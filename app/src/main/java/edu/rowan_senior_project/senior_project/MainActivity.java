@@ -3,6 +3,8 @@ package edu.rowan_senior_project.senior_project;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+// test change
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
