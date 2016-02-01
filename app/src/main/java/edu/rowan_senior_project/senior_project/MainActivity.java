@@ -3,7 +3,7 @@ package edu.rowan_senior_project.senior_project;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-// test change 222
+// test change 222 by John and Ben
 
 public class MainActivity extends AppCompatActivity {
 
