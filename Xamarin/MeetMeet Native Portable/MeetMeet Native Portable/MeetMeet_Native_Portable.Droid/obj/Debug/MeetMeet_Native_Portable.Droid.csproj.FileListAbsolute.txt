@@ -18,3 +18,4 @@ c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\Me
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\R.cs.flag
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\uploadflags.txt
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.dll.mdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_projectnew.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.csprojResolveAssemblyReference.cache

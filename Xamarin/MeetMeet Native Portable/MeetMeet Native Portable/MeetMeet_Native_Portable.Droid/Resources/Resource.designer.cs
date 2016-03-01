@@ -118,6 +118,7 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f040000
 			public const int hello = 2130968576;
+
 			
 			static String()
 			{

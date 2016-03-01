@@ -2,4 +2,8 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">MeetMeet_Native_Portable.Droid</string>
+
+
+	<string name="Sign_In">Sign in</string>
+	<string name="Sign_Up"> Sign up</string>
 </resources>

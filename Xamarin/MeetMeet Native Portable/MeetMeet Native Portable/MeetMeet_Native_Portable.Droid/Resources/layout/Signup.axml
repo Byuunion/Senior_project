@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/background_light"
+    android:background="#ff3b2f2f"
     android:weightSum="100">
     <TextView
         android:id="@+id/MeetMeet"
@@ -16,37 +16,6 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="25sp" />
-    <Button
-        android:id="@+id/SignIn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:background="@drawable/ButtonSignInStyle"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="15sp"
-        android:text="Sign-In" />
-    <TextView
-        android:id="@+id/txtOr"
-        android:text="-or-"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:layout_width="match_parent"
-        android:textColor="#368DEB"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="25sp" />
-    <Button
-        android:id="@+id/SignUp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:background="@drawable/ButtonSignUpStyle"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="15sp"
-        android:text="Sign-Up" />
     <RelativeLayout
         android:layout_weight="35"
         android:layout_width="match_parent"

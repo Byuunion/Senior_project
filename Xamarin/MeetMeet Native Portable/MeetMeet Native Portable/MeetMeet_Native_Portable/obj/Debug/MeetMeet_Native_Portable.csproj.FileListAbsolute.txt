@@ -3,3 +3,7 @@ c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\Me
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.csprojResolveAssemblyReference.cache
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.pdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_projectnew.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.dll
+C:\Users\johnn_000\Documents\Byuunion\Senior_projectnew.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.pdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_projectnew.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll
+C:\Users\johnn_000\Documents\Byuunion\Senior_projectnew.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.pdb

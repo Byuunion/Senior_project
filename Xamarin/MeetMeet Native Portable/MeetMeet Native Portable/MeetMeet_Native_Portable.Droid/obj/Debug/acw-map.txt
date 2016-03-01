@@ -1,4 +1,0 @@
-MeetMeet_Native_Portable.Droid.MainActivity, MeetMeet_Native_Portable.Droid;md509a908d4d77b0bb22997e89a48f3cfb4.MainActivity
-MeetMeet_Native_Portable.Droid.MainActivity, MeetMeet_Native_Portable.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md509a908d4d77b0bb22997e89a48f3cfb4.MainActivity
-MeetMeet_Native_Portable.Droid.MainActivity;md509a908d4d77b0bb22997e89a48f3cfb4.MainActivity
-meetmeet_native_portable.droid.MainActivity;md509a908d4d77b0bb22997e89a48f3cfb4.MainActivity
