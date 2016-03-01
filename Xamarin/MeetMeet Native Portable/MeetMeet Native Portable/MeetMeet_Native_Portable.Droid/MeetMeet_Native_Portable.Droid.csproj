@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>80c16e45-ba54-4e17-9338-cf89966ffd01</ProjectGuid>
+    <ProjectGuid>{80C16E45-BA54-4E17-9338-CF89966FFD01}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>MeetMeet_Native_Portable.Droid</RootNamespace>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
@@ -46,6 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MeetMeet_Native_Portable\MeetMeet_Native_Portable.csproj">
       <Name>MeetMeet_Native_Portable</Name>
+      <Project>{5E38C6EF-A5C6-490A-9CC9-6988DF4A4067}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +67,8 @@
     <AndroidResource Include="Resources\drawable-xhdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\layout\Signup.axml" />
+    <AndroidResource Include="Resources\layout\Signin.axml" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
