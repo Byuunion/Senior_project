@@ -11,6 +11,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
+// Class to change layout when SignUp button pressed
+
 namespace MeetMeet_Native_Portable.Droid
 {
 	[Activity (Label = "SignUp")]			
