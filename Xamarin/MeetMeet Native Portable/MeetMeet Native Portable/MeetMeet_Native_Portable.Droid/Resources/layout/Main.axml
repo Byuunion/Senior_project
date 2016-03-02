@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ff3b2f2f"
+    android:background="@android:color/background_light"
     android:weightSum="100">
     <TextView
         android:id="@+id/MeetMeet"
@@ -45,12 +45,12 @@
         android:background="@drawable/ButtonSignUpStyle"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:text="Sign-Up"
         android:textSize="15sp" />
     <RelativeLayout
         android:layout_weight="35"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#ff3b2f2f">
+        android:layout_height="0dp">
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

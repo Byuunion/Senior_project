@@ -73,10 +73,10 @@ namespace MeetMeet_Native_Portable.Droid
 			public const int MeetMeet = 2131034112;
 			
 			// aapt resource value: 0x7f050001
-			public const int SignIn = 2131034113;
+			public const int SignInButton = 2131034113;
 			
 			// aapt resource value: 0x7f050003
-			public const int SignUp = 2131034115;
+			public const int SignUpButton = 2131034115;
 			
 			// aapt resource value: 0x7f050004
 			public const int progressBar1 = 2131034116;
@@ -100,6 +100,12 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
 			
+			// aapt resource value: 0x7f030001
+			public const int Signin = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int Signup = 2130903042;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -113,12 +119,17 @@ namespace MeetMeet_Native_Portable.Droid
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040002
+			public const int Sign_In = 2130968578;
+			
+			// aapt resource value: 0x7f040003
+			public const int Sign_Up = 2130968579;
+			
 			// aapt resource value: 0x7f040001
 			public const int app_name = 2130968577;
 			
 			// aapt resource value: 0x7f040000
 			public const int hello = 2130968576;
-
 			
 			static String()
 			{

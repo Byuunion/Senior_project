@@ -19,3 +19,30 @@ c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\Me
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\uploadflags.txt
 c:\users\chris\documents\visual studio 2015\Projects\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.dll.mdb
 C:\Users\johnn_000\Documents\Byuunion\Senior_projectnew.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.csprojResolveAssemblyReference.cache
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.csprojResolveAssemblyReference.cache
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.Droid.dll
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.Droid.pdb
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.Droid.apk
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.Droid-Signed.apk
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.dll
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.pdb
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.dll
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.pdb
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\android\bin\MeetMeet_Native_Portable.Droid.apk
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\layout\main.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\values\strings.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-hdpi\icon.png
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-mdpi\icon.png
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-xhdpi\icon.png
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-xxhdpi\icon.png
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-xxxhdpi\icon.png
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\layout\signup.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\layout\signin.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-hdpi\buttonsigninstyle.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-hdpi\buttonsignupstyle.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\res\drawable-hdpi\progressbarstyle.xml
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\R.cs.flag
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\uploadflags.txt
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.dll.mdb
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.dll.mdb
+C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.Droid.dll.mdb
