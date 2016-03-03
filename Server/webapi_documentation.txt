@@ -1,0 +1,64 @@
+GET (READ)
+POST (CREATE) Takes in JSON Data: Single = {}, Multiple = {[]}
+PUT (UPDATE)
+DELETE (GET RID OF IT!)
+
+* = Implemented
+MISSING REQUEST = Nope
+
+BASE IP and PORT
+http://52.91.212.179:8800/
+
+/user/profile {username: , first_name: , last_name: , positive_votes: , negative_votes: , current_lat: , current_long: , gender: , bio: }
+
+	*GET: Returns all users' profile information
+	
+	POST: Create user profile tupple. 
+	
+	PUT: Update an user's information
+
+/user/login/:username {username: , password_hash: , password_salt: }
+
+	GET: In Progress
+	
+	POST: In Progress
+	
+	PUT: In Progress
+	
+	DELETE: In Progress
+	
+/user/profile/:username
+
+	GET: Returns specified user's profile information
+	
+	PUT: In Progress
+	
+	DELETE: In Progress
+
+/user/language/:username {username: , language: }
+
+	GET: Returns the user's language(s)
+	
+	POST: Add an user's language(s)
+	
+	DELETE: In Progress
+	
+/user/interest/:username {username: , interest: }
+
+	GET: Returns the user's interest(s)
+	
+	POST: In Progress
+	
+	DELETE: In Progress
+
+/user/message/:username {username_to: , username_from: , message_time: , message_text: }
+
+	GET: Returns the user's message(s)
+	
+	POST: In Progress
+	
+	DELETE: In Progress
+	
+
+
+
