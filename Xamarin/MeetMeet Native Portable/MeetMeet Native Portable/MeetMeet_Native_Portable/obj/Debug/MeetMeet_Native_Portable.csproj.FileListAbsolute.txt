@@ -13,5 +13,3 @@ C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Nativ
 C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.pdb
 C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll.mdb
 C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.dll.mdb
-C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll.mdb
-C:\Users\Choyce\Documents\GitHub\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.dll.mdb
