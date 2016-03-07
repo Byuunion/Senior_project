@@ -23,3 +23,7 @@ C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native
 C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.pdb
 C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll
 C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.pdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll.mdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.dll.mdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\obj\Debug\MeetMeet_Native_Portable.dll.mdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable\bin\Debug\MeetMeet_Native_Portable.dll.mdb

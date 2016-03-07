@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\MeetMeet_Native_Portable.Droid.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Lollipop) Test" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\MainActivity.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Marshmallow)" />
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\MainActivity.cs" Line="40" Column="22" />
+      <File FileName="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\MainActivity.cs" Line="33" Column="8" />
       <File FileName="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\Resources\values\style.xml" Line="1" Column="1" />
       <File FileName="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\Resources\values\Strings.xml" Line="1" Column="1" />
       <File FileName="MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\SignUp.cs" Line="1" Column="1" />

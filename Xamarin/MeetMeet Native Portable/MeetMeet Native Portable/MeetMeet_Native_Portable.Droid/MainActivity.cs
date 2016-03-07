@@ -30,6 +30,13 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignUp = FindViewById<Button> (Resource.Id.SignUpButton);
 			mButtonSignUp.Click += mButtonSignUp_Click;
 
+			// Option: If you wanted click to open new Layout
+
+			//Button buttonsignup = FindViewById<Button> (Resource.Id.SignUpButton);
+			//buttonsignup.Click += delegate {
+				//SetContentView (Resource.Layout.Signup);
+			//};
+
         }
 
 		void mButtonSignUp_Click (object sender, EventArgs e)
