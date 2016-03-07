@@ -114,3 +114,6 @@ C:\Users\Choyce\.IntelliJIdea15\config\settingsRepository\repository\Xamarin\Mee
 C:\Users\Choyce\.IntelliJIdea15\config\settingsRepository\repository\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.dll.mdb
 C:\Users\Choyce\.IntelliJIdea15\config\settingsRepository\repository\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.dll.mdb
 C:\Users\Choyce\.IntelliJIdea15\config\settingsRepository\repository\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\bin\Debug\MeetMeet_Native_Portable.Droid.dll.mdb
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.csprojResolveAssemblyReference.cache
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.dll
+C:\Users\johnn_000\Documents\Byuunion\Senior_project.git\Xamarin\MeetMeet Native Portable\MeetMeet Native Portable\MeetMeet_Native_Portable.Droid\obj\Debug\MeetMeet_Native_Portable.Droid.pdb
