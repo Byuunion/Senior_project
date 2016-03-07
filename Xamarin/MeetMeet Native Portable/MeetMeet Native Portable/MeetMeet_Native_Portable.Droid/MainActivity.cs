@@ -17,6 +17,7 @@ namespace MeetMeet_Native_Portable.Droid
     [Activity(Label = "MeetMeet_Native_Portable.Droid", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
+		private Button mButtonSignUp;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -26,9 +27,18 @@ namespace MeetMeet_Native_Portable.Droid
             PostUser("", test);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+			mButtonSignUp = FindViewById<Button> (Resource.Id.SignUpButton);
+			mButtonSignUp.Click += mButtonSignUp_Click;
 
         }
 
+		void mButtonSignUp_Click (object sender, EventArgs e)
+		{
+			//Pull up dialog
+			FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			SignUp signUpDialog = new SignUp();
+			signUpDialog.Show(transaction, "Dialog Fragment");
+		}
         
 
         private async Task PostUser(string url, Person person)

@@ -1,0 +1,9 @@
+﻿<resources>
+
+	<style name="dialog_animation"
+
+
+		<item name="android:windowExitAnimation">@anim/slide_right</item>
+
+	</style>
+</resources>

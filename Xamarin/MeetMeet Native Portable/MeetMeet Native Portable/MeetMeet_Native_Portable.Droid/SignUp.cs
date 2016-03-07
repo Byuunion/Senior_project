@@ -16,14 +16,22 @@ using Android.Widget;
 namespace MeetMeet_Native_Portable.Droid
 {
 	[Activity (Label = "SignUp")]			
-	public class SignUp : Activity
+	class SignUp : DialogFragment
 	{
-		protected override void OnCreate (Bundle savedInstanceState)
+		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			base.OnCreate (savedInstanceState);
+			base.OnCreateView (inflater, container, savedInstanceState);
 
-			// Create your application here
+			var view = inflater.Inflate (Resource.Layout.dialog_sign_up, container, false);
+			return view;
 		}
+
+		public override void OnActivityCreated(Bundle savedInstanceState)
+		{
+			Dialog.Window.RequestFeature (WindowFeatures.NoTitle);
+			base.OnActivityCreated (savedInstanceState);
+		}
+
+
 	}
 }
-

@@ -51,10 +51,16 @@ namespace MeetMeet_Native_Portable.Droid
 			public const int ButtonSignUpStyle = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Icon = 2130837506;
+			public const int edit_text_style = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int ProgressBarStyle = 2130837507;
+			public const int Icon = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int monoandroidsplash = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int ProgressBarStyle = 2130837509;
 			
 			static Drawable()
 			{
@@ -69,20 +75,32 @@ namespace MeetMeet_Native_Portable.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int MeetMeet = 2131034112;
+			// aapt resource value: 0x7f060004
+			public const int MeetMeet = 2131099652;
 			
-			// aapt resource value: 0x7f050001
-			public const int SignInButton = 2131034113;
+			// aapt resource value: 0x7f060005
+			public const int SignInButton = 2131099653;
 			
-			// aapt resource value: 0x7f050003
-			public const int SignUpButton = 2131034115;
+			// aapt resource value: 0x7f060007
+			public const int SignUpButton = 2131099655;
 			
-			// aapt resource value: 0x7f050004
-			public const int progressBar1 = 2131034116;
+			// aapt resource value: 0x7f060003
+			public const int btnDialogEmail = 2131099651;
 			
-			// aapt resource value: 0x7f050002
-			public const int txtOr = 2131034114;
+			// aapt resource value: 0x7f060008
+			public const int progressBar1 = 2131099656;
+			
+			// aapt resource value: 0x7f060001
+			public const int txtEmail = 2131099649;
+			
+			// aapt resource value: 0x7f060000
+			public const int txtFirstName = 2131099648;
+			
+			// aapt resource value: 0x7f060006
+			public const int txtOr = 2131099654;
+			
+			// aapt resource value: 0x7f060002
+			public const int txtPassword = 2131099650;
 			
 			static Id()
 			{
@@ -98,13 +116,16 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int dialog_sign_up = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Signin = 2130903041;
+			public const int Main = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int Signup = 2130903042;
+			public const int Signin = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int Signup = 2130903043;
 			
 			static Layout()
 			{
@@ -119,11 +140,20 @@ namespace MeetMeet_Native_Portable.Droid
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040006
+			public const int Email = 2130968582;
+			
+			// aapt resource value: 0x7f040004
+			public const int Password = 2130968580;
+			
 			// aapt resource value: 0x7f040002
 			public const int Sign_In = 2130968578;
 			
 			// aapt resource value: 0x7f040003
 			public const int Sign_Up = 2130968579;
+			
+			// aapt resource value: 0x7f040005
+			public const int Username = 2130968581;
 			
 			// aapt resource value: 0x7f040001
 			public const int app_name = 2130968577;
@@ -137,6 +167,22 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Style
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int Mono_Android_Theme_Splash = 2131034112;
+			
+			static Style()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Style()
 			{
 			}
 		}
