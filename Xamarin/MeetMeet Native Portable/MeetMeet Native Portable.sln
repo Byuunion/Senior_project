@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetMeet_Native_Portable.iO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetMeet_Native_Portable", "MeetMeet Native Portable\MeetMeet_Native_Portable\MeetMeet_Native_Portable.csproj", "{5E38C6EF-A5C6-490A-9CC9-6988DF4A4067}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A82F12E-E9EC-4FB7-8F8A-5152C72AABA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppStore|Any CPU = AppStore|Any CPU
