@@ -11,30 +11,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-// Class to change layout when SignUp button pressed
-
 namespace MeetMeet_Native_Portable.Droid
 {
 	/// <summary>
-	/// On sign up event arguments.
-	/// Gets and Sets user input for firstname
-	/// email and password.
+	/// Handles Sign In event arguments.
 	/// </summary>
-	public class OnSignUpEventArgs : EventArgs {
-
-		private string mFirstName;
+	public class OnSignInEventArgs: EventArgs 
+	{
 		private string mEmail;
 		private string mPassword;
-
-		/// <summary>
-		/// Gets or sets the first name.
-		/// </summary>
-		/// <value>The first name.</value>
-		public string FirstName
-		{
-			get { return mFirstName; }
-			set { mFirstName = value; }
-		}
 
 		/// <summary>
 		/// Gets or sets the email.
@@ -57,35 +42,33 @@ namespace MeetMeet_Native_Portable.Droid
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Droid.OnSignUpEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Droid.OnSignInEventArgs"/> class.
 		/// </summary>
-		/// <param name="firstName">First name.</param>
 		/// <param name="email">Email.</param>
 		/// <param name="password">Password.</param>
-		public OnSignUpEventArgs(String firstName, String email, string password) : base()
+		public OnSignInEventArgs(String email, String password) : base()
 		{
-			FirstName = firstName;
 			Email = email;
 			Password = password;
+
 		}
-			
+
 	}
 
 	/// <summary>
-	/// Provides functionality to Sign Up dialog fragment.
+	/// Provides functionality for Sign In dialog fragment
 	/// </summary>
-	[Activity (Label = "SignUp")]			
-	class SignUp : DialogFragment
+	[Activity (Label = "SignIn")]			
+	public class SignIn : DialogFragment
 	{
-		private EditText mTxtFirstName;
-		private EditText mTxtEmail;
-		private EditText mTxtPassword;
-		private Button mBtnSignUp;
+		private EditText mTxtEmailSignIn;
+		private EditText mTxtPasswordSignIn;
+		private Button mBtnDialogSignIn;
 
 		/// <summary>
-		/// The m on sign up complete.
+		/// The m on sign in complete.
 		/// </summary>
-		public EventHandler<OnSignUpEventArgs> mOnSignUpComplete;
+		public EventHandler <OnSignInEventArgs> mOnSignInComplete;
 
 		/// <param name="inflater">The LayoutInflater object that can be used to inflate
 		///  any views in the fragment,</param>
@@ -99,36 +82,32 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		/// <returns>To be added.</returns>
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-
 		{
 			base.OnCreateView (inflater, container, savedInstanceState);
 
-			var view = inflater.Inflate (Resource.Layout.dialog_sign_up, container, false);
+			var view = inflater.Inflate (Resource.Layout.dialog_sign_in, container, false);
 
-			// Resource for SignUp text
-			mTxtFirstName=  view.FindViewById<EditText>(Resource.Id.txtFirstName);
-			mTxtEmail=  view.FindViewById<EditText>(Resource.Id.txtEmail);
-			mTxtPassword=  view.FindViewById<EditText>(Resource.Id.txtPassword);
-			mBtnSignUp = view.FindViewById<Button> (Resource.Id.btnDialogEmail);
+			// Resource for SignIn
+			mTxtEmailSignIn = view.FindViewById<EditText>(Resource.Id.txtEmailSignIn);
+			mTxtPasswordSignIn = view.FindViewById<EditText>(Resource.Id.txtPasswordSignIn);
+			mBtnDialogSignIn = view.FindViewById<Button> (Resource.Id.btnDialogSignIn);
 
-			// Click event
+			// Sign In Click Event
 
-			mBtnSignUp.Click += MBtnSignUp_Click;
+			mBtnDialogSignIn.Click += MBtnDialogSignIn_Click;
+
 
 			return view;
 		}
 
-		// Occurs when user clicks Sign up Button 
-
 		/// <summary>
-		/// Completes Sign up process and passes arguments. 
+		/// Completes Sign in process and passes arguments. 
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">E.</param>
-		void MBtnSignUp_Click (object sender, EventArgs e)
+		void MBtnDialogSignIn_Click (object sender, EventArgs e)
 		{
-
-			mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtFirstName.Text, mTxtEmail.Text, mTxtPassword.Text));
+			mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtEmailSignIn.Text, mTxtPasswordSignIn.Text));
 			this.Dismiss ();
 		}
 
@@ -144,7 +123,6 @@ namespace MeetMeet_Native_Portable.Droid
 			base.OnActivityCreated (savedInstanceState);
 
 		}
-
-
 	}
 }
+
