@@ -15,30 +15,53 @@ using Android.Widget;
 
 namespace MeetMeet_Native_Portable.Droid
 {
+	/// <summary>
+	/// On sign up event arguments.
+	/// Gets and Sets user input for firstname
+	/// email and password.
+	/// </summary>
 	public class OnSignUpEventArgs : EventArgs {
 
 		private string mFirstName;
 		private string mEmail;
 		private string mPassword;
 
+		/// <summary>
+		/// Gets or sets the first name.
+		/// </summary>
+		/// <value>The first name.</value>
 		public string FirstName
 		{
 			get { return mFirstName; }
 			set { mFirstName = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the email.
+		/// </summary>
+		/// <value>The email.</value>
 		public string Email 
 		{
 			get { return mEmail; }
 			set { mEmail = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the password.
+		/// </summary>
+		/// <value>The password.</value>
 		public string Password 
 		{
 			get { return mPassword; }
 			set { mPassword = value; }
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Droid.OnSignUpEventArgs"/> class.
+		/// </summary>
+		/// <param name="firstName">First name.</param>
+		/// <param name="email">Email.</param>
+		/// <param name="password">Password.</param>
 		public OnSignUpEventArgs(String firstName, String email, string password) : base()
 		{
 			FirstName = firstName;
@@ -46,8 +69,11 @@ namespace MeetMeet_Native_Portable.Droid
 			Password = password;
 		}
 			
-	
 	}
+
+	/// <summary>
+	/// Provides functionality to Sign Up dialog fragment.
+	/// </summary>
 	[Activity (Label = "SignUp")]			
 	class SignUp : DialogFragment
 	{
@@ -56,9 +82,22 @@ namespace MeetMeet_Native_Portable.Droid
 		private EditText mTxtPassword;
 		private Button mBtnSignUp;
 
+		/// <summary>
+		/// The m on sign up complete.
+		/// </summary>
 		public EventHandler<OnSignUpEventArgs> mOnSignUpComplete;
 
-
+		/// <param name="inflater">The LayoutInflater object that can be used to inflate
+		///  any views in the fragment,</param>
+		/// <param name="container">If non-null, this is the parent view that the fragment's
+		///  UI should be attached to. The fragment should not add the view itself,
+		///  but this can be used to generate the LayoutParams of the view.</param>
+		/// <param name="savedInstanceState">If non-null, this fragment is being re-constructed
+		///  from a previous saved state as given here.</param>
+		/// <summary>
+		/// Called to have the fragment instantiate its user interface view.
+		/// </summary>
+		/// <returns>To be added.</returns>
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 
 		{
@@ -80,6 +119,12 @@ namespace MeetMeet_Native_Portable.Droid
 		}
 
 		// Occurs when user clicks Sign up Button 
+
+		/// <summary>
+		/// Completes Sign up process and passes arguments. 
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
 		void MBtnSignUp_Click (object sender, EventArgs e)
 		{
 
@@ -87,6 +132,12 @@ namespace MeetMeet_Native_Portable.Droid
 			this.Dismiss ();
 		}
 
+		/// <param name="savedInstanceState">If the fragment is being re-created from
+		///  a previous saved state, this is the state.</param>
+		/// <summary>
+		/// Called when the fragment's activity has been created and this
+		///  fragment's view hierarchy instantiated.
+		/// </summary>
 		public override void OnActivityCreated(Bundle savedInstanceState)
 		{
 			Dialog.Window.RequestFeature (WindowFeatures.NoTitle);
