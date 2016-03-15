@@ -57,7 +57,22 @@ namespace MeetMeet_Native_Portable.Droid
 			FragmentTransaction transaction = FragmentManager.BeginTransaction();
 			SignIn signInDialog = new SignIn ();
 			signInDialog.Show (transaction, "Dialog Fragment");
+
+			// Subscribing to Signin Event
+
+			signInDialog.mOnSignInComplete += signInDialog_mOnSignInComplete;
+
+
         }
+
+		void signInDialog_mOnSignInComplete(Object sender, OnSignInEventArgs e)
+		{
+			// here we send request to server
+			// just simulating here
+			Thread thread = new Thread(ActLikeARequest);
+			thread.Start ();
+			//string userPassword = e.Password;
+		}
 
 		void mButtonSignUp_Click (object sender, EventArgs e)
 		{
