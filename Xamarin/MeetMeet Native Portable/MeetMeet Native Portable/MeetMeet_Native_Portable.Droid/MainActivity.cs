@@ -19,6 +19,7 @@ namespace MeetMeet_Native_Portable.Droid
     public class MainActivity : Activity
     {
 		private Button mButtonSignUp;
+		private Button mButtonSignIn;
 		private ProgressBar mProgressBar;
 
         protected override void OnCreate(Bundle bundle)
@@ -31,18 +32,31 @@ namespace MeetMeet_Native_Portable.Droid
            
 			// Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
+			//References
 			mButtonSignUp = FindViewById<Button> (Resource.Id.SignUpButton);
+			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
 			mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
+
+			//Click Events
+
+			//Sign Up Click
 			mButtonSignUp.Click += mButtonSignUp_Click;
 
-			// Option: If you wanted click to open new Layout
+			//Sign in Click opens new activity
+			//Different approach then SignUp
 
-			//Button buttonsignup = FindViewById<Button> (Resource.Id.SignUpButton);
-			//buttonsignup.Click += delegate {
-			//	SetContentView (Resource.Layout.Signup);
-			//	StartActivity(typeof(SignUp2));;
-			//};
+			mButtonSignIn.Click += MButtonSignIn_Click;
 
+	
+        }
+
+        void MButtonSignIn_Click (object sender, EventArgs e)
+        {
+			//Pull up dialog
+			FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			SignIn signInDialog = new SignIn ();
+			signInDialog.Show (transaction, "Dialog Fragment");
         }
 
 		void mButtonSignUp_Click (object sender, EventArgs e)
