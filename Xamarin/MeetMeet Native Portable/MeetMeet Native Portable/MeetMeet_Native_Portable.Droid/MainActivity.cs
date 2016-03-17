@@ -142,6 +142,41 @@ namespace MeetMeet_Native_Portable.Droid
 
 			RunOnUiThread (() => {mProgressBar.Visibility = ViewStates.Invisible; });
 		}
+		
+				// Initialize the Amazon Cognito credentials provider
+		CognitoAWSCredentials credentials = new CognitoAWSCredentials (
+			"us-east-1:9fc7967a-222c-4b86-8c09-36ca25e76a72", // Identity Pool ID
+			RegionEndpoint.USEast1 // Region
+		);
+
+		// Initialize the Cognito Sync client
+		CognitoSyncManager syncManager = new CognitoSyncManager (
+			credentials,
+			new AmazonCognitoSyncConfig {
+				RegionEndpoint = RegionEndpoint.USEast1 // Region
+			}
+		);
+
+		// Create a record in a dataset and synchronize with the server
+		Dataset dataset = syncManager.OpenOrCreateDataset ("myDataset");
+		dataset.OnSyncSuccess += SyncSuccessCallback;
+		dataset.Put("myKey", "myValue");
+		dataset.SynchronizeAsync();
+
+		void SyncSuccessCallback(object sender, SyncSuccessEventArgs e) {
+			// Your handler code here
+			// Update Login Map Android
+			HashMap<String, String> loginsMap = new HashMap<String, String>();
+			loginsMap.put(developerAuthenticationProvider.getProviderName(), developer 
+				UserIdentifier);
+			credentialsProvider.setLogins(loginsMap);
+			credentialsProvider.refresh();
+		}
+
+		// create a service client that uses credentials provided by Cognito
+		var client = new AmazonDynamoDBClient(credentials, REGION)
+
+    }  
     }
 }
 
