@@ -38,20 +38,24 @@ namespace MeetMeet_Native_Portable
 		public void getDistance(Postable userToMeet)
 		{
 			var user2 = userToMeet.getName();
-			var r = 6371000; // Earth's radius in metres
+			var r = 6371; // Earth's radius in km
+			//var r = 3960; // Earth's radius in mi
 
-			var lat1 = toRadians(40.7486);// toRadians(Latiude);
-			var long1 = toRadians(-73.9864);// toRadians(Longitude);
+			var lat1 = 38.898556;// Latiude;
+			var long1 = -77.037852;
+			var latRad1 = toRadians(lat1);// toRadians(Latiude);
 
-			var lat2 = toRadians(40.7486);// pull from database with username
-			var long2 = toRadians(-73.9664);// pull from database with username
+			var lat2 = 38.897147;// pull from database with username
+			var long2 = -77.043934;// pull from database with username
+			var latRad2 = toRadians(lat2);
 
-			var	latitudeDiff = toRadians(lat2-lat1);
-			var longitudeDiff = toRadians(long2-long1);
+			var	latitudeDiff = toRadians(lat2 - lat1);
+			var longitudeDiff = toRadians(long2 - long1);
 
-			var a = Math.Sin(latitudeDiff/2) * Math.Sin(latitudeDiff/2) +
-				Math.Cos(lat1) * Math.Cos(lat2) *
-				Math.Sin(longitudeDiff/2) * Math.Sin(longitudeDiff/2);
+			var a = Math.Sin(latitudeDiff/2.0) * Math.Sin(latitudeDiff/2.0) +
+				Math.Cos(latRad1) * Math.Cos(latRad2) *
+				Math.Sin(longitudeDiff/2.0) * Math.Sin(longitudeDiff/2.0);
+			
 			var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1-a));
 
 			var d = r * c;
