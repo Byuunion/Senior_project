@@ -31,6 +31,9 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomCredentials.cs" />
+    <Compile Include="DeveloperAuthenticatedCredentials.cs" />
+    <Compile Include="Login.cs" />
     <Compile Include="MyClass.cs" />
     <Compile Include="Postable.cs" />
     <Compile Include="Poster.cs" />

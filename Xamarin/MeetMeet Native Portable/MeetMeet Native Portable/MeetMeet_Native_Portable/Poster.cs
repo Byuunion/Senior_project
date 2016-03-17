@@ -9,7 +9,7 @@ namespace MeetMeet_Native_Portable
     public class Poster
     {
 
-        public static async Task PostObject(Postable obj, string url)
+        public static async Task<bool> PostObject(Postable obj, string url)
         {
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
@@ -32,13 +32,15 @@ namespace MeetMeet_Native_Portable
             }
 
 
-            if (!task.IsFaulted)
+            if (task.IsCompleted)
             {
                 System.Diagnostics.Debug.WriteLine("Successful");
+                return true;
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Not Successful");
+                return false;
             }
         }
 
