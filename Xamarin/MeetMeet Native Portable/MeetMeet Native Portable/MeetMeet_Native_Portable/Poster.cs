@@ -14,11 +14,11 @@ namespace MeetMeet_Native_Portable
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
 
-            var uri = new Uri(string.Format(url, obj.getName()));
+            var uri = new Uri(string.Format(url, obj.GetName()));
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var task = client.PostAsync(uri, content);
-
+            
             
 
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)

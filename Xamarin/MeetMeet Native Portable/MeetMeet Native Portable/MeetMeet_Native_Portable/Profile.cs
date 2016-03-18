@@ -2,7 +2,7 @@
 
 namespace MeetMeet_Native_Portable 
 {
-    public class Profile : Postable
+    public class Profile : Postable, Gettable
     {
         public string username;
         public string first_name;
@@ -28,7 +28,12 @@ namespace MeetMeet_Native_Portable
             this.bio = "User has not set up a bio yet.";
         }
 
-        public string getName()
+        public string GetName()
+        {
+            return this.username;
+        }
+
+        public string GetGetName()
         {
             return this.username;
         }

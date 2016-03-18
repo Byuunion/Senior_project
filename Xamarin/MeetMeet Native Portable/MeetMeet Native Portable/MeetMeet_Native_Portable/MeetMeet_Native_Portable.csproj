@@ -31,6 +31,8 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Gettable.cs" />
+    <Compile Include="Getter.cs" />
     <Compile Include="MyClass.cs" />
     <Compile Include="Postable.cs" />
     <Compile Include="Poster.cs" />

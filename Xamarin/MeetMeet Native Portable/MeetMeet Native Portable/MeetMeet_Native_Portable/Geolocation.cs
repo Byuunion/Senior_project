@@ -13,7 +13,7 @@ namespace MeetMeet_Native_Portable
 			this.username = username;
 		}
 
-		public string getName()
+		public string GetName()
 		{
 			return this.username;
 		}
@@ -32,13 +32,13 @@ namespace MeetMeet_Native_Portable
 
 		public double toRadians(double degrees)
 		{
-			return (Math.PI / 180) * degrees;
+			return (Math.PI / 180.0) * degrees;
 		}
 
 		public void getDistance(Postable userToMeet)
 		{
-			var user2 = userToMeet.getName();
-			var r = 6371; // Earth's radius in km
+			var user2 = userToMeet.GetName();
+			var r = 6371.0; // Earth's radius in km
 			//var r = 3960; // Earth's radius in mi
 
 			var lat1 = 38.898556;// Latiude;
