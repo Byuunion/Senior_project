@@ -19,14 +19,15 @@ namespace MeetMeet_Native_Portable.Droid
 	/// <summary>
 	/// Will provide functionality for main page.
 	/// </summary>
-    [Activity(Label = "MeetMeet_Native_Portable.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    [Activity(Label = "MeetMeet", MainLauncher = true, Icon = "@drawable/icon")]
+	public class MainActivity : Activity
     {
 
 		// Main Menu Items
 		private Button mButtonSignUp;
 		private Button mButtonSignIn;
 		private ProgressBar mProgressBar;
+		private Button mLocationButton;
 
 		/// <summary>
 		/// Creates the event for main activity.
@@ -49,6 +50,8 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignUp = FindViewById<Button> (Resource.Id.SignUpButton);
 			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
 			mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
+			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
+
 
 			//Click Events
 
@@ -58,8 +61,12 @@ namespace MeetMeet_Native_Portable.Droid
 			//Sign in Click opens 
 			mButtonSignIn.Click += MButtonSignIn_Click;
 
-	
+			mLocationButton.Click += delegate {
+				StartActivity (typeof(LocationActivity));
+			};
+
         }
+				
 
 		// Sign In Click
 

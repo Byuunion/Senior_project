@@ -2,13 +2,13 @@
 
 namespace MeetMeet_Native_Portable
 {
-	public class Location : Postable
+	public class Geolocation : Postable
 	{
 		public double latiude;
 		public double longitude;
 		public string username;
 
-		public Location (String username)
+		public Geolocation (String username)
 		{
 			this.username = username;
 		}
