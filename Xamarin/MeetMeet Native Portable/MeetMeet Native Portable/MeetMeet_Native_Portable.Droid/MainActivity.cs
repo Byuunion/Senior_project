@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Util;
 using System.Net.Http;
 using System.Net;
 using System.Text;
@@ -37,13 +38,10 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="bundle">Bundle.</param>
         protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(bundle);
-            Profile test = new Profile("test2", "no", "name", "nope");
-            System.Diagnostics.Debug.WriteLine("hello");
-            Poster.PostObject(test, "http://52.91.212.179:8800/user/");
-            System.Diagnostics.Debug.WriteLine("Got here");
            
-			// Set our view from the "main" layout resource
+            base.OnCreate(bundle);
+
+            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
 			//References for Main Menu Items
@@ -143,12 +141,28 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <summary>
 		/// Acts like A request.
 		/// </summary>
-		private void ActLikeARequest()
+		private async void ActLikeARequest()
 		{
-			Thread.Sleep (3000);
+            //Thread.Sleep (3000);
 
-			RunOnUiThread (() => {mProgressBar.Visibility = ViewStates.Invisible; });
-		}
+            string tag = "MeetMeet";
+            Profile test = new Profile("houzec8", "no", "name", "nope");
+            //Poster.PostObject(test, "http://52.91.212.179:8800/user/");
+
+
+            var test2 = await Getter<Profile>.GetObject(test, "http://52.91.212.179:8800/user/profile/{0}");
+            if(test2 == default(Profile))
+            {
+                System.Diagnostics.Debug.WriteLine("Response received was null");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Response received first name: {0} last name: {1}", test2.first_name, test2.last_name);
+            }
+           
+
+            //RunOnUiThread (() => {mProgressBar.Visibility = ViewStates.Invisible; });
+        }
     }
 }
 

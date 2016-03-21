@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MeetMeet_Native_Portable
 {
-    public interface Postable
+    public interface Gettable
     {
-        //this just tells the poster that the classes which implement this should be able to be sent to the server
-        string GetName();
+        string GetGetName();
     }
 }
