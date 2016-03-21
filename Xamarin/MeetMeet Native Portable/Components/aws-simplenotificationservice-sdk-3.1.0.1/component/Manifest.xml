@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="aws-simplenotificationservice-sdk">
+  <name>AWSSDK - Amazon Simple Notification Service</name>
+  <publisher>Amazon Web Services</publisher>
+  <publisher-url>http://aws.amazon.com/mobile/sdk/</publisher-url>
+  <version>3.1.0.1</version>
+  <summary>AWS SimpleNotificationService SDK for Xamarin</summary>
+  <packages>
+    <package id="AWSSDK.Core" version="3.1.1.0" framework="winphone-8.1" />
+    <package id="AWSSDK.SimpleNotificationService" version="3.1.0.1" framework="winphone-8.1" />
+    <package id="AWSSDK.Core" version="3.1.1.0" framework="ios-unified" />
+    <package id="AWSSDK.SimpleNotificationService" version="3.1.0.1" framework="ios-unified" />
+    <package id="AWSSDK.Core" version="3.1.1.0" framework="android" />
+    <package id="AWSSDK.SimpleNotificationService" version="3.1.0.1" framework="android" />
+    <package id="AWSSDK.Core" version="3.1.1.0" framework="winphone-8.0" />
+    <package id="AWSSDK.SimpleNotificationService" version="3.1.0.1" framework="winphone-8.0" />
+  </packages>
+  <samples>
+    <sample id="AWSSDK.SNS.Sample">
+      <name>SimpleNotificationService-Sample</name>
+      <summary>SimpleNotificationService-Sample</summary>
+    </sample>
+  </samples>
+</component>
