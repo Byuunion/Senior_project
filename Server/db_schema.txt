@@ -2,17 +2,26 @@ CREATE TABLE user_login (username VARCHAR(15),
 password_hash VARCHAR(64), 
 password_salt VARCHAR(64),
 PRIMARY KEY (username),
-FOREIGN KEY (username) references user_profile(username));
+FOREIGN KEY (username) references user_profile(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
 			
 CREATE TABLE user_interest (username VARCHAR(15), 
 interest VARCHAR(500),
 PRIMARY KEY (username, interest),
-FOREIGN KEY (username) references user_profile(username));
+FOREIGN KEY (username) references user_profile(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
 						
 CREATE TABLE user_language (username VARCHAR(15), 
 language VARCHAR(100), 
 PRIMARY KEY (username, language),
-FOREIGN KEY (username) references user_profile(username));
+FOREIGN KEY (username) references user_profile(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
 						
 CREATE TABLE user_message (username_to VARCHAR(15),
 username_from VARCHAR(15),
