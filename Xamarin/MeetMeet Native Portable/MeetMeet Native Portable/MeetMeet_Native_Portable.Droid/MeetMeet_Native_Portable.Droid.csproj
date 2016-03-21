@@ -54,6 +54,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v4.23.1.1.1\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MeetMeet_Native_Portable\MeetMeet_Native_Portable.csproj">
@@ -68,12 +71,18 @@
     <Compile Include="SignUp.cs" />
     <Compile Include="SignIn.cs" />
     <Compile Include="LocationActivity.cs" />
+    <Compile Include="DetailsActivity.cs" />
+    <Compile Include="DetailsFragment.cs" />
+    <Compile Include="ProfileMainActivity.cs" />
+    <Compile Include="Shakespeare.cs" />
+    <Compile Include="TitlesFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <None Include="Resources\layout\layout-large\activity_main.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -90,6 +99,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\edit_text_style.xml" />
     <AndroidResource Include="Resources\layout\dialog_sign_in.axml" />
     <AndroidResource Include="Resources\layout\location.axml" />
+    <AndroidResource Include="Resources\layout\activity_main.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -99,4 +109,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <ItemGroup>
+    <Folder Include="Resources\layout\layout-large\" />
+  </ItemGroup>
 </Project>

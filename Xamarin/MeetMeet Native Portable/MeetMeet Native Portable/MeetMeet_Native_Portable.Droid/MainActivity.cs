@@ -29,6 +29,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mButtonSignIn;
 		private ProgressBar mProgressBar;
 		private Button mLocationButton;
+		private Button mProfileListSample;
 
 		/// <summary>
 		/// Creates the event for main activity.
@@ -49,6 +50,7 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
 			mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
 			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
+			mProfileListSample = FindViewById<Button> (Resource.Id.TestProfileList);
 
 
 			//Click Events
@@ -61,6 +63,11 @@ namespace MeetMeet_Native_Portable.Droid
 
 			mLocationButton.Click += delegate {
 				StartActivity (typeof(LocationActivity));
+			};
+
+			// ProfileListSample Click
+			mProfileListSample.Click += delegate {
+				StartActivity (typeof(ProfileMainActivity));
 			};
 
         }

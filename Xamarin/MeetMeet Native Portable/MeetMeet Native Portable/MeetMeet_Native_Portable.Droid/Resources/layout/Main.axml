@@ -57,6 +57,17 @@
         android:layout_marginRight="20dp"
         android:textSize="15sp"
         android:text="Test Location" />
+    <Button
+        android:id="@+id/TestProfileList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:background="@drawable/ButtonSignInStyle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/TestLocationButton"
+        android:textSize="15sp"
+        android:text="ProfileListSample" />
     <RelativeLayout
         android:layout_weight="35"
         android:layout_width="match_parent"
