@@ -1,7 +1,6 @@
 var app = require('express')();
 var mysql = require('mysql'); //import mysql package.
 var bodyParser = require('body-parser');
-
 var hat = require('hat');
 
 var mysqlConfig = {
@@ -88,8 +87,23 @@ app.get('/user/login/:username', function(req, res) {
         if (err) throw err;
 		if(data.password_hash = password){ // Success
 			var token = hat();
-			//Cognito shit here
+			//Cognito shit here================================================================================================================================
+
+			var cognitoidentity = new AWS.CognitoIdentity();
 			
+			//Params for making the API call
+			var params = {
+				AccountId: 267911792901, // AWS account Id
+				RoleArn: arn:aws:iam::267911792901:role/Cognito_MeetMeetAuth_Role, // IAM role that will be used by authentication
+				IdentityPoolId: us-east-1:9fc7967a-222c-4b86-8c09-36ca25e76a72, //ID of the identity pool
+				Logins: {'login.rowan.meetmeet': TOKEN} 
+			};
+				 
+			//Initialize the Credentials object
+			AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
+			 
+			//Call to Amazon Cognito, get the credentials for our user
+			AWS.config.credentials.get(err,data){…}
 		}
     });
 	
@@ -353,3 +367,29 @@ app.delete('/user/:username', function(req, res) {
 app.listen(app.get('port'), function(){
    console.log("Listening on Port: " + app.get('port'));
 });
+
+function getCognitoID(){
+
+  var params = {
+    AccountId: 267911792901, // AWS account Id
+	RoleArn: arn:aws:iam::267911792901:role/Cognito_MeetMeetAuth_Role, // IAM role that will be used by authentication
+	IdentityPoolId: us-east-1:9fc7967a-222c-4b86-8c09-36ca25e76a72, //ID of the identity pool
+    Logins: {'login.rowan.meetmeet': TOKEN} 
+  };
+
+  AWS.config.region = AWS_Region;
+
+  /* initialize the Credentials object */
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
+
+  /* Get the credentials for our user */
+  AWS.config.credentials.get(function(err) {
+    if (err) console.log("credentials.get: ".red + err, err.stack); /* an error occurred */
+      else{
+	&AWS_TEMP_CREDENTIALS = AWS.config.credentials.data.Credentials;
+        COGNITO_IDENTITY_ID = AWS.config.credentials.identityId;
+        console.log("Cognito Identity Id: ".green + COGNITO_IDENTITY_ID);
+
+      }
+  });
+}
