@@ -2,6 +2,8 @@ var app = require('express')();
 var mysql = require('mysql'); //import mysql package.
 var bodyParser = require('body-parser');
 
+var hat = require('hat');
+
 var mysqlConfig = {
         host: 'userdb.cydfufqp5imu.us-east-1.rds.amazonaws.com',
         user: 'overlord',
@@ -9,7 +11,7 @@ var mysqlConfig = {
 		port: '3306',
         database: 'userdb',
     };
-	
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -19,14 +21,14 @@ app.get('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-	if(!err) {
-		console.log("Database is connected ... nn");    
-	} else {
-		console.log("Error connecting database ... nn");    
-	}
-	});  
-	
-	var response = {
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var response = {
         success: null,
         success_message: "All users retrieved onto Database"
     };
@@ -38,49 +40,84 @@ app.get('/user', function(req, res) {
     connection.end();
 });
 
-app.get('/user/username/:username', function(req, res) {
+app.get('/user/profile/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
-	
+
     connection.connect(function(err){
-	if(!err) {
-		console.log("Database is connected ... nn");    
-	} else {
-		console.log("Error connecting database ... nn");    
-	}
-	});  
-	
-	var response = {
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var response = {
         success: null,
         success_message: "User retrieved onto Database: " + req.params.username
     };
 
-    connection.query('SELECT * FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data) {
+
+    connection.query('SELECT * FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
         if (err) throw err;
         res.json(data);
     });
     connection.end();
 });
 
-app.post('/user', function(req, res) {
+//Pass in JSON format of entered username and password from the app
+//Hash not implemented yet
+app.get('/user/login/:username', function(req, res) {
+    var connection = mysql.createConnection(mysqlConfig);
+		var password = req.body.username;
+
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var response = {
+        success: null,
+        success_message: "User successfully logged in?: " + req.params.username
+    };
+
+
+    connection.query('SELECT password_hash FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
+        if (err) throw err;
+		if(data.password_hash = password){ // Success
+			var token = hat();
+			//Cognito shit here
+			
+		}
+    });
 	
+    connection.end();
+});
+
+app.post('/user/profile', function(req, res) {
+
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-	if(!err) {
-		console.log("Database is connected ... nn");    
-	} else {
-		console.log("Error connecting database ... nn");    
-	}
-	});
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
 
     var data = {
         username: req.body.username,
-		first_name: req.body.first_name,    
-		last_name: req.body.last_name,     
-		positive_votes: req.body.positive_votes,
-		negative_votes: req.body.negative_votes,
-		current_lat: req.body.current_lat,
-		current_long: req.body.current_long
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        positive_votes: req.body.positive_votes,
+        negative_votes: req.body.negative_votes,
+        current_lat: req.body.current_lat,
+        current_long: req.body.current_long,
+        gender: req.body.gender,
+        bio: req.body.bio
     };
 
     var response = {
@@ -90,9 +127,9 @@ app.post('/user', function(req, res) {
 
     connection.query('INSERT INTO user_profile SET ?', data, function(err, rows) {
         if (err) {
-			console.log(data);
-			throw err;
-		}
+            console.log(data);
+            throw err;
+            }
 
         if (rows.affectedRows === 1) {
           response.success = true;
@@ -109,20 +146,210 @@ app.post('/user', function(req, res) {
     connection.end();
 });
 
+app.post('/user/interest', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var data = {
+        username: req.body.username,
+        interest: req.body.interest
+    };
+
+    var response = {
+        success: null,
+        success_message: "User written onto Database"
+    };
+
+    connection.query('INSERT INTO user_interest SET ?', data, function(err, rows) {
+        if (err) {
+            console.log(data);
+            throw err;
+            }
+
+        if (rows.affectedRows === 1) {
+          response.success = true;
+            response.success_message = "Successfully created user: " + data.username + ".";
+        } else if (!!rows.affectedRows) {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: Multiple inserts.";
+        } else {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: INSERT failed.";
+        }
+        res.json(response);
+    });
+    connection.end();
+});
+
+app.post('/user/language', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var data = {
+        username: req.body.username,
+        language: req.body.language
+    };
+
+    var response = {
+        success: null,
+        success_message: "User written onto Database"
+    };
+
+    connection.query('INSERT INTO user_language SET ?', data, function(err, rows) {
+        if (err) {
+            console.log(data);
+            throw err;
+            }
+
+        if (rows.affectedRows === 1) {
+          response.success = true;
+            response.success_message = "Successfully created user: " + data.username + ".";
+        } else if (!!rows.affectedRows) {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: Multiple inserts.";
+        } else {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: INSERT failed.";
+        }
+        res.json(response);
+    });
+    connection.end();
+});
+
+app.post('/user/login', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var data = {
+        username: req.body.username,
+        password_hash: req.body.password_hash,
+        password_salt: req.body.password_salt
+    };
+
+    var response = {
+        success: null,
+        success_message: "User written onto Database"
+    };
+
+    connection.query('INSERT INTO user_login SET ?', data, function(err, rows) {
+        if (err) {
+            console.log(data);
+            throw err;
+            }
+
+        if (rows.affectedRows === 1) {
+          response.success = true;
+            response.success_message = "Successfully created user: " + data.username + ".";
+        } else if (!!rows.affectedRows) {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: Multiple inserts.";
+        } else {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: INSERT failed.";
+        }
+        res.json(response);
+    });
+    connection.end();
+});
+
+app.post('/user/messages', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var data = {
+        username: req.body.username,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        positive_votes: req.body.positive_votes,
+        negative_votes: req.body.negative_votes,
+        current_lat: req.body.current_lat,
+        current_long: req.body.current_long,
+        gender: req.body.gender,
+        bio: req.body.bio
+    };
+
+    var response = {
+        success: null,
+        success_message: "User written onto Database"
+    };
+
+    connection.query('INSERT INTO user_profile SET ?', data, function(err, rows) {
+        if (err) {
+            console.log(data);
+            throw err;
+            }
+
+        if (rows.affectedRows === 1) {
+          response.success = true;
+            response.success_message = "Successfully created user: " + data.username + ".";
+        } else if (!!rows.affectedRows) {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: Multiple inserts.";
+        } else {
+            response.success = false;
+            response.success_message = "Improper INSERT executed: INSERT failed.";
+        }
+        res.json(response);
+    });
+    connection.end();
+});
+
+app.delete('/user/:username', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) {
+            console.log("Database is connected ... nn");
+            } else {
+                console.log("Error connecting database ... nn");
+                }
+        });
+
+    var response = {
+        success: null,
+        success_message: "User information deleted from Database"
+    };
+
+	//Delete Cascades through tables
+    connection.query('DELETE FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
+        if (err) throw err;
+    });
+    connection.end();
+});
+
 app.listen(app.get('port'), function(){
    console.log("Listening on Port: " + app.get('port'));
 });
-
-
-/***** REMEMBER TO INCLUDE RESPONSE CODES AND LINKS TO OTHER API URIS
-LOOKUP RESTFUL RESPONSE CODES AND HATEOAS ***/
-
-
-
-/**
- * Invokes RESTful call to add an event
- * @param {Object} req    The JSON of the event 
- * returns JSON with status
- */
- 
- connection.query('INSERT INTO user_profile SET ?', data, function(err, rows) {
