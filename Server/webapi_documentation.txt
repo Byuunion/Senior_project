@@ -1,53 +1,51 @@
 GET (READ)
-POST (CREATE) Takes in JSON Data: Single = {}, Multiple = {[]}
+POST (CREATE)
 PUT (UPDATE)
 DELETE (GET RID OF IT!)
-
-* = Implemented
-MISSING REQUEST = Nope
 
 BASE IP and PORT
 http://52.91.212.179:8800/
 
-/user/profile {username: , first_name: , last_name: , positive_votes: , negative_votes: , current_lat: , current_long: , gender: , bio: }
+POST API Call JSON Needed: {xxx: , xx: , x: }
 
-	*GET: Returns all users' profile information
-	
-	*POST: Create user profile tupple. 
-	
-/user/login/:username {username: , password_hash: , password_salt: }
+Profile
 
-	GET: In Progress Goes with Login Authentication
-	
-	*POST:
-	
-/user/profile/:username
+	/user/profile/:username GET: Returns specified user's profile information
 
-	*GET: Returns specified user's profile information
-
-/user/language/:username {username: , language: }
-
-	*GET: Returns the user's language(s)
+	/user/profile POST: Create user profile tupple. {username: , positive_votes: , negative_votes: , current_lat: , current_long: , gender: , bio: , token: }
 	
-	*POST: Add an user's language(s)
+Login
+
+	/user/login/:username GET: Creates a new token and writes it to the db and returns it {username: , password_hash: , password_salt: }
+	
+	/user/login POST: Create account and token into db and returned it  {username: , password_hash: , password_salt: }
+	
+
+Language
+
+	/user/language/:username GET: Returns the user's language(s)
+	
+	/user/language POST: Add an user's language(s) {username: , language: , token: }
+	
 		
-/user/interest/:username {username: , interest: }
+Interest
 
-	*GET: Returns the user's interest(s)
+	/user/interest/:username GET: Returns the user's interest(s)
 	
-	*POST:
+	/user/interest/ POST: {username: , interest: , token: }
 	
+	
+Messages	
 
-/user/message/:username {username_to: , username_from: , message_time: , message_text: }
-
-	*GET: Returns the user's message(s)
+	/user/message/:username GET: Returns the user's message(s)
 	
-	*POST:
+	/user/message/ POST: {username: , username_to: , username_from: , message_time: , message_text: , token: }
+	
 		
-/user/
+Get all Users
 
-	*GET: Returns all users in the db
+	/user GET: Returns all users in the db
 	
-/user/:username
+Delete specific User Keeps Messages
 	
-	*DELETE: Deletes all references to the username from all tables.
+	/user/:username DELETE: Deletes all references to the username from all tables.
