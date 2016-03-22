@@ -24,7 +24,8 @@ namespace MeetMeet_Native_Portable
 
             if (response.IsSuccessStatusCode)
             {
-                System.Diagnostics.Debug.WriteLine("Response was not successful");
+                System.Diagnostics.Debug.WriteLine("Response was successful");
+                string responseString = await response.Content.ReadAsStringAsync();
                 var content = await response.Content.ReadAsStringAsync();
                 returnData = JsonConvert.DeserializeObject<List<T>>(content).ElementAt(0);
             }
