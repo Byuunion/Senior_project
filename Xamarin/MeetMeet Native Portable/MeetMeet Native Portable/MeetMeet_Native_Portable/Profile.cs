@@ -9,8 +9,8 @@ namespace MeetMeet_Native_Portable
         public string last_name;
         public int positive_votes;
         public int negative_votes;
-        public int current_lat;
-        public int current_long;
+        public double current_lat;
+        public double current_long;
         public string gender;
         public string bio;
 
@@ -23,8 +23,8 @@ namespace MeetMeet_Native_Portable
             this.gender = gender;
             this.positive_votes = 0;
             this.negative_votes = 0;
-            this.current_lat = 0;
-            this.current_long = 0;
+            this.current_lat = 0.0;
+            this.current_long = 0.0;
             this.bio = "User has not set up a bio yet.";
         }
 
