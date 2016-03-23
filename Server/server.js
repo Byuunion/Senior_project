@@ -14,7 +14,7 @@ var mysqlConfig = {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.set('port', (process.env.PORT || 8800));
+app.set('port', (process.env.PORT || 8801));
 
 app.get('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
@@ -116,7 +116,7 @@ app.get('/user/login/:username', function(req, res) {
 			var token = hat();
 			response.success = true;
 			response.token = token;	
-			connection.query('UPDATE user_login SET token = ' + token + 'WHERE username = ' + connection.escape(req.params.username);
+			connection.query('UPDATE user_login SET token = ' + token + 'WHERE username = ' + connection.escape(req.params.username));
 			res.Json(response);
 		}
 		else{
@@ -420,6 +420,66 @@ app.delete('/user/:username', function(req, res) {
 	});
 	connection.end();
 });
+
+app.put('/user/profile/location/:username', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected.");
+		else console.log("Error connecting database.");
+	});
+
+	connection.query('SELECT token FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
+        if (err) throw err;
+        var token = data[0].token;
+    
+		if(req.body.token === token){
+			var response = {
+				success: null,
+				success_message: "User location updated"
+			};
+			
+			var data = {
+				current_lat: req.body.current_lat,
+				current_long: req.body.current_long
+			};
+
+			//Delete Cascades through tables
+			connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data,  function(err, data){
+				if (err) throw err;
+				response.success = true;
+				res.Json(response);
+			});
+		}
+		else{
+			response.success = false;
+			response.success_message = "Token didn't match";
+			res.json(response);
+		}
+	});
+	connection.end();
+});
+
+app.get('/user/location', function(req, res) {
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected.");
+		else console.log("Error connecting database.");
+	});
+	
+	var radius = 0.00126291; // 5 miles
+    connection.query('SELECT * FROM (SELECT * FROM user_profile WHERE (current_lat >=' + req.body.min_lat + 'AND current_lat <=' + req.body.max_lat + ') AND (current_long >=' + req.body.min_long + 'AND current_long <=' + req.body.max_long + ')) WHERE acos(sin('  + req.body.lat + ') * sin(' + current_lat + ') + cos(' + req.body.lat + ') * cos(' + current_lat + ') * cos(' + current_long + '-' + req.body.long + ')) <=' + radius, 
+	
+	
+function(err, data) {
+        if (err) throw err;
+        res.json(data);
+    });
+    connection.end();
+});
+
 
 app.listen(app.get('port'), function(){
    console.log("Listening on Port: " + app.get('port'));
