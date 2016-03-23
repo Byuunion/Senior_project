@@ -14,6 +14,10 @@ Profile
 
 	/user/profile POST: Create user profile tupple. {username: , positive_votes: , negative_votes: , current_lat: , current_long: , gender: , bio: , token: }
 	
+Profile Location
+
+	/user/profile/location/:username PUT: Updates user profile's lat/long values {current_lat: , current_long: }
+	
 Login
 
 	/user/login/:username GET: Creates a new token and writes it to the db and returns it {username: , password_hash: , password_salt: }
@@ -49,3 +53,7 @@ Get all Users
 Delete specific User Keeps Messages
 	
 	/user/:username DELETE: Deletes all references to the username from all tables.
+
+Find Users
+
+	/user/location GET: Get people based on param of geo location coordinates. {min_lat: , max_lat: , min_long: , max_long: , lat: , long: }
