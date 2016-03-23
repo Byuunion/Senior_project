@@ -150,12 +150,6 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f050006
 			public const int txtEmail = 2131034118;
 			
-			// aapt resource value: 0x7f050002
-			public const int txtEmailSignIn = 2131034114;
-			
-			// aapt resource value: 0x7f050005
-			public const int txtFirstName = 2131034117;
-			
 			// aapt resource value: 0x7f05001a
 			public const int txtOr = 2131034138;
 			
@@ -164,6 +158,12 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f050003
 			public const int txtPasswordSignIn = 2131034115;
+			
+			// aapt resource value: 0x7f050005
+			public const int txtUserName = 2131034117;
+			
+			// aapt resource value: 0x7f050002
+			public const int txtUserNameSignIn = 2131034114;
 			
 			static Id()
 			{

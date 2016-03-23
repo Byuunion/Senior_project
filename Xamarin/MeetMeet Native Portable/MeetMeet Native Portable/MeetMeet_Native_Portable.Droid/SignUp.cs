@@ -22,7 +22,7 @@ namespace MeetMeet_Native_Portable.Droid
 	/// </summary>
 	public class OnSignUpEventArgs : EventArgs {
 
-		private string mFirstName;
+		private string mUserName;
 		private string mEmail;
 		private string mPassword;
 
@@ -30,10 +30,10 @@ namespace MeetMeet_Native_Portable.Droid
 		/// Gets or sets the first name.
 		/// </summary>
 		/// <value>The first name.</value>
-		public string FirstName
+		public string UserName
 		{
-			get { return mFirstName; }
-			set { mFirstName = value; }
+			get { return mUserName; }
+			set { mUserName = value; }
 		}
 
 		/// <summary>
@@ -62,11 +62,13 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="firstName">First name.</param>
 		/// <param name="email">Email.</param>
 		/// <param name="password">Password.</param>
-		public OnSignUpEventArgs(String firstName, String email, string password) : base()
+		public OnSignUpEventArgs(String userName, String email, string password) : base()
 		{
-			FirstName = firstName;
+			UserName = userName;
 			Email = email;
 			Password = password;
+
+
 		}
 			
 	}
@@ -77,7 +79,7 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity (Label = "SignUp")]			
 	class SignUp : DialogFragment
 	{
-		private EditText mTxtFirstName;
+		private EditText mTxtUserName;
 		private EditText mTxtEmail;
 		private EditText mTxtPassword;
 		private Button mBtnSignUp;
@@ -106,7 +108,7 @@ namespace MeetMeet_Native_Portable.Droid
 			var view = inflater.Inflate (Resource.Layout.dialog_sign_up, container, false);
 
 			// Resource for SignUp text
-			mTxtFirstName=  view.FindViewById<EditText>(Resource.Id.txtFirstName);
+			mTxtUserName=  view.FindViewById<EditText>(Resource.Id.txtUserName);
 			mTxtEmail=  view.FindViewById<EditText>(Resource.Id.txtEmail);
 			mTxtPassword=  view.FindViewById<EditText>(Resource.Id.txtPassword);
 			mBtnSignUp = view.FindViewById<Button> (Resource.Id.btnDialogEmail);
@@ -128,7 +130,7 @@ namespace MeetMeet_Native_Portable.Droid
 		void MBtnSignUp_Click (object sender, EventArgs e)
 		{
 
-			mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtFirstName.Text, mTxtEmail.Text, mTxtPassword.Text));
+			mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtUserName.Text, mTxtEmail.Text, mTxtPassword.Text));
 			this.Dismiss ();
 		}
 

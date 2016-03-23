@@ -31,6 +31,10 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mLocationButton;
 		private Button mProfileListSample;
 
+		// User data
+		public string userEmail;
+		public string userPassword;
+
 		/// <summary>
 		/// Creates the event for main activity.
 		/// Sets layout to main, references the main page button,
@@ -103,6 +107,8 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			// here we send request to server
 			// just simulating here
+			userEmail = e.Username;
+			userPassword = e.Password;
 			Thread thread = new Thread(ActLikeARequest);
 			thread.Start ();
 			//string userPassword = e.Password;
@@ -153,7 +159,9 @@ namespace MeetMeet_Native_Portable.Droid
             //Thread.Sleep (3000);
 
             string tag = "MeetMeet";
-            Profile test = new Profile("TestDelete", 1, 2, "nope");
+		
+			//Profile test = new Profile(userEmail, 5, 6, userPassword);
+			Profile test = new Profile("Hi", 5, 6, "Bye");
             await Poster.PostObject(test, "http://52.91.212.179:8800/user/");
 
             var test2 = await Getter<Profile>.GetObject(test, "http://52.91.212.179:8800/user/profile/{0}");

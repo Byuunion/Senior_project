@@ -18,17 +18,17 @@ namespace MeetMeet_Native_Portable.Droid
 	/// </summary>
 	public class OnSignInEventArgs: EventArgs 
 	{
-		private string mEmail;
+		private string mUserName;
 		private string mPassword;
 
 		/// <summary>
 		/// Gets or sets the email.
 		/// </summary>
 		/// <value>The email.</value>
-		public string Email 
+		public string Username 
 		{
-			get { return mEmail; }
-			set { mEmail = value; }
+			get { return mUserName; }
+			set { mUserName = value; }
 		}
 
 		/// <summary>
@@ -46,9 +46,9 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		/// <param name="email">Email.</param>
 		/// <param name="password">Password.</param>
-		public OnSignInEventArgs(String email, String password) : base()
+		public OnSignInEventArgs(String userName, String password) : base()
 		{
-			Email = email;
+			Username = userName;
 			Password = password;
 
 		}
@@ -61,7 +61,7 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity (Label = "SignIn")]			
 	public class SignIn : DialogFragment
 	{
-		private EditText mTxtEmailSignIn;
+		private EditText mTxtUserNameSignIn;
 		private EditText mTxtPasswordSignIn;
 		private Button mBtnDialogSignIn;
 
@@ -88,7 +88,7 @@ namespace MeetMeet_Native_Portable.Droid
 			var view = inflater.Inflate (Resource.Layout.dialog_sign_in, container, false);
 
 			// Resource for SignIn
-			mTxtEmailSignIn = view.FindViewById<EditText>(Resource.Id.txtEmailSignIn);
+			mTxtUserNameSignIn = view.FindViewById<EditText>(Resource.Id.txtUserNameSignIn);
 			mTxtPasswordSignIn = view.FindViewById<EditText>(Resource.Id.txtPasswordSignIn);
 			mBtnDialogSignIn = view.FindViewById<Button> (Resource.Id.btnDialogSignIn);
 
@@ -107,7 +107,7 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		void MBtnDialogSignIn_Click (object sender, EventArgs e)
 		{
-			mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtEmailSignIn.Text, mTxtPasswordSignIn.Text));
+			mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text));
 			this.Dismiss ();
 		}
 
