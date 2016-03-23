@@ -1,16 +1,14 @@
 CREATE TABLE user_login (username VARCHAR(15), 
 password_hash VARCHAR(64), 
 password_salt VARCHAR(64),
-PRIMARY KEY (username),
-FOREIGN KEY (username) references user_profile(username)
-ON DELETE CASCADE
-ON UPDATE CASCADE
+token VARCHAR(100),
+PRIMARY KEY (username)
 );
 			
 CREATE TABLE user_interest (username VARCHAR(15), 
 interest VARCHAR(500),
 PRIMARY KEY (username, interest),
-FOREIGN KEY (username) references user_profile(username)
+FOREIGN KEY (username) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
@@ -18,7 +16,7 @@ ON UPDATE CASCADE
 CREATE TABLE user_language (username VARCHAR(15), 
 language VARCHAR(100), 
 PRIMARY KEY (username, language),
-FOREIGN KEY (username) references user_profile(username)
+FOREIGN KEY (username) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
@@ -28,8 +26,8 @@ username_from VARCHAR(15),
 message_time TIMESTAMP,
 message_text TEXT,
 PRIMARY KEY (username_to, username_from, message_time),
-FOREIGN KEY (username_to) references user_profile(username),
-FOREIGN KEY (username_from) references user_profile(username));
+FOREIGN KEY (username_to) references user_login(username),
+FOREIGN KEY (username_from) references user_login(username));
 						
 CREATE TABLE user_profile (username VARCHAR(15), 
 first_name VARCHAR(64), 
@@ -38,4 +36,8 @@ positive_votes INTEGER,
 negative_votes INTEGER,
 current_lat DECIMAL(10, 8) NOT NULL,
 current_long DECIMAL(11, 8) NOT NULL,
-PRIMARY KEY (username));
+PRIMARY KEY (username),
+FOREIGN KEY (username) references user_login(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
