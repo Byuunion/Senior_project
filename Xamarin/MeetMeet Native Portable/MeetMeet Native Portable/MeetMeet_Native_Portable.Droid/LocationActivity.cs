@@ -17,8 +17,10 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity (Label = "LocationActivity")]			
 	public class LocationActivity : Activity, ILocationListener
 	{
-		private TextView latitudeField;
-		private TextView longitudeField;
+		private TextView userlatitudeField;
+		private TextView userlongitudeField;
+		private TextView serverlatitudeField;
+		private TextView serverlongitudeField;
 		private LocationManager locationManager;
 		private String provider;
 
@@ -26,8 +28,10 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnCreate (savedInstanceState);
 			SetContentView(Resource.Layout.location);
-			latitudeField = (TextView) FindViewById(Resource.Id.TextView02);
-			longitudeField = (TextView) FindViewById(Resource.Id.TextView04);
+			userlatitudeField = (TextView) FindViewById(Resource.Id.TextView02);
+			userlongitudeField = (TextView) FindViewById(Resource.Id.TextView04);
+			serverlatitudeField = (TextView) FindViewById(Resource.Id.TextView06);
+			serverlongitudeField = (TextView) FindViewById(Resource.Id.TextView08);
 
 			// Get the location manager
 			locationManager = (LocationManager) GetSystemService(Context.LocationService);
@@ -39,11 +43,16 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Initialize the location fields
 			if (location != null) {
-				OnLocationChanged (location);
+				//OnLocationChanged (location);
+				double lat = location.Latitude;
+				double lng = location.Longitude;
+				userlatitudeField.Text = Convert.ToString(lat);
+				userlongitudeField.Text = Convert.ToString(lng);
+				GetLocationFromServer();
 			}
 			else {
-				latitudeField.Text = "Location not available";
-				longitudeField.Text = "Location not available";
+				userlatitudeField.Text = "Location not available";
+				userlongitudeField.Text = "Location not available";
 			}
 		}
 
@@ -62,8 +71,8 @@ namespace MeetMeet_Native_Portable.Droid
 		public void OnLocationChanged(Location location) {
 			double lat = location.Latitude;
 			double lng = location.Longitude;
-			latitudeField.Text = Convert.ToString(lat);
-			longitudeField.Text = Convert.ToString(lng);
+			//userlatitudeField.Text = Convert.ToString(lat);
+			//userlongitudeField.Text = Convert.ToString(lng);
 		}
 			
 		public void OnStatusChanged(String provider, Availability status, Bundle extras) {
@@ -79,6 +88,26 @@ namespace MeetMeet_Native_Portable.Droid
 		public void OnProviderDisabled(String provider) {
 			Toast.MakeText (this, "Disabled provider " + provider,
 				ToastLength.Short).Show();
+		}
+
+		private async void GetLocationFromServer()
+		{
+			Profile test = new Profile("KevyKevvv", null, null, null);
+			// await Poster.PostObject(test, "http://52.91.212.179:8800/user/");
+
+			var test2 = await Getter<Profile>.GetObject(test, "http://52.91.212.179:8800/user/profile/{0}");
+			if(test2 == default(Profile))
+			{
+				userlatitudeField.Text = "null";
+				userlongitudeField.Text = "null";
+			}
+			else
+			{
+				double lat = test2.current_lat;
+				double lng = test2.current_long;
+				serverlatitudeField.Text = Convert.ToString(lat);
+				serverlongitudeField.Text = Convert.ToString(lng);
+			}
 		}
 	}
 }
