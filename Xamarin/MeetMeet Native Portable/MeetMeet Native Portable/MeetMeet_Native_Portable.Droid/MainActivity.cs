@@ -153,7 +153,7 @@ namespace MeetMeet_Native_Portable.Droid
             //Thread.Sleep (3000);
 
             string tag = "MeetMeet";
-            Profile test = new Profile("TestDelete2", "no", "name", "nope");
+            Profile test = new Profile("TestDelete", 1, 2, "nope");
             await Poster.PostObject(test, "http://52.91.212.179:8800/user/");
 
             var test2 = await Getter<Profile>.GetObject(test, "http://52.91.212.179:8800/user/profile/{0}");
@@ -163,7 +163,7 @@ namespace MeetMeet_Native_Portable.Droid
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Response received first name: {0} last name: {1}", test2.first_name, test2.last_name);
+                System.Diagnostics.Debug.WriteLine("Response received first name: {0} last name: {1}", test2.gender, test2.bio);
             }
            //await Deleter.DeleteProfile("TestPost", "http://52.91.212.179:8800/user/{0}");
 

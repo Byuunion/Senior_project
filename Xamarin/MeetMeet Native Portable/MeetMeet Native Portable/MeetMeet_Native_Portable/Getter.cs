@@ -11,10 +11,10 @@ namespace MeetMeet_Native_Portable
     public class Getter<T> where T : Gettable
     {
 
-        public static async Task<T> GetObject(T obj, string url)
+        private static async Task<string> GetAbstract(T obj, string url)
         {
             HttpClient client;
-            T returnData = default(T);
+            string content = null;
             var uri = new Uri(string.Format(url, obj.GetGetName()));
 
             client = new HttpClient();
@@ -26,17 +26,26 @@ namespace MeetMeet_Native_Portable
             {
                 System.Diagnostics.Debug.WriteLine("Response was successful");
                 string responseString = await response.Content.ReadAsStringAsync();
-                var content = await response.Content.ReadAsStringAsync();
-                returnData = JsonConvert.DeserializeObject<List<T>>(content).ElementAt(0);
+                content = await response.Content.ReadAsStringAsync();
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Response was not successful");
             }
 
-            return returnData;
+            return content;
         }
 
+        public static async Task<List<T>> GetObjectList(T obj, string url)
+        {
+            string content = await GetAbstract(obj, url);
+            return JsonConvert.DeserializeObject<List<T>>(content);
+        }
 
+        public static async Task<T> GetObject(T obj, string url)
+        {
+            string content = await GetAbstract(obj, url);
+            return JsonConvert.DeserializeObject<List<T>>(content).ElementAt(0);
+        }
     }
 }
