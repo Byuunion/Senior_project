@@ -72,20 +72,20 @@ namespace MeetMeet_Native_Portable.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050015
-			public const int MeetMeet = 2131034133;
-			
-			// aapt resource value: 0x7f050016
-			public const int SignInButton = 2131034134;
-			
 			// aapt resource value: 0x7f050018
-			public const int SignUpButton = 2131034136;
+			public const int MeetMeet = 2131034136;
 			
 			// aapt resource value: 0x7f050019
-			public const int TestLocationButton = 2131034137;
+			public const int SignInButton = 2131034137;
 			
-			// aapt resource value: 0x7f05001a
-			public const int TestProfileList = 2131034138;
+			// aapt resource value: 0x7f05001b
+			public const int SignUpButton = 2131034139;
+			
+			// aapt resource value: 0x7f05001c
+			public const int TestLocationButton = 2131034140;
+			
+			// aapt resource value: 0x7f05001d
+			public const int TestProfileList = 2131034141;
 			
 			// aapt resource value: 0x7f05000a
 			public const int TextView01 = 2131034122;
@@ -111,6 +111,12 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f050014
 			public const int TextView08 = 2131034132;
 			
+			// aapt resource value: 0x7f050016
+			public const int TextView09 = 2131034134;
+			
+			// aapt resource value: 0x7f050017
+			public const int TextView10 = 2131034135;
+			
 			// aapt resource value: 0x7f050008
 			public const int btnDialogEmail = 2131034120;
 			
@@ -132,8 +138,11 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f050012
 			public const int linearLayout4 = 2131034130;
 			
-			// aapt resource value: 0x7f05001b
-			public const int progressBar1 = 2131034139;
+			// aapt resource value: 0x7f050015
+			public const int linearLayout5 = 2131034133;
+			
+			// aapt resource value: 0x7f05001e
+			public const int progressBar1 = 2131034142;
 			
 			// aapt resource value: 0x7f050000
 			public const int titles_fragment = 2131034112;
@@ -147,8 +156,8 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f050005
 			public const int txtFirstName = 2131034117;
 			
-			// aapt resource value: 0x7f050017
-			public const int txtOr = 2131034135;
+			// aapt resource value: 0x7f05001a
+			public const int txtOr = 2131034138;
 			
 			// aapt resource value: 0x7f050007
 			public const int txtPassword = 2131034119;
