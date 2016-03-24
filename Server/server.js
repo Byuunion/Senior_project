@@ -117,7 +117,7 @@ app.get('/user/login/:username/:password', function(req, res) {
 					var token = hat();
 					response.success = true;
 					response.token = token;
-					connection.query('UPDATE user_login SET token = ' + token + ' WHERE username = ' + connection.escape(req.params.username));
+					connection.query('UPDATE user_login SET token = "' + token + '" WHERE username = ' + connection.escape(req.params.username));
 					res.json(response);
 			}
 			else{
@@ -125,9 +125,8 @@ app.get('/user/login/:username/:password', function(req, res) {
 					response.success_message = "Username/Password pair not found";
 					res.json(response);
 			}
+		connection.end();	
     });
-
-    connection.end();
 });
 
 
