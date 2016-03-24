@@ -30,12 +30,12 @@ FOREIGN KEY (username_to) references user_login(username),
 FOREIGN KEY (username_from) references user_login(username));
 						
 CREATE TABLE user_profile (username VARCHAR(15), 
-first_name VARCHAR(64), 
-last_name VARCHAR(64),
-positive_votes INTEGER,
-negative_votes INTEGER,
+positive_votes INTEGER NOT NULL DEFAULT 0,
+negative_votes INTEGER NOT NULL DEFAULT 0,
 current_lat DECIMAL(10, 8) NOT NULL,
 current_long DECIMAL(11, 8) NOT NULL,
+gender VARCHAR(15),
+bio TEXT
 PRIMARY KEY (username),
 FOREIGN KEY (username) references user_login(username)
 ON DELETE CASCADE
