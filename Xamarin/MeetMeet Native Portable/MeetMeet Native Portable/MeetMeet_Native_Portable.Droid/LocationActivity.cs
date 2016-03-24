@@ -45,8 +45,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Initialize the location fields
 			if (location != null) {
-				//OnLocationChanged (location);
-				GetLocationFromServer(location);
+				Geolocation loc = new Geolocation (location.Latitude, location.Longitude);
 			}
 			else {
 				userlatitudeField.Text = "Location not available";
@@ -140,6 +139,33 @@ namespace MeetMeet_Native_Portable.Droid
 			var d = r * c;
 
 			return d;
+		}
+
+		public double[] MinMaxLat(double latitude)
+		{
+			double r = 0.1570; //constant angle 
+			var lat = toRadians(latitude);
+
+			double[] minMax = new double[2];
+			minMax [0] = lat - r;
+			minMax [1] = lat + r;
+
+			return minMax;
+		}
+
+		public double[] minMaxLong(double latitude, double longitude)
+		{
+			double r = 0.1570; //constant angle 
+			var lat = toRadians (latitude);
+			var lng = toRadians (longitude);
+
+			double deltaLong = Math.Asin (Math.Sin (r) / Math.Cos (lat));
+
+			double[] minMax = new double[2];
+			minMax [0] = lng - deltaLong;
+			minMax [1] = lng + deltaLong;
+
+			return minMax;
 		}
 	}
 }

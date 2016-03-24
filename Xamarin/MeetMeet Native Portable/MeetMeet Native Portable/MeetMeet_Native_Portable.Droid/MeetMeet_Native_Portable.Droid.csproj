@@ -76,6 +76,7 @@
     <Compile Include="ProfileMainActivity.cs" />
     <Compile Include="Shakespeare.cs" />
     <Compile Include="TitlesFragment.cs" />
+    <Compile Include="Geolocation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
