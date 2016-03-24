@@ -20,7 +20,7 @@ Profile Location
 	
 Login
 
-	/user/login/:username GET: Creates a new token and writes it to the db and returns it {username: , password_hash: , password_salt: }
+	/user/login/:username GET: Creates a new token and writes it to the db and returns it {username: , password: }
 	
 	/user/login POST: Create account and token into db and returned it  {username: , password_hash: , password_salt: }
 	
