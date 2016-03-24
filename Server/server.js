@@ -14,7 +14,7 @@ var mysqlConfig = {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.set('port', (process.env.PORT || 8801));
+app.set('port', (process.env.PORT || 8800));
 
 app.get('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
@@ -27,8 +27,8 @@ app.get('/user', function(req, res) {
     connection.query('SELECT * FROM user_profile', function(err, data) {
         if (err) throw err;
         res.json(data);
+		connection.end();
     });
-    connection.end();
 });
 
 app.get('/user/profile/:username', function(req, res) {
@@ -42,8 +42,8 @@ app.get('/user/profile/:username', function(req, res) {
     connection.query('SELECT * FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
         if (err) throw err;
         res.json(data);
+		connection.end();
     });
-    connection.end();
 });
 
 app.get('/user/language/:username', function(req, res) {
@@ -57,8 +57,8 @@ app.get('/user/language/:username', function(req, res) {
     connection.query('SELECT * FROM user_language WHERE username = ' + connection.escape(req.params.username), function(err, data){
         if (err) throw err;
         res.json(data);
+		connection.end();
     });
-    connection.end();
 });
 
 app.get('/user/interest/:username', function(req, res) {
@@ -72,8 +72,8 @@ app.get('/user/interest/:username', function(req, res) {
     connection.query('SELECT * FROM user_interest WHERE username = ' + connection.escape(req.params.username), function(err, data){
         if (err) throw err;
         res.json(data);
+		connection.end();
     });
-    connection.end();
 });
 
 app.get('/user/message/:username', function(req, res) {
@@ -87,17 +87,16 @@ app.get('/user/message/:username', function(req, res) {
     connection.query('SELECT * FROM user_message WHERE username = ' + connection.escape(req.params.username), function(err, data){
         if (err) throw err;
         res.json(data);
+		connection.end();
     });
-    connection.end();
 });
 
-//Pass in JSON format of entered username and password from the app
+//Pass in username and password from the app's url
 //Hash not implemented yet
 app.get('/user/login/:username/:password', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
-        var password = req.params.password;
-
+    var password = req.params.password;
 
     connection.connect(function(err){
         if(!err) console.log("Database is connected.");
@@ -106,29 +105,29 @@ app.get('/user/login/:username/:password', function(req, res) {
 
     var response = {
         success: null,
-        success_message: "User successfully logged in: " + req.params.username,
+        success_message: null,
         token: null
     };
-
 
     connection.query('SELECT password_hash FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 	if (err) throw err;
 			if(data.password_hash = password){ // Success
 					var token = hat();
 					response.success = true;
+					response.success_message = "User successfully logged in: " + req.params.username;
 					response.token = token;
 					connection.query('UPDATE user_login SET token = "' + token + '" WHERE username = ' + connection.escape(req.params.username));
 					res.json(response);
+					connection.end();
 			}
 			else{
 					response.success = false;
 					response.success_message = "Username/Password pair not found";
 					res.json(response);
+					connection.end();
 			}
-		connection.end();	
     });
 });
-
 
 app.post('/user/profile', function(req, res) {
 
@@ -141,10 +140,15 @@ app.post('/user/profile', function(req, res) {
 	
 	var username = req.body.username;
 	
-	connection.query('SELECT token FROM user_profile WHERE username = ' + username, function(err, data){
+	var response = {
+				success: null,
+				success_message: null
+	};
+	
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
         if (err) throw err;
         var token = data[0].token;
-    
+
 		if(req.body.token === token){
 
 			var data = {
@@ -157,34 +161,23 @@ app.post('/user/profile', function(req, res) {
 				bio: req.body.bio
 			};
 
-			var response = {
-				success: null,
-				success_message: "User written onto Database"
-			};
-
 			connection.query('INSERT INTO user_profile SET ?', data, function(err, rows) {
 				if (err)throw err;
-
-				if (rows.affectedRows === 1) {
-				  response.success = true;
-					response.success_message = "Successfully created user: " + data.username + ".";
-				} else if (!!rows.affectedRows) {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: Multiple inserts.";
-				} else {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: INSERT failed.";
-				}
+				
+				response.success = true;
+				response.success_message = "Successfully created profile: " + data.username + ".";
 				res.json(response);
+				connection.end();
 			});
 		}	
 		else{
 			response.success = false;
 			response.success_message = "Token didn't match";
 			res.json(response);
+			connection.end();
 		}
 	});
-	connection.end();
+	
 });
 
 app.post('/user/interest/', function(req, res) {
@@ -197,8 +190,13 @@ app.post('/user/interest/', function(req, res) {
 	});
 	
 	var username = req.body.username;
+	
+	var response = {
+				success: null,
+				success_message: null
+	};
 		
-	connection.query('SELECT token FROM user_profile WHERE username = ' + username, function(err, data){
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
         if (err) throw err;
         var token = data[0].token;
     
@@ -208,37 +206,23 @@ app.post('/user/interest/', function(req, res) {
 				interest: req.body.interest
 			};
 
-			var response = {
-				success: null,
-				success_message: "User written onto Database"
-			};
-
 			connection.query('INSERT INTO user_interest SET ?', data, function(err, rows) {
-				if (err) {
-					console.log(data);
-					throw err;
-					}
+				if (err) throw err;
 
-				if (rows.affectedRows === 1) {
-				  response.success = true;
-					response.success_message = "Successfully created user: " + data.username + ".";
-				} else if (!!rows.affectedRows) {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: Multiple inserts.";
-				} else {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: INSERT failed.";
-				}
+				response.success = true;
+				response.success_message = "Successfully created interest.";
 				res.json(response);
+				connection.end();
 			});
 		}	
 		else{
 			response.success = false;
 			response.success_message = "Token didn't match";
 			res.json(response);
+			connection.end();
 		}
 	});
-	connection.end();
+	
 });
 
 app.post('/user/language', function(req, res) {
@@ -252,7 +236,12 @@ app.post('/user/language', function(req, res) {
 		
 	var username = req.body.username;
 	
-	connection.query('SELECT token FROM user_profile WHERE username = ' + username, function(err, data){
+	var response = {
+				success: null,
+				success_message: null
+	};
+	
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
         if (err) throw err;
         var token = data[0].token;
     
@@ -263,34 +252,22 @@ app.post('/user/language', function(req, res) {
 				language: req.body.language
 			};
 
-			var response = {
-				success: null,
-				success_message: "User written onto Database"
-			};
-
 			connection.query('INSERT INTO user_language SET ?', data, function(err, rows) {
 				if (err)throw err;
 
-				if (rows.affectedRows === 1) {
-				  response.success = true;
-					response.success_message = "Successfully created user: " + data.username + ".";
-				} else if (!!rows.affectedRows) {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: Multiple inserts.";
-				} else {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: INSERT failed.";
-				}
+				response.success = true;
+				response.success_message = "Successfully added language.";
 				res.json(response);
+				connection.end();
 			});
 		}
 		else{
 			response.success = false;
 			response.success_message = "Token didn't match";
 			res.json(response);
+			connection.end();
 		}
 	});
-	connection.end();
 });
 
 //Create account
@@ -314,28 +291,21 @@ app.post('/user/login', function(req, res) {
 
     var response = {
         success: null,
-        success_message: "User written onto Database"
+        success_message: null,
+		token: token
     };
 
     connection.query('INSERT INTO user_login SET ?', data, function(err, rows) {
         if (err)throw err;
 
-        if (rows.affectedRows === 1) {
-          response.success = true;
-            response.success_message = "Successfully created user: " + data.username + ".";
-        } else if (!!rows.affectedRows) {
-            response.success = false;
-            response.success_message = "Improper INSERT executed: Multiple inserts.";
-        } else {
-            response.success = false;
-            response.success_message = "Improper INSERT executed: INSERT failed.";
-        }
+        response.success = true;
+		response.success_message = "Successfully created user: " + data.username + ".";
         res.json(response);
+		connection.end();
     });
-    connection.end();
 });
 
-app.post('/user/messages', function(req, res) {
+app.post('/user/message', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
 
@@ -344,10 +314,15 @@ app.post('/user/messages', function(req, res) {
 		else console.log("Error connecting database.");
 	});
 	
-    connection.query('SELECT token FROM user_profile WHERE username = ' + req.body.username, function(err, data){
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username_from), function(err, data){
         if (err) throw err;
         var token = data[0].token;
     
+		var response = {
+				success: null,
+				success_message: null
+		};
+		
 		if(req.body.token === token){
 			
 			var data = {
@@ -357,37 +332,25 @@ app.post('/user/messages', function(req, res) {
 				message_text: req.body.message_text,
 			};
 
-			var response = {
-				success: null,
-				success_message: null
-			};
-
 			connection.query('INSERT INTO user_message SET ?', data, function(err, rows) {
 				if (err) throw err;
 
-				if (rows.affectedRows === 1) {
-				  response.success = true;
-					response.success_message = "Successfully inserted user message.";
-				} else if (!!rows.affectedRows) {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: Multiple inserts.";
-				} else {
-					response.success = false;
-					response.success_message = "Improper INSERT executed: INSERT failed.";
-				}
+				response.success = true;
+				response.success_message = "Successfully inserted user message.";
 				res.json(response);
+				connection.end();
 			});
 		}
 		else{
 			response.success = false;
 			response.success_message = "Token didn't match";
 			res.json(response);
+			connection.end();
 		}
 	});
-    connection.end();
 });
 
-app.delete('/user/:username', function(req, res) {
+app.delete('/user', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
 
@@ -396,30 +359,33 @@ app.delete('/user/:username', function(req, res) {
 		else console.log("Error connecting database.");
 	});
 
-	connection.query('SELECT token FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
+	var username = req.body.username;
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
         if (err) throw err;
         var token = data[0].token;
-    
-		if(req.body.token === token){
-			var response = {
+		
+		var response = {
 				success: null,
-				success_message: "User information deleted from Database"
-			};
-
+				success_message: null
+		};
+    
+		if(req.body.token === token){	
 			//Delete Cascades through tables
-			connection.query('DELETE FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
+			connection.query('DELETE FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err) throw err;
 				response.success = true;
-				res.Json(response);
+				response.success_message = "User information deleted from Database";
+				res.json(response);
+				connection.end();
 			});
 		}
 		else{
 			response.success = false;
 			response.success_message = "Token didn't match";
 			res.json(response);
+			connection.end();
 		}
 	});
-	connection.end();
 });
 
 app.put('/user/profile/location/:username', function(req, res) {
@@ -431,15 +397,16 @@ app.put('/user/profile/location/:username', function(req, res) {
 		else console.log("Error connecting database.");
 	});
 
-	connection.query('SELECT token FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
         if (err) throw err;
         var token = data[0].token;
-    
-		if(req.body.token === token){
-			var response = {
+		
+		var response = {
 				success: null,
 				success_message: "User location updated"
-			};
+		};
+    
+		if(req.body.token === token){
 			
 			var data = {
 				current_lat: req.body.current_lat,
@@ -450,19 +417,20 @@ app.put('/user/profile/location/:username', function(req, res) {
 			connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data,  function(err, data){
 				if (err) throw err;
 				response.success = true;
-				res.Json(response);
+				res.json(response);
+				connection.end();
 			});
 		}
 		else{
 			response.success = false;
 			response.success_message = "Token didn't match";
 			res.json(response);
+			connection.end();
 		}
 	});
-	connection.end();
 });
 
-app.get('/user/location', function(req, res) {
+app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
@@ -471,10 +439,7 @@ app.get('/user/location', function(req, res) {
 	});
 	
 	var radius = 0.00126291; // 5 miles
-    connection.query('SELECT * FROM (SELECT * FROM user_profile WHERE (current_lat >=' + req.body.min_lat + 'AND current_lat <=' + req.body.max_lat + ') AND (current_long >=' + req.body.min_long + 'AND current_long <=' + req.body.max_long + ')) WHERE acos(sin('  + req.body.lat + ') * sin(' + current_lat + ') + cos(' + req.body.lat + ') * cos(' + current_lat + ') * cos(' + current_long + '-' + req.body.long + ')) <=' + radius, 
-	
-	
-function(err, data) {
+    connection.query('SELECT username FROM (SELECT current_lat, current_long FROM user_profile WHERE (current_lat >=' + req.params.min_lat + ' AND current_lat <= ' + req.params.max_lat + ') AND (current_long >= ' + req.params.min_long + ' AND current_long <= ' + req.params.max_long + ')) WHERE acos(sin('  + req.params.lat + ') * sin(current_lat) + cos(' + req.params.yourLat + ') * cos(current_lat) * cos(current_long -' + req.params.yourLong + ')) <=' + radius, function(err,data){
         if (err) throw err;
         res.json(data);
     });
