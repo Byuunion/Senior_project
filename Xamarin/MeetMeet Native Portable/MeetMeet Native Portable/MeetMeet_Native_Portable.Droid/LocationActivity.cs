@@ -96,7 +96,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			Profile test = new Profile("KevyKevvv", 0, 0, null);
 
-			var test2 = await Getter<Profile>.GetObject(test, "http://52.91.212.179:8800/user/profile/{0}");
+			var test2 = await Getter<Profile>.GetObject(test.username, "http://52.91.212.179:8800/user/profile/{0}");
 			if(test2 == default(Profile))
 			{
 				userlatitudeField.Text = "null";

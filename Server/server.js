@@ -93,41 +93,43 @@ app.get('/user/message/:username', function(req, res) {
 
 //Pass in JSON format of entered username and password from the app
 //Hash not implemented yet
-app.get('/user/login/:username', function(req, res) {
+app.get('/user/login/:username/:password', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
-	var password = req.body.username;
+        var password = req.params.password;
+
 
     connection.connect(function(err){
         if(!err) console.log("Database is connected.");
-		else console.log("Error connecting database.");
-	});
+                else console.log("Error connecting database.");
+        });
 
     var response = {
         success: null,
         success_message: "User successfully logged in: " + req.params.username,
-		token: null
+        token: null
     };
 
 
     connection.query('SELECT password_hash FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
-        if (err) throw err;
-		if(data.password_hash = password){ // Success
-			var token = hat();
-			response.success = true;
-			response.token = token;	
-			connection.query('UPDATE user_login SET token = ' + token + 'WHERE username = ' + connection.escape(req.params.username));
-			res.Json(response);
-		}
-		else{
-			response.success = false;
-			response.success_message = "Token does not match";
-			res.Json(response);
-		}
+	if (err) throw err;
+			if(data.password_hash = password){ // Success
+					var token = hat();
+					response.success = true;
+					response.token = token;
+					connection.query('UPDATE user_login SET token = ' + token + ' WHERE username = ' + connection.escape(req.params.username));
+					res.json(response);
+			}
+			else{
+					response.success = false;
+					response.success_message = "Username/Password pair not found";
+					res.json(response);
+			}
     });
-	
+
     connection.end();
 });
+
 
 app.post('/user/profile', function(req, res) {
 

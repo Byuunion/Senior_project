@@ -34,13 +34,14 @@ namespace MeetMeet_Native_Portable.Droid
 		// User data
 		public string userEmail;
 		public string userPassword;
+        public static string serverURL = "http://52.91.212.179:8801/{0}";
 
-		/// <summary>
-		/// Creates the event for main activity.
-		/// Sets layout to main, references the main page button,
-		/// and signIn/signOut button clicks.
-		/// </summary>
-		/// <param name="bundle">Bundle.</param>
+        /// <summary>
+        /// Creates the event for main activity.
+        /// Sets layout to main, references the main page button,
+        /// and signIn/signOut button clicks.
+        /// </summary>
+        /// <param name="bundle">Bundle.</param>
         protected override void OnCreate(Bundle bundle)
         {
            
@@ -157,14 +158,14 @@ namespace MeetMeet_Native_Portable.Droid
 		private async void ActLikeARequest()
 		{
             //Thread.Sleep (3000);
-
+            /*
             string tag = "MeetMeet";
 		
 			//Profile test = new Profile(userEmail, 5, 6, userPassword);
 			Profile test = new Profile("Hi", 5, 6, "Bye");
             await Poster.PostObject(test, "http://52.91.212.179:8800/user/");
 
-            var test2 = await Getter<Profile>.GetObject(test, "http://52.91.212.179:8800/user/profile/{0}");
+            var test2 = await Getter<Profile>.GetObject(test.username, "http://52.91.212.179:8800/user/profile/{0}");
             if(test2 == default(Profile))
             {
                 System.Diagnostics.Debug.WriteLine("Response received was null");
@@ -172,6 +173,18 @@ namespace MeetMeet_Native_Portable.Droid
             else
             {
                 System.Diagnostics.Debug.WriteLine("Response received first name: {0} last name: {1}", test2.gender, test2.bio);
+            }*/
+
+            Login test = new Login("GrilloPad");
+            var loggedIn = await test.doLogin("hunter2", serverURL);
+
+            if (loggedIn)
+            {
+                System.Diagnostics.Debug.WriteLine("Successfully logged in, token is: " + test.token);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Could not log in");
             }
            //await Deleter.DeleteProfile("TestPost", "http://52.91.212.179:8800/user/{0}");
 

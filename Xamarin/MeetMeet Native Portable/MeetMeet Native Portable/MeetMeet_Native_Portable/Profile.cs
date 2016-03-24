@@ -2,7 +2,7 @@
 
 namespace MeetMeet_Native_Portable 
 {
-    public class Profile : Postable, Gettable
+    public class Profile : Postable
     {
         public string username;
         public int positive_votes;
@@ -25,11 +25,6 @@ namespace MeetMeet_Native_Portable
         }
 
         public string GetName()
-        {
-            return this.username;
-        }
-
-        public string GetGetName()
         {
             return this.username;
         }

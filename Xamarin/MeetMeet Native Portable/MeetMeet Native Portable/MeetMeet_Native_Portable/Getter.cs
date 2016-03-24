@@ -8,14 +8,14 @@ using Newtonsoft.Json;
 
 namespace MeetMeet_Native_Portable
 {
-    public class Getter<T> where T : Gettable
+    public class Getter<T>
     {
 
-        private static async Task<string> GetAbstract(T obj, string url)
+        private static async Task<string> GetAbstract(string resource, string url)
         {
             HttpClient client;
             string content = null;
-            var uri = new Uri(string.Format(url, obj.GetGetName()));
+            var uri = new Uri(string.Format(url, resource));
 
             client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
@@ -36,16 +36,33 @@ namespace MeetMeet_Native_Portable
             return content;
         }
 
-        public static async Task<List<T>> GetObjectList(T obj, string url)
+        public static async Task<List<T>> GetObjectList(string resource, string url)
         {
-            string content = await GetAbstract(obj, url);
+            string content = await GetAbstract(resource, url);
             return JsonConvert.DeserializeObject<List<T>>(content);
         }
 
-        public static async Task<T> GetObject(T obj, string url)
+        public static async Task<T> GetObject(string resource, string url)
         {
-            string content = await GetAbstract(obj, url);
+            string content = await GetAbstract(resource, url);
+
+            //This line should not be necessary, it it the result of the server returning data directly from a MySQL query.
+            //rather than returning a list with one item, the server should just send back the single item by itself
             return JsonConvert.DeserializeObject<List<T>>(content).ElementAt(0);
+
+            //In reality, the contents of this method should be replaced with the contents from "GetObjectNotFromList"
+            //return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        /**
+        *
+        *Note: This is a workaround method and should not be 
+        *
+        */
+        public static async Task<T> GetObjectNotFromList(string resource, string url)
+        {
+            string content = await GetAbstract(resource, url);
+            return JsonConvert.DeserializeObject<T>(content);
         }
     }
 }
