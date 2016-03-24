@@ -16,7 +16,7 @@ Profile
 	
 Profile Location
 
-	/user/profile/location/:username PUT: Updates user profile's lat/long values {current_lat: , current_long: }
+	/user/profile/location/:username PUT: Updates user profile's lat/long values {current_lat: , current_long: , token: }
 	
 Login
 
@@ -52,8 +52,8 @@ Get all Users
 	
 Delete specific User Keeps Messages
 	
-	/user/:username DELETE: Deletes all references to the username from all tables.
+	/user DELETE: Deletes all references to the username from all tables. {username: , token: }
 
 Find Users
 
-	/user/location GET: Get people based on param of geo location coordinates. {min_lat: , max_lat: , min_long: , max_long: , lat: , long: }
+	/user/:min_lat/:max_lat/:min_long/:max_long/:lat/:long GET: Get people based on param of geo location coordinates.
