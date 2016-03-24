@@ -32,8 +32,13 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mProfileListSample;
 
 		// User data
-		public string userEmail;
-		public string userPassword;
+		public string userNameSignIn;
+		public string userEmailSignIn;
+		public string userPasswordSignIn;
+
+		public string userNameSignUp;
+		public string userEmailSignUp;
+		public string userPasswordSignUp;
         public static string serverURL = "http://52.91.212.179:8801/{0}";
 
         /// <summary>
@@ -108,11 +113,14 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			// here we send request to server
 			// just simulating here
-			userEmail = e.Username;
-			userPassword = e.Password;
+			userNameSignIn = e.Username;
+			userEmailSignIn = e.Email;
+			userPasswordSignIn = e.Password;
 			Thread thread = new Thread(ActLikeARequest);
 			thread.Start ();
 			//string userPassword = e.Password;
+
+			//Post to server code
 		}
 
 		// Sign Up Click
@@ -148,6 +156,12 @@ namespace MeetMeet_Native_Portable.Droid
 			Thread thread = new Thread(ActLikeARequest);
 			thread.Start ();
 			//string userPassword = e.Password;
+
+			userNameSignUp = e.UserName;
+			userEmailSignUp = e.Email;
+			userPasswordSignUp = e.Password;
+
+			// Post to server code
 		}
 
 		// Part of thread simulation
