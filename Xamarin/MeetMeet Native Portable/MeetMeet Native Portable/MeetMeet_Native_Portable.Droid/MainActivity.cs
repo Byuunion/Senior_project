@@ -13,6 +13,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
+using Android.Gms.Common;
+using Android.Util;
+using ClientApp;
+
 
 namespace MeetMeet_Native_Portable.Droid
 {
@@ -42,6 +46,9 @@ namespace MeetMeet_Native_Portable.Droid
         public static string serverURL = "http://52.91.212.179:8800/";
         public static string login = "user/login";
         public static string profile = "user/profile";
+
+		//var to check if play services work
+		TextView msgText;
 
         /// <summary>
         /// Creates the event for main activity.
@@ -82,7 +89,39 @@ namespace MeetMeet_Native_Portable.Droid
 				StartActivity (typeof(ProfileMainActivity));
 			};
 
+			//starts up our messaging service
+			msgText = FindViewById<TextView> (Resource.Id.msgText);
+
+			if (IsPlayServicesAvailable ())
+			{
+				var intent = new Intent (this, typeof (RegistrationIntentService));
+				StartService (intent);
+			}
+
+
         }
+
+		//checks to make sure google play services are running
+		public bool IsPlayServicesAvailable ()
+		{
+			int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable (this);
+			if (resultCode != ConnectionResult.Success)
+			{
+				if (GoogleApiAvailability.Instance.IsUserResolvableError (resultCode))
+					msgText.Text = GoogleApiAvailability.Instance.GetErrorString (resultCode);
+				else
+				{
+					msgText.Text = "Sorry, this device is not supported";
+					Finish ();
+				}
+				return false;
+			}
+			else
+			{
+				msgText.Text = "Google Play Services is available.";
+				return true;
+			}
+		}
 				
 
 		// Sign In Click

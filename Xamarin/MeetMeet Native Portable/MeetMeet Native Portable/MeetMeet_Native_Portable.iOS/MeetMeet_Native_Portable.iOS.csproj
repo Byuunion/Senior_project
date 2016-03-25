@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>523c3459-95f7-43ba-b54c-1a31ebe7c009</ProjectGuid>
+    <ProjectGuid>{523C3459-95F7-43BA-B54C-1A31EBE7C009}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MeetMeet_Native_Portable.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
@@ -69,6 +69,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MeetMeet_Native_Portable\MeetMeet_Native_Portable.csproj">
       <Name>MeetMeet_Native_Portable</Name>
+      <Project>{5E38C6EF-A5C6-490A-9CC9-6988DF4A4067}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
