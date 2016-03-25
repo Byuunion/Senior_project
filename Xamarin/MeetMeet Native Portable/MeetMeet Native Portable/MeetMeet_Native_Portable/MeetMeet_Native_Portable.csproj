@@ -31,7 +31,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Login.cs" />
+    <Compile Include="Credentials.cs" />
     <Compile Include="Deleter.cs" />
     <Compile Include="Getter.cs" />
     <Compile Include="MyClass.cs" />

@@ -39,7 +39,9 @@ namespace MeetMeet_Native_Portable.Droid
 		public string userNameSignUp;
 		public string userEmailSignUp;
 		public string userPasswordSignUp;
-        public static string serverURL = "http://52.91.212.179:8801/{0}";
+        public static string serverURL = "http://52.91.212.179:8800/";
+        public static string login = "user/login";
+        public static string profile = "user/profile";
 
         /// <summary>
         /// Creates the event for main activity.
@@ -189,18 +191,55 @@ namespace MeetMeet_Native_Portable.Droid
                 System.Diagnostics.Debug.WriteLine("Response received first name: {0} last name: {1}", test2.gender, test2.bio);
             }*/
 
-            Login test = new Login("GrilloPad");
-            var loggedIn = await test.doLogin("hunter2", serverURL);
+            Credentials test = new Credentials("test12");
+
+            var loggedIn = await test.doSignUp("thisIsAPassword", serverURL + login);
+
+            //var loggedIn = await test.doLogin("hunter2", serverURL + login);
 
             if (loggedIn)
             {
-                System.Diagnostics.Debug.WriteLine("Successfully logged in, token is: " + test.token);
+                System.Diagnostics.Debug.WriteLine("Successfully signed up, token is: " + test.token);
+
+                Profile testProfile = new Profile("test12", "male", "This is a super amazing awesome bio", test.token);
+
+                var posted = await Poster.PostObject(testProfile, serverURL + profile);
+
+                if (posted)
+                {
+                    var response = await Getter<Profile>.GetObject(testProfile.username, serverURL + profile + "/");
+
+                    if(response != default(Profile))
+                    {
+                        System.Diagnostics.Debug.WriteLine("Response received bio: {0} username: {1}", response.bio, response.username);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("Could not get profile");
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Could not post profile");
+                }
+
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Could not log in");
+                System.Diagnostics.Debug.WriteLine("Could not sign up or log in");
             }
-           //await Deleter.DeleteProfile("TestPost", "http://52.91.212.179:8800/user/{0}");
+
+            
+
+
+            //Profile test = new Profile(userEmail, 5, 6, userPassword);
+
+
+
+            //Profile test2 = new Profile("Hi", "dunno", "Bye");
+            //await Poster.PostObject(test2, serverURL + "user/");
+
+            //await Deleter.DeleteProfile("TestPost", "http://52.91.212.179:8800/user/{0}");
 
             //RunOnUiThread (() => {mProgressBar.Visibility = ViewStates.Invisible; });
         }

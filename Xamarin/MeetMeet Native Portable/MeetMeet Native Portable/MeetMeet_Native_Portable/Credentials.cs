@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MeetMeet_Native_Portable
 {
-    public class Login
+    public class Credentials
     {
         private string mUsername;
         public string username { get { return mUsername; } }
         private string mToken;
         public string token { get { return mToken; } }
 
-        public Login (string username)
+        public Credentials(string username)
         {
             this.mUsername = username;
             this.mToken = default(String);
@@ -21,12 +21,12 @@ namespace MeetMeet_Native_Portable
 
         public async Task<Boolean> doLogin(string password, string url)
         {
-            var resource = "user/login/" + username + "/" + password;
+            var resource = username + "/" + password;
             var tempToken = await Getter<Token>.GetObjectNotFromList(resource, url);
 
             mToken = tempToken.token;
 
-            if(token != default(String))
+            if (token != default(String))
             {
                 return true;
             }
@@ -36,6 +36,15 @@ namespace MeetMeet_Native_Portable
             }
         }
 
+        public async Task<Boolean> doSignUp(string password, string url)
+        {
+            if(await Poster.PostObject(new Info(username, password), url))
+            {
+                return await doLogin(password, url + "/");
+            }
+
+            return false;
+        }
 
     }
 
@@ -44,4 +53,21 @@ namespace MeetMeet_Native_Portable
         public string token { get; set; }
     }
 
+
+    public class Info : Postable
+    {
+        public string password { get; set; }
+        public string username { get; set; }
+
+        public Info(string username, string password)
+        {
+            this.username = username;
+            this.password = password;
+        }
+
+        public string GetName()
+        {
+            return "";
+        }
+    }
 }

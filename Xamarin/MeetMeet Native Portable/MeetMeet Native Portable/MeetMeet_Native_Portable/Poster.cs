@@ -9,12 +9,12 @@ namespace MeetMeet_Native_Portable
     public class Poster
     {
 
-        public static async Task PostObject(Postable obj, string url)
+        public static async Task<Boolean> PostObject(Postable obj, string url)
         {
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
 
-            var uri = new Uri(string.Format(url, obj.GetName()));
+            var uri = new Uri(url);
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var task = client.PostAsync(uri, content);
@@ -25,20 +25,12 @@ namespace MeetMeet_Native_Portable
             {
                 System.Diagnostics.Debug.WriteLine("Response received");
                 System.Diagnostics.Debug.WriteLine(task.Status);
+                return true;
 
             }
             else {
                 System.Diagnostics.Debug.WriteLine("Response timeout");
-            }
-
-
-            if (!task.IsFaulted)
-            {
-                System.Diagnostics.Debug.WriteLine("Successful");
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("Not Successful");
+                return false;
             }
         }
 

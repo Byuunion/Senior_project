@@ -15,7 +15,7 @@ namespace MeetMeet_Native_Portable
         {
             HttpClient client;
             string content = null;
-            var uri = new Uri(string.Format(url, resource));
+            var uri = new Uri(url + resource);
 
             client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
@@ -24,13 +24,13 @@ namespace MeetMeet_Native_Portable
 
             if (response.IsSuccessStatusCode)
             {
-                System.Diagnostics.Debug.WriteLine("Response was successful");
                 string responseString = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine("Get was successful, string is " + responseString);
                 content = await response.Content.ReadAsStringAsync();
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Response was not successful");
+                System.Diagnostics.Debug.WriteLine("Get was not successful");
             }
 
             return content;
@@ -39,7 +39,14 @@ namespace MeetMeet_Native_Portable
         public static async Task<List<T>> GetObjectList(string resource, string url)
         {
             string content = await GetAbstract(resource, url);
-            return JsonConvert.DeserializeObject<List<T>>(content);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<T>>(content);
+            }
+            catch(Exception e)
+            {
+                return new List<T>();
+            } 
         }
 
         public static async Task<T> GetObject(string resource, string url)
@@ -48,7 +55,14 @@ namespace MeetMeet_Native_Portable
 
             //This line should not be necessary, it it the result of the server returning data directly from a MySQL query.
             //rather than returning a list with one item, the server should just send back the single item by itself
-            return JsonConvert.DeserializeObject<List<T>>(content).ElementAt(0);
+            try
+            {
+                   return JsonConvert.DeserializeObject<List<T>>(content).ElementAt(0);
+            }
+            catch
+            {
+                return default(T);
+            }
 
             //In reality, the contents of this method should be replaced with the contents from "GetObjectNotFromList"
             //return JsonConvert.DeserializeObject<T>(content);

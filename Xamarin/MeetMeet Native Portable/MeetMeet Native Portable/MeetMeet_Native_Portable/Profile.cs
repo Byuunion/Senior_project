@@ -11,17 +11,20 @@ namespace MeetMeet_Native_Portable
         public double current_long;
         public string gender;
         public string bio;
+        public string token;
 
 
-        public Profile(string username, int positive_votes, int negative_votes, string gender)
+
+        public Profile(string username, string gender, string bio, string token)
         {
             this.username = username;
             this.gender = gender;
-            this.positive_votes = positive_votes;
-            this.negative_votes = positive_votes;
+            this.positive_votes = 0;
+            this.negative_votes = 0;
             this.current_lat = 0.0;
             this.current_long = 0.0;
-            this.bio = "User has not set up a bio yet.";
+            this.bio = bio;
+            this.token = token;
         }
 
         public string GetName()
