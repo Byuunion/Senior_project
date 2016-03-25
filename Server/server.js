@@ -439,7 +439,7 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
 	});
 	
 	var radius = 0.00126291; // 5 miles
-    connection.query('SELECT username FROM (SELECT current_lat, current_long FROM user_profile WHERE (current_lat >=' + req.params.min_lat + ' AND current_lat <= ' + req.params.max_lat + ') AND (current_long >= ' + req.params.min_long + ' AND current_long <= ' + req.params.max_long + ')) WHERE acos(sin('  + req.params.lat + ') * sin(current_lat) + cos(' + req.params.yourLat + ') * cos(current_lat) * cos(current_long -' + req.params.yourLong + ')) <=' + radius, function(err,data){
+	 connection.query('SELECT username FROM (SELECT current_lat, current_long, username FROM user_profile WHERE (current_lat >=' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')) AS reducedProfiles  WHERE acos(sin('  + connection.escape(req.params.yourLat) + ') * sin(current_lat) + cos(' + connection.escape(req.params.yourLat) + ') * cos(current_lat) * cos(current_long -' + connection.escape(req.params.yourLong) + ')) <=' + radius, function(err,data){
         if (err) throw err;
         res.json(data);
     });
