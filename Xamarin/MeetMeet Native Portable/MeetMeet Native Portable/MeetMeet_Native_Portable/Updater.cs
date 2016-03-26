@@ -1,25 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net.Http;
+using Newtonsoft.Json;
+
 
 namespace MeetMeet_Native_Portable
 {
-    public class Poster
+    public class Updater 
     {
-
-        public static async Task<Boolean> PostObject(Object obj, string url)
+        public static async Task<Boolean> UpdateObject(Updatable obj, string url)
         {
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
 
-            var uri = new Uri(url);
+            var uri = new Uri(url + obj.GetName());
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var task = client.PostAsync(uri, content);
-            
-            
+            var task = client.PutAsync(uri, content);
+
+
 
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {
@@ -33,8 +35,5 @@ namespace MeetMeet_Native_Portable
                 return false;
             }
         }
-
     }
-
-
 }

@@ -2,7 +2,7 @@
 
 namespace MeetMeet_Native_Portable 
 {
-    public class Profile : Postable
+    public class Profile : Updatable
     {
         public string username;
         public int positive_votes;

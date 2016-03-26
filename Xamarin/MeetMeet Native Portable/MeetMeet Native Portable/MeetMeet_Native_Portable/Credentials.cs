@@ -54,7 +54,7 @@ namespace MeetMeet_Native_Portable
     }
 
 
-    public class Info : Postable
+    public class Info : Updatable
     {
         public string password { get; set; }
         public string username { get; set; }

@@ -44,11 +44,12 @@ namespace MeetMeet_Native_Portable.Droid
 		public string userEmailSignUp;
 		public string userPasswordSignUp;
         public static string serverURL = "http://52.91.212.179:8800/";
-        public static string login = "user/login";
-        public static string profile = "user/profile";
+        public static string loginExt = "user/login";
+        public static string profileExt = "user/profile";
+        public static string locationExt = "user/profile/location";
 
-		//var to check if play services work
-		TextView msgText;
+        //var to check if play services work
+        TextView msgText;
 
         /// <summary>
         /// Creates the event for main activity.
@@ -212,24 +213,25 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		private async void ActLikeARequest()
 		{
-            //Thread.Sleep (3000);
-            /*
-            string tag = "MeetMeet";
-		
-			//Profile test = new Profile(userEmail, 5, 6, userPassword);
-			Profile test = new Profile("Hi", 5, 6, "Bye");
-            await Poster.PostObject(test, "http://52.91.212.179:8800/user/");
+            Credentials test = new Credentials("houzec8");
 
-            var test2 = await Getter<Profile>.GetObject(test.username, "http://52.91.212.179:8800/user/profile/{0}");
-            if(test2 == default(Profile))
+            var loggedIn = await test.doLogin("passsdflkj", serverURL + loginExt + "/");
+
+            if (loggedIn)
             {
-                System.Diagnostics.Debug.WriteLine("Response received was null");
+                System.Diagnostics.Debug.WriteLine("Successfully signed in, token is: " + test.token);
+                var testProfile = await Getter<Profile>.GetObject(test.username, serverURL + profileExt + "/");
+                testProfile.token = test.token;
+
+                if(testProfile != default(Profile))
+                {
+                    testProfile.current_lat = 24;
+                    testProfile.current_long = 31;
+                    await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
+                }
             }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("Response received first name: {0} last name: {1}", test2.gender, test2.bio);
-            }*/
 
+            /*
             Credentials test = new Credentials("test12");
 
             var loggedIn = await test.doSignUp("thisIsAPassword", serverURL + login);
@@ -267,18 +269,7 @@ namespace MeetMeet_Native_Portable.Droid
             {
                 System.Diagnostics.Debug.WriteLine("Could not sign up or log in");
             }
-
-            
-
-
-            //Profile test = new Profile(userEmail, 5, 6, userPassword);
-
-
-
-            //Profile test2 = new Profile("Hi", "dunno", "Bye");
-            //await Poster.PostObject(test2, serverURL + "user/");
-
-            //await Deleter.DeleteProfile("TestPost", "http://52.91.212.179:8800/user/{0}");
+            */
 
             //RunOnUiThread (() => {mProgressBar.Visibility = ViewStates.Invisible; });
         }

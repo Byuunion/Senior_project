@@ -22,6 +22,9 @@ namespace MeetMeet_Native_Portable
 
             var response = await client.GetAsync(uri);
 
+            System.Diagnostics.Debug.WriteLine("Response: " + await response.Content.ReadAsStringAsync());
+
+
             if (response.IsSuccessStatusCode)
             {
                 string responseString = await response.Content.ReadAsStringAsync();
