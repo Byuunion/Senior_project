@@ -43,7 +43,12 @@ Messages
 
 	/user/message/:username GET: Returns the user's message(s)
 	
-	/user/message/ POST: {username_to: , username_from: , message_time: , message_text: , token: }
+	/user/message/ POST: {username_to: , username_from: , message_text: , token: }
+
+GCM Registration
+	/user/gcmregid POST: {username: , token: , gcm_regid: }
+	
+	TODO PUT, DELETE
 	
 		
 Get all Users

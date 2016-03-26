@@ -2,6 +2,8 @@ var app = require('express')();
 var mysql = require('mysql'); //import mysql package.
 var bodyParser = require('body-parser');
 var hat = require('hat');
+var http = require('http');
+var querystring = require('querystring');
 
 var mysqlConfig = {
         host: 'userdb.cydfufqp5imu.us-east-1.rds.amazonaws.com',
@@ -305,6 +307,140 @@ app.post('/user/login', function(req, res) {
     });
 });
 
+app.post('/user/gcmregid', function(req, res) {
+        var connection = mysql.createConnection(mysqlConfig);
+
+        connection.connect(function(err){
+        if(!err) console.log("Database is connected.");
+                else console.log("Error connecting database.");
+        });
+
+
+        connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
+        if (err) throw err;
+        var token = data[0].token;
+
+                var response = {
+                                success: null,
+                                success_message: null
+                };
+
+                if(req.body.token === token){
+
+                        var data = {
+                                username: req.body.username,
+                                gcm_regid: req.body.gcm_regid,
+                        };
+
+                        connection.query('INSERT INTO user_gcm SET ?', data, function(err, rows) {
+                                if (err) throw err;
+
+                                response.success = true;
+                                response.success_message = "Successfully created user gcm";
+                                res.json(response);
+                                connection.end();
+                        });
+                }
+                else{
+                        response.success = false;
+                        response.success_message = "Token didn't match";
+                        res.json(response);
+                        connection.end();
+                }
+        });
+});
+
+
+app.post('/user/message', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected.");
+                else console.log("Error connecting database.");
+        });
+
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username_from), function(err, data){
+        if (err) throw err;
+        var token = data[0].token;
+
+                var response = {
+                        success: null,
+                        success_message: null
+                };
+
+                if(req.body.token === token){
+                        connection.query('SELECT gcm_regid FROM user_gcm WHERE username = ' + connection.escape(req.body.username_to), function(err, gcm_user){
+                                if(err) throw err;
+
+                                var to = gcm_user[0].gcm_regid;
+
+                                var postData = JSON.stringify({
+                                        'registration_ids': [ to ],
+                                        'data': {
+                                                'title': 'Test Title',
+                                                'message': req.body.message_text
+                                        }
+                                });
+
+                                console.log('JSON string: ' + postData);
+
+                                var options = {
+                                        hostname: 'gcm-http.googleapis.com',
+                                        path: '/gcm/send',
+                                        method: 'POST',
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                'Content-Length': postData.length,
+                                                'Authorization': 'key=' + GOOGLE_API_KEY
+                                        }
+                                };
+
+                                var myReq = http.request(options, function (myRes) {
+                                        console.log('STATUS: ' + myRes.statusCode);
+
+                                        console.log('HEADERS: ' + JSON.stringify(myRes.headers));
+                                        myRes.setEncoding('utf8');
+                                        myRes.on('data', function (chunk) {
+                                                console.log('BODY: ' + chunk);
+                                        });
+                                        myRes.on('end', function (){
+                                                console.log('No more data in response.')
+                                        })
+                                });
+
+                                myReq.on('error', function (e) {
+                                        console.log('problem with request: ' + e.message);
+                                });
+
+                                myReq.on('error', function (e) {
+                                        console.log('problem with request: ' + e.message);
+                                });
+
+                                myReq.write(postData);
+                                myReq.end();
+
+
+                                response.success = true;
+                                response.success_message = 'something happened';
+                                res.json(response);
+                                connection.end();
+
+                        });
+                }
+                 else{
+                        response.success = false;
+                        response.success_message = "Token didn't match";
+                        res.json(response);
+                        connection.end();
+                }
+        });
+});
+
+
+
+
+/*
 app.post('/user/message', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
@@ -349,7 +485,7 @@ app.post('/user/message', function(req, res) {
 		}
 	});
 });
-
+*/
 app.delete('/user', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
