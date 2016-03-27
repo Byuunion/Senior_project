@@ -1,6 +1,5 @@
 CREATE TABLE user_login (username VARCHAR(15), 
 password_hash VARCHAR(64), 
-password_salt VARCHAR(64),
 token VARCHAR(100),
 PRIMARY KEY (username)
 );
