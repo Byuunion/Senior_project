@@ -20,16 +20,21 @@ namespace MeetMeet_Native_Portable
 			double lat = toRadians(latitude);
 			double lng = toRadians (longitude);
 			double r = 0.1570; //constant angle 
-			this.latmin = lat - r;
-			this.latmax = lat + r;
+			this.latmin = toDegrees(lat - r);
+			this.latmax = toDegrees(lat + r);
 			double deltaLong = Math.Asin (Math.Sin (r) / Math.Cos (lat));
-			this.longmin = lng - deltaLong;
-			this.longmax = lng + deltaLong;	
+			this.longmin = toDegrees(lng - deltaLong);
+			this.longmax = toDegrees(lng + deltaLong);	
 		}
 
 		public double toRadians(double degrees)
 		{
 			return (Math.PI / 180.0) * degrees;
+		}
+
+		public double toDegrees(double radians)
+		{
+			return (180.0 / Math.PI) * radians;
 		}
 
 		public string GetName()

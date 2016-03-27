@@ -98,9 +98,10 @@ namespace MeetMeet_Native_Portable.Droid
 
 		private async void UpdateGeolocation(Geolocation location)
 		{
-			Credentials test = new Credentials("kshea12");
-
-			var loggedIn = await test.doLogin("kevin", serverURL + loginExt + "/");
+			//Credentials test = new Credentials("kshea12");
+			//var loggedIn = await test.doLogin("kevin", serverURL + loginExt + "/");
+			Credentials test = new Credentials("dummy2");
+			var loggedIn = await test.doLogin("dummy2", serverURL + loginExt + "/");
 
 			if (loggedIn)
 			{
