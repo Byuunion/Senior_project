@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using Android.Gms.Common;
-using Android.Util;
 using ClientApp;
 
 

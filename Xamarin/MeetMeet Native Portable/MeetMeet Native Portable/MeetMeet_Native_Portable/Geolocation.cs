@@ -1,18 +1,20 @@
 ﻿using System;
 
-namespace MeetMeet_Native_Portable.Droid
+namespace MeetMeet_Native_Portable
 {
-	public class Geolocation
+	public class Geolocation : Updatable
 	{
-		private double latitude;
-		private double longitude;
-		private double latmin;
-		private double latmax;
-		private double longmin;
-		private double longmax;
+		public string username;
+		public double latitude;
+		public double longitude;
+		public double latmin;
+		public double latmax;
+		public double longmin;
+		public double longmax;
 
-		public Geolocation (double latitude, double longitude)
+		public Geolocation (string username, double latitude, double longitude)
 		{
+			this.username = username;
 			this.latitude = latitude;
 			this.longitude = longitude;
 			double lat = toRadians(latitude);
@@ -28,6 +30,11 @@ namespace MeetMeet_Native_Portable.Droid
 		public double toRadians(double degrees)
 		{
 			return (Math.PI / 180.0) * degrees;
+		}
+
+		public string GetName()
+		{
+			return this.username;
 		}
 	}
 }

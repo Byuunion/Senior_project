@@ -24,6 +24,10 @@ namespace MeetMeet_Native_Portable.Droid
 		private TextView distanceField;
 		private LocationManager locationManager;
 		private String provider;
+		public static string serverURL = "http://52.91.212.179:8800/";
+		public static string loginExt = "user/login";
+		public static string profileExt = "user/profile";
+		public static string locationExt = "user/profile/location";
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
@@ -43,9 +47,14 @@ namespace MeetMeet_Native_Portable.Droid
 			provider = locationManager.GetBestProvider(criteria, false);
 			Location location = locationManager.GetLastKnownLocation(provider);
 
+			string username = "kshea12";
 			// Initialize the location fields
 			if (location != null) {
-				Geolocation loc = new Geolocation (location.Latitude, location.Longitude);
+				Geolocation loc = new Geolocation (username, location.Latitude, location.Longitude);
+				UpdateGeolocation (loc);
+				userlatitudeField.Text = Convert.ToString(loc.latitude);
+				userlongitudeField.Text = Convert.ToString(loc.longitude);
+
 			}
 			else {
 				userlatitudeField.Text = "Location not available";
@@ -85,6 +94,27 @@ namespace MeetMeet_Native_Portable.Droid
 		public void OnProviderDisabled(String provider) {
 			Toast.MakeText (this, "Disabled provider " + provider,
 				ToastLength.Short).Show();
+		}
+
+		private async void UpdateGeolocation(Geolocation location)
+		{
+			Credentials test = new Credentials("kshea12");
+
+			var loggedIn = await test.doLogin("kevin", serverURL + loginExt + "/");
+
+			if (loggedIn)
+			{
+				System.Diagnostics.Debug.WriteLine("Successfully signed in, token is: " + test.token);
+				var testProfile = await Getter<Profile>.GetObject(test.username, serverURL + profileExt + "/");
+				testProfile.token = test.token;
+
+				if(testProfile != default(Profile))
+				{
+					testProfile.current_lat = location.latitude;
+					testProfile.current_long = location.longitude;
+					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
+				}
+			}
 		}
 
 		private async void GetLocationFromServer(Location location)

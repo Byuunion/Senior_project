@@ -90,7 +90,6 @@
     <Compile Include="ProfileMainActivity.cs" />
     <Compile Include="Shakespeare.cs" />
     <Compile Include="TitlesFragment.cs" />
-    <Compile Include="Geolocation.cs" />
     <Compile Include="RegistrationIntentService.cs" />
     <Compile Include="InstanceIdListenerService.cs" />
   </ItemGroup>
