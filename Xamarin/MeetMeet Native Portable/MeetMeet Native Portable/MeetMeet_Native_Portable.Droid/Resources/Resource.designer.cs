@@ -274,10 +274,13 @@ namespace MeetMeet_Native_Portable.Droid
 			public const int edit_text_style = 2130837548;
 			
 			// aapt resource value: 0x7f02002d
-			public const int Icon = 2130837549;
+			public const int ic_stat_ic_notification = 2130837549;
 			
 			// aapt resource value: 0x7f02002e
-			public const int ProgressBarStyle = 2130837550;
+			public const int Icon = 2130837550;
+			
+			// aapt resource value: 0x7f02002f
+			public const int ProgressBarStyle = 2130837551;
 			
 			static Drawable()
 			{
