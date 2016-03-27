@@ -6,6 +6,9 @@ DELETE (GET RID OF IT!)
 BASE IP and PORT
 http://52.91.212.179:8800/
 
+POSTMAN API URL + JSON DATA FORMAT
+https://www.getpostman.com/collections/776c8a24a8aa53e4e920
+
 POST API Call JSON Needed: {xxx: , xx: , x: }
 
 Profile
