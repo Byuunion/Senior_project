@@ -26,7 +26,7 @@ app.get('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get Users.");
 		else console.log("Error connecting database.");
 	});
 
@@ -47,7 +47,7 @@ app.get('/user/profile/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get User Profile.");
 		else console.log("Error connecting database.");
 	});
 
@@ -68,7 +68,7 @@ app.get('/user/language/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get User Language.");
 		else console.log("Error connecting database.");
 	});
 
@@ -89,7 +89,7 @@ app.get('/user/interest/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get User Interest.");
 		else console.log("Error connecting database.");
 	});
 
@@ -99,9 +99,9 @@ app.get('/user/interest/:username', function(req, res) {
 			response.success = false;
 			response.success_message = "Failed to get interest(s) of: " + req.params.username + ".";
 			res.json(response);
-			connection.end();
 		}
-        res.json(data);
+		else res.json(data);
+		
 		connection.end();
     });
 });
@@ -111,7 +111,7 @@ app.get('/user/message/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get User Message.");
 		else console.log("Error connecting database.");
 	});
 
@@ -135,7 +135,7 @@ app.get('/user/login/:username/:password', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get User Login.");
 		else console.log("Error connecting database.");
 	});
 
@@ -191,7 +191,7 @@ app.post('/user/profile', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Post User Profile.");
 		else console.log("Error connecting database.");
 	});
     
@@ -250,7 +250,7 @@ app.post('/user/interest/', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Post User Interest.");
 		else console.log("Error connecting database.");
 	});
     
@@ -271,10 +271,12 @@ app.post('/user/interest/', function(req, res) {
 			var token = data[0].token;
 		
 			if(req.body.token === token){
+			
 				var data = {
 					username: username,
 					interest: req.body.interest
 				};
+				
 				connection.query('INSERT INTO user_interest SET ?', data, function(err, rows) {
 					if (err){
 						response.success = false;
@@ -302,7 +304,7 @@ app.post('/user/language', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected.  Post User Language.");
 		else console.log("Error connecting database.");
 	});
     
@@ -323,10 +325,12 @@ app.post('/user/language', function(req, res) {
 			var token = data[0].token;
 		
 			if(req.body.token === token){
+			
 				var data = {
 					username: username,
 					language: req.body.language
 				};
+				
 				connection.query('INSERT INTO user_language SET ?', data, function(err) {
 					if (err){
 						response.success = false;
@@ -355,7 +359,7 @@ app.post('/user/login', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-		if(!err) console.log("Database is connected.");
+		if(!err) console.log("Database is connected. Post User Login.");
 		else console.log("Error connecting database.");
 	});
     
@@ -398,42 +402,50 @@ app.post('/user/gcmregid', function(req, res) {
 	var connection = mysql.createConnection(mysqlConfig);
 	
 	connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Post User Gcmregid");
 		else console.log("Error connecting database.");
 	});
 	
-	
-	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
-        if (err) throw err;
-        var token = data[0].token;
-    
-		var response = {
-				success: null,
-				success_message: null
-		};
+	var response = {
+			success: null,
+			success_message: null,
+	};
 		
-		if(req.body.token === token){
-			
-			var data = {
-				username: req.body.username, 
-				gcm_regid: req.body.gcm_regid, 
-			};
-
-			connection.query('INSERT INTO user_gcm SET ?', data, function(err, rows) {
-				if (err) throw err;
-
-				response.success = true;
-				response.success_message = "Successfully created user gcm";
-				res.json(response);
-				connection.end();
-			});
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
+        if (err || data.length === 0){
+			response.success = false;
+			response.success_message = "Failed to find existing token from: " + username + ".";
+			res.json(response);
 		}
 		else{
-			response.success = false;
-			response.success_message = "Token didn't match";
-			res.json(response);
-			connection.end();
+			var token = data[0].token;
+		
+			if(req.body.token === token){
+				
+				var data = {
+					username: req.body.username, 
+					gcm_regid: req.body.gcm_regid, 
+				};
+
+				connection.query('INSERT INTO user_gcm SET ?', data, function(err, rows) {
+					if (err){
+						response.success = false;
+						response.success_message = "Failed to post interest for: " + username + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "Successfully created user gcm";
+					}
+					res.json(response);
+				});
+			}
+			else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
 		}
+		connection.end();
 	});
 });
 
@@ -443,7 +455,7 @@ app.post('/user/message', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected.  Post User Message.");
 		else console.log("Error connecting database.");
 	});
 	
@@ -581,7 +593,7 @@ app.delete('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Delete User.");
 		else console.log("Error connecting database.");
 	});
 
@@ -630,48 +642,52 @@ app.put('/user/profile/location/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 	
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Update User Profile Location");
 		else console.log("Error connecting database.");
 	});
 
 	var username = req.param.username;
 
     connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
-        if (err){
+        if (err || data.length === 0){
 			var response;
 			response.success = false;
-			response.success_message = "Failed to token from: " + username + ".";
+			response.success_message = "Failed to find existing token from: " + username + ".";
 			res.json(response);
 		}
-		
-        var token = data[0].token;
-	
-		var response = {
-			success: null,
-			success_message: "User location updated"
-		};
-    
-		if(req.body.token === token){
-			var data = {
-				current_lat: req.body.current_lat,
-				current_long: req.body.current_long
-			};
-			
-			connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
-				if (err){
-					response.success = false;
-					response.success_message = "Failed to update location of user: " + username + ".";
-				}
-				response.success = true;
-				response.success_message = "Successfully updates location of user: " + username + ".";
-			});
-	    }
 		else{
-			response.success = false;
-			response.success_message = "Token didn't match";
-
+		
+			var token = data[0].token;
+		
+			var response = {
+				success: null,
+				success_message: "User location updated"
+			};
+		
+			if(req.body.token === token){
+				var data = {
+					current_lat: req.body.current_lat,
+					current_long: req.body.current_long
+				};
+				
+				connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
+					if (err){
+						response.success = false;
+						response.success_message = "Failed to update location of user: " + username + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "Successfully updates location of user: " + username + ".";
+					}
+					res.json(response);
+				});
+			}
+			else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
 		}
-		res.json(response);
 	    connection.end();
 	});
 });
@@ -680,18 +696,26 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
     var connection = mysql.createConnection(mysqlConfig);
 
     connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
+        if(!err) console.log("Database is connected. Get Geolocation Users");
 		else console.log("Error connecting database.");
 	});
     
     var radius = 0.00126291; // 5 miles
+	
+	var response = {
+				success: null,
+				success_message: null
+	};
 	
     connection.query('SELECT username FROM (SELECT current_lat, current_long, username FROM user_profile WHERE (current_lat >=' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')) AS reducedProfiles  WHERE acos(sin('  + connection.escape(req.params.yourLat) + ') * sin(current_lat) + cos(' + connection.escape(req.params.yourLat) + ') * cos(current_lat) * cos(current_long -' + connection.escape(req.params.yourLong) + ')) <=' + radius, function(err,data){
     // connection.query('SELECT username FROM user_profile WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')', function(err, data){ 
 		if (err){
 			response.success = false;
 			response.success_message = "Failed to update location of user: " + username + ".";
-			res.json
+		}
+		else{
+			response.success = True;
+			response.success_message = "Here are all of the users near: " + username + ".";
 		}
 		res.json(data);
 	});
