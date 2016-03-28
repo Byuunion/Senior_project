@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:gridSpec="0|8|#0093eeff|K:#ee8700ff:16,l:72,l:16,r|S:#83ee00ff:16,0,l:16,56,l:16,0,r"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <EditText
+        android:inputType="textPersonName"
+        android:layout_width="250.0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/mTxtUsername"
+        android:text="Username:"
+        android:layout_marginRight="67.0dp"
+        android:layout_marginLeft="67.0dp" />
+    <EditText
+        android:layout_width="100.0dp"
+        android:layout_height="40.0dp"
+        android:id="@+id/mTxtGender"
+        android:text="Gender:" />
+    <EditText
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="250.0dp"
+        android:id="@+id/mTxtBio"
+        android:text="Bio:" />
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditProfileButton"
+            android:layout_marginLeft="45.5dp"
+            android:text="Edit Profile" />
+        <Button
+            android:text="Message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/MessangerButton"
+            android:layout_marginLeft="225.5dp" />
+        <Button
+            android:text="Sign Out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SignOutButton"
+            android:layout_marginTop="100.5dp"
+            android:layout_marginLeft="150.0dp" />
+    </RelativeLayout>
+</LinearLayout>
