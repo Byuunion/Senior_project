@@ -129,9 +129,12 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		void MBtnSignUp_Click (object sender, EventArgs e)
 		{
+			if(mTxtUserName.Text != "" && mTxtEmail.Text != "" && mTxtPassword.Text != "")
+			{
+				mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtUserName.Text, mTxtEmail.Text, mTxtPassword.Text));
+				this.Dismiss ();
+			}
 
-			mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtUserName.Text, mTxtEmail.Text, mTxtPassword.Text));
-			this.Dismiss ();
 		}
 
 		/// <param name="savedInstanceState">If the fragment is being re-created from

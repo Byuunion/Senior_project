@@ -116,8 +116,11 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		void MBtnDialogSignIn_Click (object sender, EventArgs e)
 		{
-			mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text));
-			this.Dismiss ();
+			if (mTxtUserNameSignIn.Text != "" && mTxtPasswordSignIn.Text != "") 
+			{
+				mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text));
+				this.Dismiss ();
+			}
 		}
 
 		/// <param name="savedInstanceState">If the fragment is being re-created from

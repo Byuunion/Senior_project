@@ -78,7 +78,6 @@ namespace MeetMeet_Native_Portable.Droid
 			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
 			mProfileListSample = FindViewById<Button> (Resource.Id.TestProfileList);
 
-
 			//Click Events
 
 			//Sign Up Click
