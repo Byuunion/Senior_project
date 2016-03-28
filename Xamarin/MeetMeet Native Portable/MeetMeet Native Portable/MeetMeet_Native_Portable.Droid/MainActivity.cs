@@ -155,13 +155,16 @@ namespace MeetMeet_Native_Portable.Droid
 			// here we send request to server
 			// just simulating here
 			userNameSignIn = e.Username;
-			userEmailSignIn = e.Email;
 			userPasswordSignIn = e.Password;
 			Thread thread = new Thread(ActLikeARequest);
 			thread.Start ();
 			//string userPassword = e.Password;
 
-			//Post to server code
+			//Post to server code. Will need two outcomes if can't log in or if successful
+
+			//Success
+
+			//Failure
 		}
 
 		// Sign Up Click
@@ -203,6 +206,10 @@ namespace MeetMeet_Native_Portable.Droid
 			userPasswordSignUp = e.Password;
 
 			// Post to server code
+
+			//Success
+
+			//Failure
 		}
 
 		// Part of thread simulation

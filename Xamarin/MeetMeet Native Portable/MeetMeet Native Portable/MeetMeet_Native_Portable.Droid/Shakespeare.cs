@@ -2,6 +2,7 @@ namespace MeetMeet_Native_Portable.Droid
 {
 	class Shakespeare
 	{
+		// This will take list of users within range
 		public static string[] Titles = 
 	    {
 	            "Henry IV (1)",   
@@ -13,7 +14,8 @@ namespace MeetMeet_Native_Portable.Droid
 	            "Othello",
 	            "King Lear"
 	    };
-		
+
+		// This will be Profile informqtion shown in otherside of fragment.
 		public static string[] Dialogue = 
     	{
             "So shaken as we are, so wan with care," +

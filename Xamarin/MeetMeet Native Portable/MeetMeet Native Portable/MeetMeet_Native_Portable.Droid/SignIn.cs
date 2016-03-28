@@ -20,7 +20,7 @@ namespace MeetMeet_Native_Portable.Droid
 	{
 		private string mUserName;
 		private string mPassword;
-		private string mEmail;
+		//private string mEmail;
 
 		/// <summary>
 		/// Gets or sets the email.
@@ -42,22 +42,22 @@ namespace MeetMeet_Native_Portable.Droid
 			set { mPassword = value; }
 		}
 
-		public string Email 
-		{
-			get { return mEmail; }
-			set { mEmail = value; }
-		}
+		//public string Email 
+		//{
+			//get { return mEmail; }
+			//set { mEmail = value; }
+		//}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Droid.OnSignInEventArgs"/> class.
 		/// </summary>
 		/// <param name="email">Email.</param>
 		/// <param name="password">Password.</param>
-		public OnSignInEventArgs(String userName, String password, String email) : base()
+		public OnSignInEventArgs(String userName, String password) : base()
 		{
 			Username = userName;
 			Password = password;
-			Email = email;
+			//Email = email;
 		}
 
 	}
@@ -70,7 +70,7 @@ namespace MeetMeet_Native_Portable.Droid
 	{
 		private EditText mTxtUserNameSignIn;
 		private EditText mTxtPasswordSignIn;
-		private EditText mTxtEmailSignIn;
+		//private EditText mTxtEmailSignIn;
 		private Button mBtnDialogSignIn;
 
 		/// <summary>
@@ -98,7 +98,7 @@ namespace MeetMeet_Native_Portable.Droid
 			// Resource for SignIn
 			mTxtUserNameSignIn = view.FindViewById<EditText>(Resource.Id.txtUserNameSignIn);
 			mTxtPasswordSignIn = view.FindViewById<EditText>(Resource.Id.txtPasswordSignIn);
-			mTxtEmailSignIn = view.FindViewById<EditText>(Resource.Id.txtEmailSignIn);
+			//mTxtEmailSignIn = view.FindViewById<EditText>(Resource.Id.txtEmailSignIn);
 			mBtnDialogSignIn = view.FindViewById<Button> (Resource.Id.btnDialogSignIn);
 
 			// Sign In Click Event
@@ -116,7 +116,7 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		void MBtnDialogSignIn_Click (object sender, EventArgs e)
 		{
-			mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text, mTxtEmailSignIn.Text));
+			mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text));
 			this.Dismiss ();
 		}
 
