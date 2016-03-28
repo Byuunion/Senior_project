@@ -449,6 +449,49 @@ app.post('/user/gcmregid', function(req, res) {
 	});
 });
 
+app.put('/user/gcmregid', function(req, res) {
+	var connection = mysql.createConnection(mysqlConfig);
+	
+	connection.connect(function(err){
+        if(!err) console.log("Database is connected.");
+		else console.log("Error connecting database.");
+	});
+	
+	
+	connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
+        if (err) throw err;
+        var token = data[0].token;
+    
+		var response = {
+				success: null,
+				success_message: null
+		};
+		
+		if(req.body.token === token){
+			
+			var data = {
+				username: req.body.username, 
+				gcm_regid: req.body.gcm_regid, 
+			};
+
+			connection.query('UPDATE user_gcm SET gcm_regid = ' + connection.escape(req.body.gcm_regid) + 'WHERE username = ' + connection.escape(req.body.username), data, function(err, rows) {
+				if (err) throw err;
+
+				response.success = true;
+				response.success_message = "Successfully created user gcm";
+				res.json(response);
+				connection.end();
+			});
+		}
+		else{
+			response.success = false;
+			response.success_message = "Token didn't match";
+			res.json(response);
+			connection.end();
+		}
+	});
+});
+
 //Token from sender needed
 app.post('/user/message', function(req, res) {
 
@@ -488,7 +531,8 @@ app.post('/user/message', function(req, res) {
 						var postData = JSON.stringify({
 							'registration_ids': [ to ],
 							'data': {
-								'title': 'Test Title',
+								'message_code': '1',
+								'from': req.body.username_from,
 								'message': req.body.message_text
 							}
 						});
@@ -542,52 +586,10 @@ app.post('/user/message', function(req, res) {
 	});            
 });
 
-/*
-app.post('/user/message', function(req, res) {
 
-    var connection = mysql.createConnection(mysqlConfig);
 
-    connection.connect(function(err){
-        if(!err) console.log("Database is connected.");
-	else console.log("Error connecting database.");
-	});
-    
-    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username_from), function(err, data){
-        if (err) throw err;
-        var token = data[0].token;
-    
-	var response = {
-	    success: null,
-	    success_message: null
-	    };
-	
-	if(req.body.token === token){
-	    
-	    var data = {
-		username_to: req.body.username_to, 
-		username_from: req.body.username_from, 
-		message_time: req.body.message_time, 
-		message_text: req.body.message_text,
-		};
 
-	    connection.query('INSERT INTO user_message SET ?', data, function(err, rows) {
-		if (err) throw err;
 
-		response.success = true;
-		response.success_message = "Successfully inserted user message.";
-		res.json(response);
-		connection.end();
-		});
-	    }
-	else{
-	    response.success = false;
-	    response.success_message = "Token didn't match";
-	    res.json(response);
-	    connection.end();
-	    }
-	});
-});
-*/
 
 app.delete('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);

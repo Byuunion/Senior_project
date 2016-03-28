@@ -11,12 +11,12 @@ namespace MeetMeet_Native_Portable
 {
     public class Updater 
     {
-        public static async Task<Boolean> UpdateObject(Updatable obj, string url)
+        public static async Task<Boolean> UpdateObject(Object obj, string url, string resource)
         {
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
 
-            var uri = new Uri(url + obj.GetName());
+            var uri = new Uri(url + resource);
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var task = client.PutAsync(uri, content);

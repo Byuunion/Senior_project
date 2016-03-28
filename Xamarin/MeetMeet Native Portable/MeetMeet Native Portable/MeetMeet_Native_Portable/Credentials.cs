@@ -12,6 +12,7 @@ namespace MeetMeet_Native_Portable
         public string username { get { return mUsername; } }
         private string mToken;
         public string token { get { return mToken; } }
+        public static string login = "user/login";
 
         public Credentials(string username)
         {
@@ -21,7 +22,8 @@ namespace MeetMeet_Native_Portable
 
         public async Task<Boolean> doLogin(string password, string url)
         {
-            var resource = username + "/" + password;
+            var resource = login + "/" +  username + "/" + password;
+            System.Diagnostics.Debug.WriteLine("Resource trying to get " + resource);
             var tempToken = await Getter<Token>.GetObjectNotFromList(resource, url);
 
             mToken = tempToken.token;
@@ -38,9 +40,9 @@ namespace MeetMeet_Native_Portable
 
         public async Task<Boolean> doSignUp(string password, string url)
         {
-            if(await Poster.PostObject(new Info(username, password), url))
+            if(await Poster.PostObject(new { username = this.username, password = password }, url + login))
             {
-                return await doLogin(password, url + "/");
+                return await doLogin(password, url);
             }
 
             return false;
@@ -53,21 +55,4 @@ namespace MeetMeet_Native_Portable
         public string token { get; set; }
     }
 
-
-    public class Info : Updatable
-    {
-        public string password { get; set; }
-        public string username { get; set; }
-
-        public Info(string username, string password)
-        {
-            this.username = username;
-            this.password = password;
-        }
-
-        public string GetName()
-        {
-            return "";
-        }
-    }
 }

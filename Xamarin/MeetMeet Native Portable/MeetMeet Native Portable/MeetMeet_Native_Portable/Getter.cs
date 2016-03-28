@@ -79,6 +79,7 @@ namespace MeetMeet_Native_Portable
         public static async Task<T> GetObjectNotFromList(string resource, string url)
         {
             string content = await GetAbstract(resource, url);
+            System.Diagnostics.Debug.WriteLine("String gotten from server " + content);
             return JsonConvert.DeserializeObject<T>(content);
         }
     }

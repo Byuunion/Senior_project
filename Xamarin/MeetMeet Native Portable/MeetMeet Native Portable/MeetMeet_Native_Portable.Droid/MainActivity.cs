@@ -43,9 +43,16 @@ namespace MeetMeet_Native_Portable.Droid
 		public string userEmailSignUp;
 		public string userPasswordSignUp;
         public static string serverURL = "http://52.91.212.179:8800/";
-        public static string loginExt = "user/login";
-        public static string profileExt = "user/profile";
-        public static string locationExt = "user/profile/location";
+        public static string login_ext = "user/login";
+        public static string profile_ext = "user/profile";
+        public static string location_ext = "user/profile/location";
+        public static string gcm_regid_ext = "user/gcmregid";
+        public static string username;
+        public static string user_token;
+        public static string gcm_token;
+
+        private Credentials credentials;
+        
 
         //var to check if play services work
         TextView msgText;
@@ -89,25 +96,23 @@ namespace MeetMeet_Native_Portable.Droid
 				StartActivity (typeof(ProfileMainActivity));
 			};
 
-			//starts up our messaging service
-			msgText = FindViewById<TextView> (Resource.Id.msgText);
+            msgText = FindViewById<TextView>(Resource.Id.msgText);
 
-			if (IsPlayServicesAvailable ())
-			{
-				var intent = new Intent (this, typeof (RegistrationIntentService));
-				StartService (intent);
-			}
-
+            if (IsPlayServicesAvailable())
+            {
+                var intent = new Intent(this, typeof(RegistrationIntentService));
+                StartService(intent);
+            }
 
         }
 
-		//checks to make sure google play services are running
-		public bool IsPlayServicesAvailable ()
+        //checks to make sure google play services are running
+        public bool IsPlayServicesAvailable ()
 		{
 			int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable (this);
 			if (resultCode != ConnectionResult.Success)
 			{
-				if (GoogleApiAvailability.Instance.IsUserResolvableError (resultCode))
+                if (GoogleApiAvailability.Instance.IsUserResolvableError (resultCode))
 					msgText.Text = GoogleApiAvailability.Instance.GetErrorString (resultCode);
 				else
 				{
@@ -219,23 +224,27 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		private async void ActLikeARequest()
 		{
+            await TryToSignUp("TestGCMUSER6", "password");
+            
+            /*
             Credentials test = new Credentials("houzec8");
 
-            var loggedIn = await test.doLogin("passsdflkj", serverURL + loginExt + "/");
+            var loggedIn = await test.doLogin("passsdflkj", serverURL);
 
             if (loggedIn)
             {
                 System.Diagnostics.Debug.WriteLine("Successfully signed in, token is: " + test.token);
-                var testProfile = await Getter<Profile>.GetObject(test.username, serverURL + profileExt + "/");
+                var testProfile = await Getter<Profile>.GetObject(test.username, serverURL + profile_ext + "/");
                 testProfile.token = test.token;
 
-                if(testProfile != default(Profile))
+                if (testProfile != default(Profile))
                 {
                     testProfile.current_lat = 24;
                     testProfile.current_long = 31;
-                    await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
+                    await Updater.UpdateObject(testProfile, serverURL + location_ext + "/");
                 }
             }
+            */
 
             /*
             Credentials test = new Credentials("test12");
@@ -278,6 +287,64 @@ namespace MeetMeet_Native_Portable.Droid
             */
 
             //RunOnUiThread (() => {mProgressBar.Visibility = ViewStates.Invisible; });
+        }
+
+        /// <summary>
+        /// This method takes care of the login process
+        /// </summary>
+        /// <param name="username"> the user's username, gotten from the gui</param>
+        /// <param name="password"> the user's password, gotten from the gui</param>
+        /// <returns> whether or not the user was successfully logged in</returns>
+        private async Task<Boolean> TryToLogin(string username, string password)
+        {
+            credentials = new Credentials(username);
+            System.Diagnostics.Debug.WriteLine("Trying to log in");
+            var loggedIn = await credentials.doLogin(password, serverURL);
+
+            if (loggedIn)
+            {
+                if (await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL, gcm_regid_ext + "/" + username))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Do the sign up procedure
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private async Task<Boolean> TryToSignUp(string username, string password)
+        {
+            credentials = new Credentials(username);
+            System.Diagnostics.Debug.WriteLine("Trying to log in");
+            var loggedIn = await credentials.doSignUp(password, serverURL);
+
+            if (loggedIn)
+            {
+                if (await Poster.PostObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL + gcm_regid_ext))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

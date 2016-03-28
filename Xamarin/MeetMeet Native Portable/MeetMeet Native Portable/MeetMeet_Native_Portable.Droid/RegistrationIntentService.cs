@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Util;
 using Android.Gms.Gcm;
 using Android.Gms.Gcm.Iid;
+using MeetMeet_Native_Portable.Droid;
 
 namespace ClientApp
 {
@@ -26,6 +27,9 @@ namespace ClientApp
 						"47160214403", GoogleCloudMessaging.InstanceIdScope, null);
 						//senderID generated from google dev. console
 					Log.Info ("RegistrationIntentService", "GCM Registration Token: " + token);
+
+                    //Make the token accessible by our code
+                    MainActivity.gcm_token = token;
 					SendRegistrationToAppServer (token);
 					Subscribe (token);
 				}
@@ -39,7 +43,7 @@ namespace ClientApp
 
 		void SendRegistrationToAppServer (string token)
 		{
-			// Add custom implementation here as needed.
+             // Add custom implementation here as needed.
 		}
 
 		void Subscribe (string token)

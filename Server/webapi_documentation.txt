@@ -51,7 +51,7 @@ Messages
 GCM Registration
 	/user/gcmregid POST: {username: , token: , gcm_regid: }
 	
-	TODO PUT, DELETE
+	/user/gcmregid/:username PUT: {username: , token: , gcm_regid: }
 	
 		
 Get all Users
