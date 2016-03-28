@@ -7,10 +7,10 @@ namespace MeetMeet_Native_Portable
 		public string username;
 		public double latitude;
 		public double longitude;
-		public double latmin;
-		public double latmax;
-		public double longmin;
-		public double longmax;
+		public double minLat;
+		public double maxLat;
+		public double minLong;
+		public double maxLong;
 
 		public Geolocation (string username, double latitude, double longitude)
 		{
@@ -20,11 +20,11 @@ namespace MeetMeet_Native_Portable
 			double lat = toRadians(latitude);
 			double lng = toRadians (longitude);
 			double r = 0.1570; //constant angle 
-			this.latmin = toDegrees(lat - r);
-			this.latmax = toDegrees(lat + r);
+			this.minLat = toDegrees(lat - r);
+			this.maxLat = toDegrees(lat + r);
 			double deltaLong = Math.Asin (Math.Sin (r) / Math.Cos (lat));
-			this.longmin = toDegrees(lng - deltaLong);
-			this.longmax = toDegrees(lng + deltaLong);	
+			this.minLong = toDegrees(lng - deltaLong);
+			this.maxLong = toDegrees(lng + deltaLong);	
 		}
 
 		public double toRadians(double degrees)

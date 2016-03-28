@@ -54,6 +54,7 @@ namespace MeetMeet_Native_Portable.Droid
 				UpdateGeolocation (loc);
 				userlatitudeField.Text = Convert.ToString(loc.latitude);
 				userlongitudeField.Text = Convert.ToString(loc.longitude);
+				GetUsersNearby (loc);
 
 			}
 			else {
@@ -116,6 +117,19 @@ namespace MeetMeet_Native_Portable.Droid
 					//await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
 				}
 			}
+		}
+
+		private async void GetUsersNearby(Geolocation loc)
+		{
+			var resource = loc.minLat + "/" + loc.maxLat + "/" + loc.minLong + "/" + loc.maxLong + "/" + loc.latitude + "/" + loc.longitude;
+			var nearbyUserList = await Getter<Geolocation>.GetObjectList(resource, serverURL + "user/");
+			String names = "";
+			foreach (var user in nearbyUserList) {
+				if (loc.username != user.username)
+					names += user.username + " ";
+			}
+			serverlatitudeField.Text = names;
+
 		}
 
 		private async void GetLocationFromServer(Location location)
