@@ -96,13 +96,13 @@ namespace MeetMeet_Native_Portable.Droid
 			Toast.MakeText (this, "Disabled provider " + provider,
 				ToastLength.Short).Show();
 		}
-
+		  
 		private async void UpdateGeolocation(Geolocation location)
 		{
 			//Credentials test = new Credentials("kshea12");
-			//var loggedIn = await test.doLogin("kevin", serverURL + loginExt + "/");
-			Credentials test = new Credentials("dummy2");
-			var loggedIn = await test.doLogin("dummy2", serverURL + loginExt + "/");
+			//var loggedIn = await test.doLogin("kevin", serverURL);
+			Credentials test = new Credentials("dummy4");
+			var loggedIn = await test.doLogin("dummy4", serverURL);
 
 			if (loggedIn)
 			{
@@ -114,7 +114,7 @@ namespace MeetMeet_Native_Portable.Droid
 				{
 					testProfile.current_lat = location.latitude;
 					testProfile.current_long = location.longitude;
-					//await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
+					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/", testProfile.username);
 				}
 			}
 		}
