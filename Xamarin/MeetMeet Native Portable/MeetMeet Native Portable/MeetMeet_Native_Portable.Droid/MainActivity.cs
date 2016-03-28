@@ -198,17 +198,20 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">E.</param>
-		void signUpDialog_mOnSignUpComplete(Object sender, OnSignUpEventArgs e)
+		async void signUpDialog_mOnSignUpComplete(Object sender, OnSignUpEventArgs e)
 		{
 			// here we send request to server
 			// just simulating here
-			Thread thread = new Thread(ActLikeARequest);
-			thread.Start ();
+			//Thread thread = new Thread(ActLikeARequest);
+			//thread.Start ();
 			//string userPassword = e.Password;
 
 			userNameSignUp = e.UserName;
 			userEmailSignUp = e.Email;
 			userPasswordSignUp = e.Password;
+
+			await TryToSignUp(userNameSignUp, userPasswordSignUp);
+
 
 			// Post to server code
 

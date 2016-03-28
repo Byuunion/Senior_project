@@ -113,7 +113,7 @@ namespace MeetMeet_Native_Portable.Droid
 				{
 					testProfile.current_lat = location.latitude;
 					testProfile.current_long = location.longitude;
-					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
+					//await Updater.UpdateObject(testProfile, serverURL + locationExt + "/");
 				}
 			}
 		}
