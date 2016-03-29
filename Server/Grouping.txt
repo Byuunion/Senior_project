@@ -1,0 +1,40 @@
+Inviting Someone
+insert into invites (inviting_user, invited_user)
+send message(code, inviting_user) to invited_user
+
+
+
+Responding to invite
+if(invites contains(responding_to_user, responding_user){
+	if(responding_to_user.IsInGroup){
+		if(responding_user.IsNotInGroup){
+			insert into groups (responding_user, groups.getGroupID(responding_to_user))
+		}
+		else{
+			throw error (both are already in groups)
+		}
+	}
+	else{
+		if(responding_user.IsInGroup){
+			insert into groups (responding_to_user, groups.getGroupID(responding_user))
+		}
+		else{
+			newID = new groupID
+			insert into groups (responding_user, newID)
+			insert into groups (responding_to_user, newID)
+		}
+	}
+}
+else{
+	throw error (trying to accept an invitation from someone who did not invite you)
+}
+
+
+Sending Message
+arrayOfUsernames = select username from groups where groupID = getGroupID(sending_user)
+
+gcmSendMessage(sending_user, message, arrayOfUsernames)
+
+
+Leaving group
+delete from groups where username = leavingUser.username

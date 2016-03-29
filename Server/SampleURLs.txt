@@ -1,0 +1,11 @@
+Invite (invite or respond)
+/user/group/invite POST {username_from: , username_to: , token: , response: }
+
+Respond to invite
+/user/group/invite PUT {username_from: , username_to: , token: , response: }
+
+Send a group message
+/user/group/message POST {username_from: , token: , message: }
+
+Remove the user from their current group
+/user/group DELETE {username: , token: }
