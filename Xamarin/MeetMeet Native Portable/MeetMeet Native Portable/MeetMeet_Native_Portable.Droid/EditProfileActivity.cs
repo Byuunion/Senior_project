@@ -1,15 +1,20 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 using Android.App;
 using Android.Content;
-using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.OS;
+using Android.Util;
+using System.Net.Http;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+using Android.Gms.Common;
+using ClientApp;
 
 namespace MeetMeet_Native_Portable.Droid
 {
@@ -17,6 +22,7 @@ namespace MeetMeet_Native_Portable.Droid
 	{
 		private string mGender;
 		private string mProfile;
+		private Credentials credentials;
 
 		public string Gender 
 		{
@@ -67,10 +73,33 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 
 			{
-				mOnEditProfileComplete.Invoke (this, new OnEditProfileEventArgs (mTxtGender.Text, mTxtProfile.Text));
+				//mOnEditProfileComplete.Invoke (
 				//this.Dismiss ();
 			}
 		}
+
+		/*private async Task<Boolean> TryToSaveProfile(string gender, string bio)
+		{
+			credentials = new Credentials(username);
+			System.Diagnostics.Debug.WriteLine("Trying to save profile");
+			var loggedIn = await credentials.doLogin(password, serverURL);
+
+			if (loggedIn)
+			{
+				if (await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL, gcm_regid_ext + "/" + username))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}*/
 	}
 }
 
