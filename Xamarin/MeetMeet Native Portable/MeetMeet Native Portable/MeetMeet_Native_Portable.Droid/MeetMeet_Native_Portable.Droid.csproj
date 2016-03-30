@@ -119,6 +119,10 @@
     <AndroidResource Include="Resources\layout\location.axml" />
     <AndroidResource Include="Resources\layout\activity_main.axml" />
     <AndroidResource Include="Resources\layout\edit_profile.axml" />
+    <AndroidResource Include="Resources\layout\messaging.axml" />
+    <AndroidResource Include="Resources\layout\msg_helper.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\rec_msg.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\sent_msg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

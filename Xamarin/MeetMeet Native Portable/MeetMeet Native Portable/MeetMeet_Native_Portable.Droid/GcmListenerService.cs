@@ -16,6 +16,9 @@ namespace ClientApp
             Log.Debug("MyGcmListenerService", "From:    " + from);
             Log.Debug("MyGcmListenerService", "Message: " + message);
             SendNotification(message);
+			int ms_code = 0;
+			int.TryParse((data.GetString ("message_code")), out ms_code);
+			string username = data.GetString ("username_from");
         }
 
         void SendNotification(string message)
