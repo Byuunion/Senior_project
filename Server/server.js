@@ -506,6 +506,11 @@ app.post('/user/message', function(req, res) {
 
     connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(sender), function(err, data){
 		if (err || data.length === 0){
+			var response = {
+				success: null,
+				success_message: null
+			};
+			
 			response.success = false;
 			response.success_message = "Failed to find existing token from: " + sender + ".";
 			res.json(response);
@@ -532,7 +537,7 @@ app.post('/user/message', function(req, res) {
 							'registration_ids': [ to ],
 							'data': {
 								'message_code': '1',
-								'from': req.body.username_from,
+								'username_from': req.body.username_from,
 								'message': req.body.message_text
 							}
 						});
