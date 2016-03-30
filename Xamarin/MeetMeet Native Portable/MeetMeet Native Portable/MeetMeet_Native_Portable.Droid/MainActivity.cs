@@ -220,6 +220,9 @@ namespace MeetMeet_Native_Portable.Droid
 
 			if (await TryToSignUp (userNameSignUp, userPasswordSignUp)) 
 			{
+				Profile nullProfile = new Profile (credentials.username, "a", "a", credentials.token);
+				await Poster.PostObject (nullProfile, serverURL + profile_ext);
+
 				StartActivity(typeof(EditProfileActivity));
 			} 
 			else 
