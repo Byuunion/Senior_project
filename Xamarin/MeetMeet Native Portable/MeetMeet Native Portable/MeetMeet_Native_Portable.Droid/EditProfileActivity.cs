@@ -85,16 +85,16 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
-		async void mOnEditProfileSaveComplete (Object sender, OnEditProfileEventArgs e)
-		{
-			string userGender = e.Gender;
-			string userProfile = e.Profile;
+		//async void mOnEditProfileSaveComplete (Object sender, OnEditProfileEventArgs e)
+		//{
+		//	string userGender = e.Gender;
+		//	string userProfile = e.Profile;
 
-			Profile myProfile = new Profile (credentials.username, userGender, userProfile, credentials.token);
+		//	Profile myProfile = new Profile (credentials.username, userGender, userProfile, credentials.token);
 
-			await Poster.PostObject (myProfile, serverURL);
+		//	await Poster.PostObject (myProfile, serverURL);
 
-		}
+		//}
 	}
 		
 }
