@@ -298,6 +298,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070025
 			public const int MeetMeet = 2131165221;
 			
+			// aapt resource value: 0x7f07002a
+			public const int NearbyUsersButton = 2131165226;
+			
 			// aapt resource value: 0x7f070026
 			public const int SignInButton = 2131165222;
 			
@@ -306,9 +309,6 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070029
 			public const int TestLocationButton = 2131165225;
-			
-			// aapt resource value: 0x7f07002a
-			public const int TestProfileList = 2131165226;
 			
 			// aapt resource value: 0x7f070016
 			public const int TextView01 = 2131165206;

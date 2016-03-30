@@ -32,7 +32,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mButtonSignIn;
 		private ProgressBar mProgressBar;
 		private Button mLocationButton;
-		private Button mProfileListSample;
+		private Button mNearbyUsersButton;
 
 		// User data
 		public string userNameSignIn;
@@ -77,7 +77,7 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
 			mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
 			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
-			mProfileListSample = FindViewById<Button> (Resource.Id.TestProfileList);
+			mNearbyUsersButton = FindViewById<Button> (Resource.Id.NearbyUsersButton);
 
 			//Click Events
 
@@ -92,7 +92,7 @@ namespace MeetMeet_Native_Portable.Droid
 			};
 
 			// ProfileListSample Click
-			mProfileListSample.Click += delegate {
+			mNearbyUsersButton.Click += delegate {
 				StartActivity (typeof(ProfileMainActivity));
 			};
 
