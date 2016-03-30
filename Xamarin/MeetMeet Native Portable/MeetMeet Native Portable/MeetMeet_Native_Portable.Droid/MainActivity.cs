@@ -30,7 +30,7 @@ namespace MeetMeet_Native_Portable.Droid
 		// Main Menu Items
 		private Button mButtonSignUp;
 		private Button mButtonSignIn;
-		private ProgressBar mProgressBar;
+		//private ProgressBar mProgressBar;
 		private Button mLocationButton;
 		private Button mProfileListSample;
 
@@ -75,7 +75,7 @@ namespace MeetMeet_Native_Portable.Droid
 			//References for Main Menu Items
 			mButtonSignUp = FindViewById<Button> (Resource.Id.SignUpButton);
 			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
-			mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
+			//mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
 			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
 			mProfileListSample = FindViewById<Button> (Resource.Id.TestProfileList);
 
@@ -155,22 +155,14 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">E.</param>
-		async void signInDialog_mOnSignInComplete(Object sender, OnSignInEventArgs e)
+		void signInDialog_mOnSignInComplete(Object sender, OnSignInEventArgs e)
 		{
 			// here we send request to server
 			// just simulating here
 			userNameSignIn = e.Username;
 			userPasswordSignIn = e.Password;
-
-			if (await TryToLogin (userNameSignIn, userPasswordSignIn)) 
-			{
-				StartActivity(typeof(EditProfileActivity));
-			} 
-			else 
-			{
-				
-			}
-
+			Thread thread = new Thread(ActLikeARequest);
+			thread.Start ();
 			//string userPassword = e.Password;
 
 			//Post to server code. Will need two outcomes if can't log in or if successful
@@ -218,6 +210,7 @@ namespace MeetMeet_Native_Portable.Droid
 			userEmailSignUp = e.Email;
 			userPasswordSignUp = e.Password;
 
+<<<<<<< Updated upstream
 			if (await TryToSignUp (userNameSignUp, userPasswordSignUp)) 
 			{
 				StartActivity(typeof(EditProfileActivity));
@@ -226,6 +219,9 @@ namespace MeetMeet_Native_Portable.Droid
 			{
 
 			}
+=======
+			await TryToSignUp(userNameSignUp, userPasswordSignUp);
+>>>>>>> Stashed changes
 
 
 			// Post to server code
@@ -234,20 +230,6 @@ namespace MeetMeet_Native_Portable.Droid
 
 			//Failure
 		}
-
-		async void mOnEditProfileSaveComplete (Object sender, OnEditProfileEventArgs e)
-		{
-			string userGender = e.Gender;
-			string userProfile = e.Profile;
-
-			Profile myProfile = new Profile (credentials.username, userGender, userProfile, credentials.token);
-
-			await Poster.PostObject (myProfile, serverURL);
-
-		}
-
-
-
 
 		// Part of thread simulation
 
