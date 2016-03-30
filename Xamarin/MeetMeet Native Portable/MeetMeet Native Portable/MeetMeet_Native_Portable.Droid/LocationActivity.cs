@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,10 +50,12 @@ namespace MeetMeet_Native_Portable.Droid
 			// Initialize the location fields
 			if (location != null) {
 				Geolocation loc = new Geolocation (username, location.Latitude, location.Longitude);
-				UpdateGeolocation (loc);
+				//loc.UpdateGeolocation ();
 				userlatitudeField.Text = Convert.ToString(loc.latitude);
 				userlongitudeField.Text = Convert.ToString(loc.longitude);
+				UpdateGeolocation (loc);
 				GetUsersNearby (loc);
+				//serverlatitudeField.Text = loc.nearbyUsers;
 
 			}
 			else {
@@ -74,35 +75,35 @@ namespace MeetMeet_Native_Portable.Droid
 			base.OnPause();
 			locationManager.RemoveUpdates(this);
 		}
-			
+
 		public void OnLocationChanged(Location location) {
 			double lat = location.Latitude;
 			double lng = location.Longitude;
 			//userlatitudeField.Text = Convert.ToString(lat);
 			//userlongitudeField.Text = Convert.ToString(lng);
 		}
-			
+
 		public void OnStatusChanged(String provider, Availability status, Bundle extras) {
 			// TODO Auto-generated method stub
 
 		}
-			
+
 		public void OnProviderEnabled(String provider) {
 			Toast.MakeText(this, "Enabled new provider " + provider,
 				ToastLength.Short).Show();
 		}
-			
+
 		public void OnProviderDisabled(String provider) {
 			Toast.MakeText (this, "Disabled provider " + provider,
 				ToastLength.Short).Show();
 		}
-		  
+
 		private async void UpdateGeolocation(Geolocation location)
 		{
-			//Credentials test = new Credentials("kshea12");
-			//var loggedIn = await test.doLogin("kevin", serverURL);
-			Credentials test = new Credentials("dummy4");
-			var loggedIn = await test.doLogin("dummy4", serverURL);
+			Credentials test = new Credentials("kshea12");
+			var loggedIn = await test.doLogin("kevin", serverURL);
+			//Credentials test = new Credentials("dummy4");
+			//var loggedIn = await test.doLogin("dummy4", serverURL);
 
 			if (loggedIn)
 			{
@@ -112,8 +113,8 @@ namespace MeetMeet_Native_Portable.Droid
 
 				if(testProfile != default(Profile))
 				{
-					testProfile.current_lat = location.latitude;
-					testProfile.current_long = location.longitude;
+					testProfile.current_lat = 40.73061000;//location.latitude;
+					testProfile.current_long = -73.93524200;//location.longitude;
 					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/", testProfile.username);
 				}
 			}

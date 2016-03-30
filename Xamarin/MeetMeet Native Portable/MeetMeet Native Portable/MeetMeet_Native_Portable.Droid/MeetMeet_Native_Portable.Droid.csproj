@@ -93,6 +93,7 @@
     <Compile Include="RegistrationIntentService.cs" />
     <Compile Include="InstanceIdListenerService.cs" />
     <Compile Include="EditProfileActivity.cs" />
+    <Compile Include="Config.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

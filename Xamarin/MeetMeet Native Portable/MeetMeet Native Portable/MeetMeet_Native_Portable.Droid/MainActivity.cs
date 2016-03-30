@@ -66,7 +66,8 @@ namespace MeetMeet_Native_Portable.Droid
         protected override void OnCreate(Bundle bundle)
         {
            
-            base.OnCreate(bundle);
+			base.OnCreate(bundle);
+			Config.context = this;
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
