@@ -50,7 +50,7 @@ namespace MeetMeet_Native_Portable.Droid
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
-			SetContentView (Resource.Layout.activity_main);
+			SetContentView (Resource.Layout.edit_profile);
 			// Create your application here
 
 			mTxtGender = FindViewById<EditText>(Resource.Id.edittextgender);
