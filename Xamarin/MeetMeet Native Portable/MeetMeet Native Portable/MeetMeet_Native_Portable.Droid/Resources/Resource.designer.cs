@@ -280,10 +280,7 @@ namespace MeetMeet_Native_Portable.Droid
 			public const int Icon = 2130837550;
 			
 			// aapt resource value: 0x7f02002f
-			public const int monoandroidsplash = 2130837551;
-			
-			// aapt resource value: 0x7f020030
-			public const int ProgressBarStyle = 2130837552;
+			public const int ProgressBarStyle = 2130837551;
 			
 			// aapt resource value: 0x7f020030
 			public const int rec_msg = 2130837552;
@@ -304,83 +301,51 @@ namespace MeetMeet_Native_Portable.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080025
-			public const int MeetMeet = 2131230757;
+			// aapt resource value: 0x7f070025
+			public const int MeetMeet = 2131165221;
 			
-			// aapt resource value: 0x7f080026
-			public const int SignInButton = 2131230758;
+			// aapt resource value: 0x7f070026
+			public const int SignInButton = 2131165222;
 			
-			// aapt resource value: 0x7f080028
-			public const int SignUpButton = 2131230760;
+			// aapt resource value: 0x7f070028
+			public const int SignUpButton = 2131165224;
 			
-			// aapt resource value: 0x7f080029
-			public const int TestLocationButton = 2131230761;
+			// aapt resource value: 0x7f070029
+			public const int TestLocationButton = 2131165225;
 			
-			// aapt resource value: 0x7f08002a
-			public const int TestProfileList = 2131230762;
+			// aapt resource value: 0x7f07002a
+			public const int TestProfileList = 2131165226;
 			
-			// aapt resource value: 0x7f080016
-			public const int TextView01 = 2131230742;
+			// aapt resource value: 0x7f070016
+			public const int TextView01 = 2131165206;
 			
-			// aapt resource value: 0x7f080017
-			public const int TextView02 = 2131230743;
+			// aapt resource value: 0x7f070017
+			public const int TextView02 = 2131165207;
 			
-			// aapt resource value: 0x7f080019
-			public const int TextView03 = 2131230745;
+			// aapt resource value: 0x7f070019
+			public const int TextView03 = 2131165209;
 			
-			// aapt resource value: 0x7f08001a
-			public const int TextView04 = 2131230746;
+			// aapt resource value: 0x7f07001a
+			public const int TextView04 = 2131165210;
 			
-			// aapt resource value: 0x7f08001c
-			public const int TextView05 = 2131230748;
+			// aapt resource value: 0x7f07001c
+			public const int TextView05 = 2131165212;
 			
-			// aapt resource value: 0x7f08001d
-			public const int TextView06 = 2131230749;
+			// aapt resource value: 0x7f07001d
+			public const int TextView06 = 2131165213;
 			
-			// aapt resource value: 0x7f08001f
-			public const int TextView07 = 2131230751;
+			// aapt resource value: 0x7f07001f
+			public const int TextView07 = 2131165215;
 			
-			// aapt resource value: 0x7f080020
-			public const int TextView08 = 2131230752;
+			// aapt resource value: 0x7f070020
+			public const int TextView08 = 2131165216;
 			
-			// aapt resource value: 0x7f080022
-			public const int TextView09 = 2131230754;
+			// aapt resource value: 0x7f070022
+			public const int TextView09 = 2131165218;
 			
-			// aapt resource value: 0x7f080023
-			public const int TextView10 = 2131230755;
+			// aapt resource value: 0x7f070023
+			public const int TextView10 = 2131165219;
 			
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-			// aapt resource value: 0x7f080000
-			public const int adjust_height = 2131230720;
-			
-			// aapt resource value: 0x7f080001
-			public const int adjust_width = 2131230721;
-			
-			// aapt resource value: 0x7f080006
-			public const int auto = 2131230726;
-=======
-			// aapt resource value: 0x7f070006
-			public const int adjust_height = 2131165190;
-			
-			// aapt resource value: 0x7f070007
-			public const int adjust_width = 2131165191;
-=======
-			// aapt resource value: 0x7f070006
-			public const int adjust_height = 2131165190;
-			
-			// aapt resource value: 0x7f070007
-			public const int adjust_width = 2131165191;
-			
-			// aapt resource value: 0x7f070003
-			public const int auto = 2131165187;
->>>>>>> Stashed changes
-			
-			// aapt resource value: 0x7f070003
-			public const int auto = 2131165187;
->>>>>>> origin/master
-=======
 			// aapt resource value: 0x7f070006
 			public const int adjust_height = 2131165190;
 			
@@ -392,53 +357,25 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070011
 			public const int btnDialogEmail = 2131165201;
->>>>>>> Stashed changes
 			
-			// aapt resource value: 0x7f080011
-			public const int btnDialogEmail = 2131230737;
+			// aapt resource value: 0x7f07000d
+			public const int btnDialogSignIn = 2131165197;
 			
-<<<<<<< Updated upstream
-			// aapt resource value: 0x7f08000d
-			public const int btnDialogSignIn = 2131230733;
-			
-<<<<<<< Updated upstream
-			// aapt resource value: 0x7f080014
-			public const int btnEditProfileSave = 2131230740;
-=======
-			// aapt resource value: 0x7f070004
-			public const int dark = 2131165188;
->>>>>>> Stashed changes
-			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f080007
-			public const int dark = 2131230727;
-=======
-			// aapt resource value: 0x7f070004
-			public const int dark = 2131165188;
->>>>>>> origin/master
-			
-			// aapt resource value: 0x7f08000a
-			public const int details = 2131230730;
-=======
 			// aapt resource value: 0x7f070014
 			public const int btnEditProfileSave = 2131165204;
 			
 			// aapt resource value: 0x7f070004
 			public const int dark = 2131165188;
->>>>>>> Stashed changes
 			
-			// aapt resource value: 0x7f080012
-			public const int edittextgender = 2131230738;
+			// aapt resource value: 0x7f07000a
+			public const int details = 2131165194;
 			
-<<<<<<< Updated upstream
-			// aapt resource value: 0x7f080013
-			public const int edittextprofile = 2131230739;
+			// aapt resource value: 0x7f070012
+			public const int edittextgender = 2131165202;
 			
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-			// aapt resource value: 0x7f080003
-			public const int icon_only = 2131230723;
-=======
+			// aapt resource value: 0x7f070013
+			public const int edittextprofile = 2131165203;
+			
 			// aapt resource value: 0x7f07002d
 			public const int fragment1 = 2131165229;
 			
@@ -453,61 +390,31 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070005
 			public const int light = 2131165189;
->>>>>>> Stashed changes
 			
-			// aapt resource value: 0x7f080008
-			public const int light = 2131230728;
-=======
-			// aapt resource value: 0x7f070000
-			public const int icon_only = 2131165184;
+			// aapt resource value: 0x7f070015
+			public const int linearLayout1 = 2131165205;
 			
-			// aapt resource value: 0x7f070005
-			public const int light = 2131165189;
->>>>>>> origin/master
-=======
-			// aapt resource value: 0x7f070013
-			public const int edittextprofile = 2131165203;
+			// aapt resource value: 0x7f070018
+			public const int linearLayout2 = 2131165208;
 			
-			// aapt resource value: 0x7f070000
-			public const int icon_only = 2131165184;
+			// aapt resource value: 0x7f07001b
+			public const int linearLayout3 = 2131165211;
 			
-			// aapt resource value: 0x7f070005
-			public const int light = 2131165189;
->>>>>>> Stashed changes
+			// aapt resource value: 0x7f07001e
+			public const int linearLayout4 = 2131165214;
 			
-			// aapt resource value: 0x7f080015
-			public const int linearLayout1 = 2131230741;
+			// aapt resource value: 0x7f070021
+			public const int linearLayout5 = 2131165217;
 			
-			// aapt resource value: 0x7f080018
-			public const int linearLayout2 = 2131230744;
+			// aapt resource value: 0x7f070024
+			public const int msgText = 2131165220;
 			
-			// aapt resource value: 0x7f08001b
-			public const int linearLayout3 = 2131230747;
-			
-			// aapt resource value: 0x7f08001e
-			public const int linearLayout4 = 2131230750;
-			
-<<<<<<< Updated upstream
-			// aapt resource value: 0x7f080021
-			public const int linearLayout5 = 2131230753;
-=======
 			// aapt resource value: 0x7f070008
 			public const int none = 2131165192;
->>>>>>> Stashed changes
 			
-			// aapt resource value: 0x7f080024
-			public const int msgText = 2131230756;
+			// aapt resource value: 0x7f07002b
+			public const int progressBar1 = 2131165227;
 			
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-			// aapt resource value: 0x7f080002
-			public const int none = 2131230722;
-=======
-			// aapt resource value: 0x7f070008
-			public const int none = 2131165192;
->>>>>>> origin/master
-=======
 			// aapt resource value: 0x7f070031
 			public const int relativeLayout1 = 2131165233;
 			
@@ -522,66 +429,30 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070030
 			public const int textView2 = 2131165232;
->>>>>>> Stashed changes
-=======
-			// aapt resource value: 0x7f070008
-			public const int none = 2131165192;
->>>>>>> Stashed changes
 			
-			// aapt resource value: 0x7f08002b
-			public const int progressBar1 = 2131230763;
+			// aapt resource value: 0x7f070009
+			public const int titles_fragment = 2131165193;
 			
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-			// aapt resource value: 0x7f080004
-			public const int standard = 2131230724;
-=======
-			// aapt resource value: 0x7f070001
-			public const int standard = 2131165185;
->>>>>>> origin/master
-=======
-			// aapt resource value: 0x7f070001
-			public const int standard = 2131165185;
->>>>>>> Stashed changes
+			// aapt resource value: 0x7f07000f
+			public const int txtEmail = 2131165199;
 			
-			// aapt resource value: 0x7f080009
-			public const int titles_fragment = 2131230729;
+			// aapt resource value: 0x7f070027
+			public const int txtOr = 2131165223;
 			
-			// aapt resource value: 0x7f08000f
-			public const int txtEmail = 2131230735;
+			// aapt resource value: 0x7f070010
+			public const int txtPassword = 2131165200;
 			
-			// aapt resource value: 0x7f080027
-			public const int txtOr = 2131230759;
+			// aapt resource value: 0x7f07000c
+			public const int txtPasswordSignIn = 2131165196;
 			
-			// aapt resource value: 0x7f080010
-			public const int txtPassword = 2131230736;
+			// aapt resource value: 0x7f07000e
+			public const int txtUserName = 2131165198;
 			
-			// aapt resource value: 0x7f08000c
-			public const int txtPasswordSignIn = 2131230732;
+			// aapt resource value: 0x7f07000b
+			public const int txtUserNameSignIn = 2131165195;
 			
-<<<<<<< Updated upstream
-			// aapt resource value: 0x7f08000e
-			public const int txtUserName = 2131230734;
-			
-			// aapt resource value: 0x7f08000b
-			public const int txtUserNameSignIn = 2131230731;
-			
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-			// aapt resource value: 0x7f080005
-			public const int wide = 2131230725;
-=======
 			// aapt resource value: 0x7f070002
 			public const int wide = 2131165186;
->>>>>>> origin/master
-=======
-			// aapt resource value: 0x7f070002
-			public const int wide = 2131165186;
->>>>>>> Stashed changes
-=======
-			// aapt resource value: 0x7f070002
-			public const int wide = 2131165186;
->>>>>>> Stashed changes
 			
 			static Id()
 			{
@@ -766,22 +637,6 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 			
 			private String()
-			{
-			}
-		}
-		
-		public partial class Style
-		{
-			
-			// aapt resource value: 0x7f070000
-			public const int Mono_Android_Theme_Splash = 2131165184;
-			
-			static Style()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Style()
 			{
 			}
 		}

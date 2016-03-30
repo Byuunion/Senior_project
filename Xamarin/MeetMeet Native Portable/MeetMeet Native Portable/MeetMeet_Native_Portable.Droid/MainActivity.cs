@@ -210,19 +210,11 @@ namespace MeetMeet_Native_Portable.Droid
 			userEmailSignUp = e.Email;
 			userPasswordSignUp = e.Password;
 
-<<<<<<< Updated upstream
-			if (await TryToSignUp (userNameSignUp, userPasswordSignUp)) 
+			if (await TryToSignUp (userNameSignUp, userPasswordSignUp))
 			{
 				StartActivity(typeof(EditProfileActivity));
 			} 
-			else 
-			{
-
-			}
-=======
 			await TryToSignUp(userNameSignUp, userPasswordSignUp);
->>>>>>> Stashed changes
-
 
 			// Post to server code
 
