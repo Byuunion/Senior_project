@@ -119,7 +119,7 @@ namespace MeetMeet_Native_Portable.Droid
 			if (mTxtUserNameSignIn.Text != "" && mTxtPasswordSignIn.Text != "") 
 			{
 				mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text));
-				//this.Dismiss ();
+				this.Dismiss ();
 			}
 		}
 
