@@ -11,16 +11,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-using System.Net.Http;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-using Android.Gms.Common;
-using ClientApp;
-
-
 namespace MeetMeet_Native_Portable.Droid
 {
 	public class OnEditProfileEventArgs: EventArgs 
@@ -48,21 +38,18 @@ namespace MeetMeet_Native_Portable.Droid
 		}
 
 	}
-
 	[Activity (Label = "EditProfileActivity")]			
 	public class EditProfileActivity : Activity
 	{
-		public static string serverURL = "http://52.91.212.179:8800/";
-		private Credentials credentials;
 		private EditText mTxtGender;
 		private EditText mTxtProfile;
 		private Button mButtonEditProfileSave;
 
 		public EventHandler <OnEditProfileEventArgs> mOnEditProfileComplete;
 
-		protected override void OnCreate (Bundle bundle)
+		protected override void OnCreate (Bundle savedInstanceState)
 		{
-			base.OnCreate (bundle);
+			base.OnCreate (savedInstanceState);
 			SetContentView (Resource.Layout.edit_profile);
 			// Create your application here
 
@@ -80,22 +67,10 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 
 			{
-				//mOnEditProfileComplete.Invoke (this, new OnEditProfileEventArgs (mTxtGender.Text, mTxtProfile.Text));
+				mOnEditProfileComplete.Invoke (this, new OnEditProfileEventArgs (mTxtGender.Text, mTxtProfile.Text));
 				//this.Dismiss ();
 			}
 		}
-
-		//async void mOnEditProfileSaveComplete (Object sender, OnEditProfileEventArgs e)
-		//{
-		//	string userGender = e.Gender;
-		//	string userProfile = e.Profile;
-
-		//	Profile myProfile = new Profile (credentials.username, userGender, userProfile, credentials.token);
-
-		//	await Poster.PostObject (myProfile, serverURL);
-
-		//}
 	}
-		
 }
 
