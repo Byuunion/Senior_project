@@ -19,6 +19,7 @@ namespace MeetMeet_Native_Portable
             this.mUsername = username;
             this.mToken = default(String);
         }
+			
 
         public async Task<Boolean> doLogin(string password, string url)
         {
