@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GcmListenerService.cs" />
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignUp.cs" />
@@ -94,6 +93,8 @@
     <Compile Include="InstanceIdListenerService.cs" />
     <Compile Include="EditProfileActivity.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="HomeActivity.cs" />
+    <Compile Include="MainActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -124,6 +125,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\rec_msg.png" />
     <AndroidResource Include="Resources\drawable-hdpi\sent_msg.png" />
     <AndroidResource Include="Resources\layout\invite_request.axml" />
+    <AndroidResource Include="Resources\layout\home_page.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

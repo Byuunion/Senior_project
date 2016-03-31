@@ -59,7 +59,13 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			currentLocation.UpdateGeolocation ();
 			List<Profile> nearbyUserslist = new List<Profile>();
-			nearbyUserslist = task3.Result;
+			try{
+				nearbyUserslist = task3.Result;
+			}
+			catch(Exception e) {
+				string error = e.Message;
+				System.Diagnostics.Debug.WriteLine ("\n\nServer offline\n\n" + error);
+			}
 
 				
 			int numUsers = nearbyUserslist.Count;
