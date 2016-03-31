@@ -10,8 +10,11 @@ namespace MeetMeet_Native_Portable.Droid
 {
     internal class DetailsFragment : Fragment
     {
-        public static DetailsFragment NewInstance(int playId)
+		private static string[] nearbyBios;
+		
+        public static DetailsFragment NewInstance(int playId, string[] bios)
         {
+			nearbyBios = bios;
             var detailsFrag = new DetailsFragment {Arguments = new Bundle()};
             detailsFrag.Arguments.PutInt("current_play_id", playId);
             return detailsFrag;
@@ -36,7 +39,7 @@ namespace MeetMeet_Native_Portable.Droid
             var padding = Convert.ToInt32(TypedValue.ApplyDimension(ComplexUnitType.Dip, 4, Activity.Resources.DisplayMetrics));
             text.SetPadding(padding, padding, padding, padding);
             text.TextSize = 24;
-            text.Text = Shakespeare.Dialogue[ShownPlayId];
+			text.Text = nearbyBios[ShownPlayId];
 
             scroller.AddView(text);
 

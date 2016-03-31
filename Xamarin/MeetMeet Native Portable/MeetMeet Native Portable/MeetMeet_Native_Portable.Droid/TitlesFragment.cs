@@ -17,6 +17,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private bool _isDualPane;
 		private LocationManager locationManager;
 		private String provider;
+		private string[] nearbyBios;
 
 		public override void OnActivityCreated(Bundle savedInstanceState)
 		{
@@ -39,18 +40,38 @@ namespace MeetMeet_Native_Portable.Droid
 			Geolocation currentLocation = new Geolocation ("kshea12", location.Latitude, location.Longitude);
 			//Geolocation currentLocation = new Geolocation ("kshea12", 39.75259742, -75.21786803);
 
+			/**
 			Task<List<Geolocation>> task3 = Task<List<Geolocation>>.Factory.StartNew(() => 
 				{ 
 					return currentLocation.GetNearbyUsers().Result;
 				});
+			currentLocation.UpdateGeolocation ();
+
 			List<Geolocation> nearbyUserslist = task3.Result;
 			int numUsers = nearbyUserslist.Count;
 			string[] nearbyUsers = new string[numUsers];
+			**/
 
-			for (int i = 0; i < numUsers; i++) 
+			Task<List<Profile>> task3 = Task<List<Profile>>.Factory.StartNew(() => 
+				{ 
+					return currentLocation.GetNearbyProfiles().Result;
+				});
+			
+			currentLocation.UpdateGeolocation ();
+			List<Profile> nearbyUserslist = new List<Profile>();
+			nearbyUserslist = task3.Result;
+
+				
+			int numUsers = nearbyUserslist.Count;
+			string[] nearbyUsers = new string[numUsers];
+			nearbyBios = new string[numUsers];
+
+			for (int i = 0; i < numUsers; i++)
+			{
 				nearbyUsers [i] = nearbyUserslist [i].username;
-
-
+				nearbyBios [i] = nearbyUserslist [i].bio;
+			}
+		
 			var adapter = new ArrayAdapter<String>(Activity, Android.Resource.Layout.SimpleListItemChecked, nearbyUsers);
 			ListAdapter = adapter;
 
@@ -64,7 +85,6 @@ namespace MeetMeet_Native_Portable.Droid
 				ListView.ChoiceMode = ChoiceMode.Single;
 				ShowDetails(_currentPlayId);
 			}
-			currentLocation.UpdateGeolocation ();
 		}
 
 		public override void OnSaveInstanceState(Bundle outState)
@@ -92,7 +112,7 @@ namespace MeetMeet_Native_Portable.Droid
 				if (details == null || details.ShownPlayId != playId)
 				{
 					// Make new fragment to show this selection.
-					details = DetailsFragment.NewInstance(playId);
+					details = DetailsFragment.NewInstance(playId, nearbyBios);
 
 					// Execute a transaction, replacing any existing
 					// fragment with this one inside the frame.

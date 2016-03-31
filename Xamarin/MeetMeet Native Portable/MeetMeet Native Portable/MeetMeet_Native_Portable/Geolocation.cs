@@ -76,5 +76,35 @@ namespace MeetMeet_Native_Portable
 
 			return nearbylist;
 		}
+
+		public async Task<List<Profile>> GetNearbyProfiles()
+		{
+			var resource = minLat + "/" + maxLat + "/" + minLong + "/" + maxLong + "/" + latitude + "/" + longitude;
+			var nearbylist = await Getter<Profile>.GetObjectList(resource, serverURL + "user/");
+
+			return nearbylist;
+		}
+
+		public double GetDistance(double lat1, double long1, double lat2, double long2)
+		{
+			//var r = 6371.0; // Earth's radius in km
+			var r = 3960.0; // Earth's radius in mi
+
+			var latRad1 = toRadians(lat1);// toRadians(Latiude);
+			var latRad2 = toRadians(lat2);
+
+			var	latitudeDiff = toRadians(lat2 - lat1);
+			var longitudeDiff = toRadians(long2 - long1);
+
+			var a = Math.Sin(latitudeDiff/2.0) * Math.Sin(latitudeDiff/2.0) +
+				Math.Cos(latRad1) * Math.Cos(latRad2) *
+				Math.Sin(longitudeDiff/2.0) * Math.Sin(longitudeDiff/2.0);
+
+			var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1-a));
+
+			var d = r * c;
+
+			return d;
+		}
 	}
 }

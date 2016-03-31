@@ -12,7 +12,7 @@ public class DetailsActivity : FragmentActivity
         base.OnCreate(bundle);
         var index = Intent.Extras.GetInt("current_play_id", 0);
 
-        var details = DetailsFragment.NewInstance(index); // Details
+        var details = DetailsFragment.NewInstance(index, null); // Details
         var fragmentTransaction = SupportFragmentManager.BeginTransaction();
         fragmentTransaction.Add(Android.Resource.Id.Content, details);
         fragmentTransaction.Commit();

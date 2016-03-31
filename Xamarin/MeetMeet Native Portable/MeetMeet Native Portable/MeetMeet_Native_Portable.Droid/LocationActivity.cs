@@ -50,11 +50,12 @@ namespace MeetMeet_Native_Portable.Droid
 			// Initialize the location fields
 			if (location != null) {
 				Geolocation loc = new Geolocation (username, location.Latitude, location.Longitude);
-				//loc.UpdateGeolocation ();
+				loc.UpdateGeolocation ();
+
 				userlatitudeField.Text = Convert.ToString(loc.latitude);
 				userlongitudeField.Text = Convert.ToString(loc.longitude);
-				UpdateGeolocation (loc);
-				GetUsersNearby (loc);
+				//UpdateGeolocation (loc);
+				//GetUsersNearby (loc);
 				//serverlatitudeField.Text = loc.nearbyUsers;
 
 			}
@@ -135,10 +136,10 @@ namespace MeetMeet_Native_Portable.Droid
 
 		private async void GetLocationFromServer(Location location)
 		{
-			double lat1 = location.Latitude;
-			double lng1 = location.Longitude;
-			userlatitudeField.Text = Convert.ToString(lat1);
-			userlongitudeField.Text = Convert.ToString(lng1);
+			double lat = location.Latitude;
+			double lng = location.Longitude;
+			userlatitudeField.Text = Convert.ToString(lat);
+			userlongitudeField.Text = Convert.ToString(lng);
 
 			Profile test = new Profile("KevyKevvv", "sflkj", "dsf", "token");
 
@@ -150,68 +151,13 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 			else
 			{
-				double lat2 = test2.current_lat;
-				double lng2 = test2.current_long;
-				serverlatitudeField.Text = Convert.ToString(lat2);
-				serverlongitudeField.Text = Convert.ToString(lng2);
-				distanceField.Text = string.Format("{0:0.00}", GetDistance (lat1, lng1, lat2, lng2)) + " mi";
+				Geolocation serverLocation = new Geolocation (test2.username, test2.current_lat, test2.current_long);
+				serverlatitudeField.Text = Convert.ToString(serverLocation.latitude);
+				serverlongitudeField.Text = Convert.ToString(serverLocation.longitude);
+				distanceField.Text = string.Format("{0:0.00}", serverLocation.GetDistance (lat, lng, serverLocation.latitude, serverLocation.longitude)) + " mi";
 
 
 			}
-		}
-
-		public double toRadians(double degrees)
-		{
-			return (Math.PI / 180.0) * degrees;
-		}
-
-		public double GetDistance(double lat1, double long1, double lat2, double long2)
-		{
-			//var r = 6371.0; // Earth's radius in km
-			var r = 3960.0; // Earth's radius in mi
-
-			var latRad1 = toRadians(lat1);// toRadians(Latiude);
-			var latRad2 = toRadians(lat2);
-
-			var	latitudeDiff = toRadians(lat2 - lat1);
-			var longitudeDiff = toRadians(long2 - long1);
-
-			var a = Math.Sin(latitudeDiff/2.0) * Math.Sin(latitudeDiff/2.0) +
-				Math.Cos(latRad1) * Math.Cos(latRad2) *
-				Math.Sin(longitudeDiff/2.0) * Math.Sin(longitudeDiff/2.0);
-
-			var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1-a));
-
-			var d = r * c;
-
-			return d;
-		}
-
-		public double[] MinMaxLat(double latitude)
-		{
-			double r = 0.1570; //constant angle 
-			var lat = toRadians(latitude);
-
-			double[] minMax = new double[2];
-			minMax [0] = lat - r;
-			minMax [1] = lat + r;
-
-			return minMax;
-		}
-
-		public double[] minMaxLong(double latitude, double longitude)
-		{
-			double r = 0.1570; //constant angle 
-			var lat = toRadians (latitude);
-			var lng = toRadians (longitude);
-
-			double deltaLong = Math.Asin (Math.Sin (r) / Math.Cos (lat));
-
-			double[] minMax = new double[2];
-			minMax [0] = lng - deltaLong;
-			minMax [1] = lng + deltaLong;
-
-			return minMax;
 		}
 	}
 }

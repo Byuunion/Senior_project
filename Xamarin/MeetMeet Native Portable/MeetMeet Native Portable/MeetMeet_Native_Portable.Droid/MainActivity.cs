@@ -214,7 +214,7 @@ namespace MeetMeet_Native_Portable.Droid
 			{
 				StartActivity(typeof(EditProfileActivity));
 			} 
-			await TryToSignUp(userNameSignUp, userPasswordSignUp);
+			//await TryToSignUp(userNameSignUp, userPasswordSignUp);
 
 			// Post to server code
 
