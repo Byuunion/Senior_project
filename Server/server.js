@@ -166,7 +166,7 @@ app.get('/user/login/:username/:password', function(req, res) {
 					response.success = true;
 					response.success_message = "User successfully logged in: " + req.params.username;
 					response.token = token;
-					connection.query('UPDATE user_login SET token = "' + connection.escape(token) + '" WHERE username = ' + connection.escape(req.params.username), function(err, data){
+					connection.query('UPDATE user_login SET token = ' + connection.escape(token) + ' WHERE username = ' + connection.escape(req.params.username), function(err, data){
 						if (err){
 							response.success = false;
 							response.success_message = "Failed update token.";
