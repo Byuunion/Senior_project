@@ -906,7 +906,7 @@ app.delete('/user', function(req, res) {
 	});
 });
 
-app.put('/user/profile/location/:username', function(req, res) {
+app.put('/user/profile/', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
 	
@@ -915,11 +915,15 @@ app.put('/user/profile/location/:username', function(req, res) {
 		else console.log("Error connecting database.");
 	});
 
-	var username = req.param.username;
+	var username = req.body.username;
+	
+	var response = {
+				success: null,
+				success_message: null
+	};
 
-    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
         if (err || data.length === 0){
-			var response;
 			response.success = false;
 			response.success_message = "Failed to find existing token from: " + username + ".";
 			res.json(response);
@@ -928,25 +932,20 @@ app.put('/user/profile/location/:username', function(req, res) {
 		
 			var token = data[0].token;
 		
-			var response = {
-				success: null,
-				success_message: "User location updated"
-			};
-		
 			if(req.body.token === token){
-				var data = {
-					current_lat: req.body.current_lat,
-					current_long: req.body.current_long
-				};
-				
-				connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
+				// Clones req.body without using a reference
+				var data = JSON.parse(JSON.stringify(req.body));
+				delete data.username;
+				delete data.token;
+
+				connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(username), data, function(err, data){
 					if (err){
 						response.success = false;
-						response.success_message = "Failed to update location of user: " + username + ".";
+						response.success_message = "Failed to update profile of user: " + username + ".";
 					}
 					else{
 						response.success = true;
-						response.success_message = "Successfully updates location of user: " + username + ".";
+						response.success_message = "Successfully updates profile of user: " + username + ".";
 					}
 					res.json(response);
 				});
@@ -966,15 +965,15 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
 
     connection.connect(function(err){
         if(!err) console.log("Database is connected. Get Geolocation Users");
-                else console.log("Error connecting database.");
-        });
+		else console.log("Error connecting database.");
+	});
 
     var radius = 0.00126291; // 5 miles
 
-        var response = {
-                                success: null,
-                                success_message: null
-        };
+	var response = {
+							success: null,
+							success_message: null
+	};
 
     connection.query('SELECT * FROM (SELECT * FROM user_profile WHERE (current_lat >='
         + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat)

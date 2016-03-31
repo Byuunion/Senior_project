@@ -17,9 +17,7 @@ Profile
 
 	/user/profile POST: Create user profile tupple. {username: , positive_votes: , negative_votes: , current_lat: , current_long: , gender: , bio: , token: }
 	
-Profile Location
-
-	/user/profile/location/:username PUT: Updates user profile's lat/long values {current_lat: , current_long: , token: }
+	/user/profile PUT: Updates profile to whatever you pass in. {username: , xxx: , xx, x: , token: } USERNAME AND TOKEN WILL NOT BE UPDATED BUT NEEDED
 	
 Login
 
