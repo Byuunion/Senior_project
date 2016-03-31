@@ -966,28 +966,35 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
 
     connection.connect(function(err){
         if(!err) console.log("Database is connected. Get Geolocation Users");
-		else console.log("Error connecting database.");
-	});
-    
+                else console.log("Error connecting database.");
+        });
+
     var radius = 0.00126291; // 5 miles
-	
-	var response = {
-				success: null,
-				success_message: null
-	};
-	
-    connection.query('SELECT username FROM (SELECT current_lat, current_long, username FROM user_profile WHERE (current_lat >=' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')) AS reducedProfiles  WHERE acos(sin('  + connection.escape(req.params.yourLat) + ') * sin(current_lat) + cos(' + connection.escape(req.params.yourLat) + ') * cos(current_lat) * cos(current_long -' + connection.escape(req.params.yourLong) + ')) <=' + radius, function(err,data){
-    // connection.query('SELECT username FROM user_profile WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')', function(err, data){ 
-		if (err){
-			response.success = false;
-			response.success_message = "Failed to update location of user: " + username + ".";
-		}
-		else{
-			response.success = True;
-			response.success_message = "Here are all of the users near: " + username + ".";
-		}
-		res.json(data);
-	});
+
+        var response = {
+                                success: null,
+                                success_message: null
+        };
+
+    connection.query('SELECT * FROM (SELECT * FROM user_profile WHERE (current_lat >='
+        + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat)
+        + ') AND (current_long >= ' + connection.escape(req.params.min_long)
+        + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')) AS reducedProfiles '
+        + ' WHERE acos(sin('  + connection.escape(req.params.yourLat) + ')' + ' * sin(current_lat) '
+        + '+ cos(' + connection.escape(req.params.yourLat) + ') * cos(current_lat) '
+        + ' * cos( current_long - ' + connection.escape(req.params.yourLong) + ')) <='
+        + radius, function(err,data){
+     //connection.query('SELECT username FROM user_profile WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')', function(err, data){ 
+                if (err){
+                        response.success = false;
+                        response.success_message = "Failed to get nearby users.";
+                }
+                else{
+                        response.success = true;
+                        response.success_message = "Here are all of the users near lat: " + req.params.yourLat +  " long: " + req.params.yourLong + ".";
+                }
+                res.json(data);
+        });
     connection.end();
 });
 
