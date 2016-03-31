@@ -52,7 +52,7 @@ namespace MeetMeet_Native_Portable
 		public async void UpdateGeolocation()
 		{
 			Credentials test = new Credentials(username);
-			var loggedIn = await test.doLogin("kevin", serverURL);
+			var loggedIn = await test.doLogin("a", serverURL);
 
 			if (loggedIn)
 			{

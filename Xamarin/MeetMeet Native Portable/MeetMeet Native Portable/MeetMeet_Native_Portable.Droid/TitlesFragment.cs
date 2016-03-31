@@ -37,9 +37,9 @@ namespace MeetMeet_Native_Portable.Droid
 			Criteria criteria = new Criteria();
 			provider = locationManager.GetBestProvider(criteria, false);
 			Location location = locationManager.GetLastKnownLocation(provider);
-			Geolocation currentLocation = new Geolocation ("kshea12", location.Latitude, location.Longitude);
+			Geolocation currentLocation = new Geolocation ("a", location.Latitude, location.Longitude);
 			//Geolocation currentLocation = new Geolocation ("kshea12", 39.75259742, -75.21786803);
-
+			currentLocation.UpdateGeolocation ();
 			/**
 			Task<List<Geolocation>> task3 = Task<List<Geolocation>>.Factory.StartNew(() => 
 				{ 
@@ -57,7 +57,6 @@ namespace MeetMeet_Native_Portable.Droid
 					return currentLocation.GetNearbyProfiles().Result;
 				});
 			
-			currentLocation.UpdateGeolocation ();
 			List<Profile> nearbyUserslist = new List<Profile>();
 			try{
 				nearbyUserslist = task3.Result;

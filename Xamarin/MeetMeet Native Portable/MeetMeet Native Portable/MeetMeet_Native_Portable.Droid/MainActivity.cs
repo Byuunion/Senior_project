@@ -149,21 +149,17 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">E.</param>
-		void signInDialog_mOnSignInComplete(Object sender, OnSignInEventArgs e)
+		public async void signInDialog_mOnSignInComplete(Object sender, OnSignInEventArgs e)
 		{
 			// here we send request to server
 			// just simulating here
 			userNameSignIn = e.Username;
 			userPasswordSignIn = e.Password;
-			Thread thread = new Thread(ActLikeARequest);
-			thread.Start ();
-			//string userPassword = e.Password;
 
-			//Post to server code. Will need two outcomes if can't log in or if successful
-
-			//Success
-
-			//Failure
+			if (await TryToLogin (userNameSignIn, userPasswordSignIn))
+			{
+				StartActivity(typeof(HomeActivity));
+			} 
 		}
 
 		// Sign Up Click

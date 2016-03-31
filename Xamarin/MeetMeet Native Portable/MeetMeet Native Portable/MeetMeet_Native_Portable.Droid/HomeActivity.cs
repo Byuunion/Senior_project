@@ -56,10 +56,11 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Edit Profile Click
 			mButtonEditProfile.Click += delegate {
-				StartActivity (typeof(ProfileMainActivity));
+				StartActivity (typeof(EditProfileActivity));
 			};
 		}
 			
 	}
 }
 
+ 
