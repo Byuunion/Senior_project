@@ -166,7 +166,7 @@ app.get('/user/login/:username/:password', function(req, res) {
 					response.success = true;
 					response.success_message = "User successfully logged in: " + req.params.username;
 					response.token = token;
-					connection.query('UPDATE user_login SET token = "' + token + '" WHERE username = ' + connection.escape(req.params.username), function(err, data){
+					connection.query('UPDATE user_login SET token = "' + connection.escape(token) + '" WHERE username = ' + connection.escape(req.params.username), function(err, data){
 						if (err){
 							response.success = false;
 							response.success_message = "Failed update token.";
@@ -245,7 +245,7 @@ app.post('/user/profile', function(req, res) {
 	});
 });
 
-app.post('/user/interest/', function(req, res) {
+app.post('/user/interest', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
 
@@ -449,6 +449,7 @@ app.post('/user/gcmregid', function(req, res) {
 	});
 });
 
+//Updates user's gcmregid
 app.put('/user/gcmregid', function(req, res) {
 	var connection = mysql.createConnection(mysqlConfig);
 	
@@ -506,11 +507,6 @@ app.post('/user/message', function(req, res) {
 
     connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(sender), function(err, data){
 		if (err || data.length === 0){
-			var response = {
-				success: null,
-				success_message: null
-			};
-			
 			response.success = false;
 			response.success_message = "Failed to find existing token from: " + sender + ".";
 			res.json(response);
@@ -537,7 +533,7 @@ app.post('/user/message', function(req, res) {
 							'registration_ids': [ to ],
 							'data': {
 								'message_code': '1',
-								'username_from': req.body.username_from,
+								'from': req.body.username_from,
 								'message': req.body.message_text
 							}
 						});
@@ -591,11 +587,210 @@ app.post('/user/message', function(req, res) {
 	});            
 });
 
+//Posting an invite
+app.post('/user/group/invite',function(req, res) {
+	
+	var connection = mysql.createConnection(mysqlConfig);
 
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected. Post User Invite.");
+		else console.log("Error connecting database.");
+	});
+    
+    var username = req.body.username_from;
+    
+    var response = {
+		success: null,
+		success_message: null
+	};
+    
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
+        if (err || data.length === 0){
+			response.success = false;
+			response.success_message = "Failed to find existing token from: " + username + ".";
+			res.json(response);
+		}
+		else{
+			var token = data[0].token;
+		
+			if(req.body.token === token){
+			
+				var data = {
+					username_from: username,
+					username_to: req.body.username_to
+				};
+				
+				connection.query('INSERT INTO user_invite SET ?', data, function(err, rows) {
+					if (err){
+						response.success = false;
+						response.success_message = "Failed to post invite from: " + username + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "Successfully created invite.";	
+					}
+					res.json(response);
+				});
+			}
+			else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
+		}
+		connection.end();
+	});	
+});
 
+//Responding to an invite
+app.put('/user/group/invite' , function(req, res){
+	
+	// username_to's token
+	var connection = mysql.createConnection(mysqlConfig);
 
-
-
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected. Put User Invite.");
+		else console.log("Error connecting database.");
+	});
+    
+    var username = req.body.username_to;
+    
+    var response = {
+		success: null,
+		success_message: null
+	};
+    
+	// Accept group invite
+	if(req.body.response == true){
+		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
+			if (err || data.length === 0){
+				response.success = false;
+				response.success_message = "Failed to find existing token from: " + username + ".";
+				res.json(response);
+			}
+			else{
+				var token = data[0].token;
+			
+				if(req.body.token === token){
+					
+					var data = {
+						username_from: username,
+						username_to: req.body.username_to
+					};
+					
+					var sql = 'SELECT username_from, username_to FROM ?? WHERE ?? = ?, ?? = ?';
+					var inserts = ['user_invite', 'username_from', req.body.username_from, 'username_to', username];
+					sql = mysql.format(sql, inserts);
+					//connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(req.body.username_from) + ', username_to = ' + connection.escape(username), function(err, data){
+					
+					connection.query(sql, function(err, data){
+						if(err || username_from !== data[0].username_from && username !== data[0].username_to){
+							response.success = false;
+							response.success_message = "Invite does not exist";
+							res.json(response);
+						}
+						else{
+							connection.query('SELECT * FROM user_group WHERE username_to = ' + connection.escape(username), function(err, receiver_data) {
+								if(err){
+									response.success = false;
+									response.success_message = "Error in query";
+									res.json(response);
+								}
+								else{
+									if(receiver_data.length !== 0){ // Receiver is already in a group 
+										response.success = false;
+										response.success_message = "Receiver is already in a group";
+										res.json(response);
+									}
+									else{ // Receiver not in a group
+										connection.query('SELECT * FROM user_group WHERE username_to = ' + connection.escape(req.body.username_from), function(err, sender_data) {
+											if(err){
+												response.success = false;
+												response.success_message = "Error in query";
+												res.json(response);
+											}
+											else{
+												if(data.length !== 0){ // Sender is in a group 
+													// Add receiver to sender's group
+													var groupData = {
+														id: sender_data[0].id,
+														username: username
+													}
+													connection.query('INSERT INTO user_group SET ?', groupData, function(err) {
+														if(err){
+															response.success = false;
+															response.success_message = "Error inserting into group";
+														}
+														else{
+															response.success = true;
+															response.success_message = "Receiver added to sender's group";
+														}
+														res.json(response);
+														connection.end();
+													});
+												}
+												else{ // Sender is not in a group
+													// Create a new group and add sender to it.
+													connection.query('INSERT INTO user_group ?', [req.body.username_from], function(err, groupData) {
+														if(err){
+															response.success = false;
+															response.success_message = "Error inserting into group";
+															res.json(response);
+															connection.end();
+														}
+														else{
+															// Add receiver to the same group
+															connection.query('INSERT INTO user_group ?', [groupData[0].id, req.body.username_from], function(err) {
+																if(err){
+																	response.success = false;
+																	response.success_message = "Error inserting into group";
+																}
+																else{
+																	response.success = true;
+																	response.success_message = "Created new group and added to the sender";
+																}
+																res.json(response);
+																connection.end();
+															});
+														}
+													});				
+												}
+											}
+										});
+									}
+								}
+							});
+						}
+					)};
+				}
+				else{
+					response.success = false;
+					response.success_message = "Token didn't match";
+					res.json(response);
+				}
+			}
+			connection.end();
+		});	
+	}
+	// Delete the invite
+	var sql = 'DELETE FROM user_invite WHERE username_from = ? , username_to = ?';
+	var inserts = [req.body.username_from, username];
+	sql = mysql.format(sql, inserts);
+	
+	//connection.query('DELETE FROM user_invite WHERE username_from = ? , username_to = ?', [req.body.username_from, username], function(err, data){
+	connection.query(sql, function(err, data){	
+		if(err){
+			response.success = false;
+			response.success_message = "Error inserting into group";
+		}
+		else{
+			response.success = true;
+			response.success_message = "Receiver added to sender's group";
+		}
+		res.json(response);
+		connection.end();
+	});
+});
 app.delete('/user', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
@@ -715,14 +910,14 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
 	};
 	
     connection.query('SELECT username FROM (SELECT current_lat, current_long, username FROM user_profile WHERE (current_lat >=' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')) AS reducedProfiles  WHERE acos(sin('  + connection.escape(req.params.yourLat) + ') * sin(current_lat) + cos(' + connection.escape(req.params.yourLat) + ') * cos(current_lat) * cos(current_long -' + connection.escape(req.params.yourLong) + ')) <=' + radius, function(err,data){
-     //connection.query('SELECT username FROM user_profile WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')', function(err, data){ 
+    // connection.query('SELECT username FROM user_profile WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')', function(err, data){ 
 		if (err){
 			response.success = false;
-			response.success_message = "Failed to get nearby users.";
+			response.success_message = "Failed to update location of user: " + username + ".";
 		}
 		else{
-			response.success = true;
-			response.success_message = "Here are all of the users near lat: " + req.params.yourLat +  " long: " + req.params.yourLong + ".";
+			response.success = True;
+			response.success_message = "Here are all of the users near: " + username + ".";
 		}
 		res.json(data);
 	});

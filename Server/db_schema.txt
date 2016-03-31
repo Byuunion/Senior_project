@@ -20,14 +20,6 @@ ON DELETE CASCADE
 ON UPDATE CASCADE
 );
 						
-CREATE TABLE user_message (username_to VARCHAR(15),
-username_from VARCHAR(15),
-message_time TIMESTAMP,
-message_text TEXT,
-PRIMARY KEY (username_to, username_from, message_time),
-FOREIGN KEY (username_to) references user_login(username),
-FOREIGN KEY (username_from) references user_login(username));
-						
 CREATE TABLE user_profile (username VARCHAR(15), 
 positive_votes INTEGER NOT NULL DEFAULT 0,
 negative_votes INTEGER NOT NULL DEFAULT 0,
@@ -37,6 +29,23 @@ gender VARCHAR(15),
 bio TEXT
 PRIMARY KEY (username),
 FOREIGN KEY (username) references user_login(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
+
+CREATE TABLE user_group (id INT AUTO_INCREMENT,
+username VARCHAR(15),
+PRIMARY KEY (id, username),
+FOREIGN KEY (username) references user_login(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
+
+CREATE TABLE user_invite (username_from VARCHAR(15),
+username_to VARCHAR(15),
+PRIMARY KEY (username_from, username_to),
+FOREIGN KEY (username_from) references user_login(username),
+FOREIGN KEY (username_to) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );

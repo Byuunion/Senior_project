@@ -49,10 +49,10 @@ Messages
 	/user/message/ POST: {username_to: , username_from: , message_text: , token: }
 
 GCM Registration
+
 	/user/gcmregid POST: {username: , token: , gcm_regid: }
 	
 	/user/gcmregid/:username PUT: {username: , token: , gcm_regid: }
-	
 		
 Get all Users
 
@@ -65,3 +65,17 @@ Delete specific User Keeps Messages
 Find Users
 
 	/user/:min_lat/:max_lat/:min_long/:max_long/:lat/:long GET: Get people based on param of geo location coordinates.
+
+Invite
+
+	/user/group/invite POST {username_from: , username_to: , token: , response: null}
+
+	/user/group/invite PUT {username_from: , username_to: , token: , response: } 
+
+Group Message
+
+	/user/group/message POST {username_from: , token: , message: }
+
+Remove the user from their current group
+
+	/user/group DELETE {username: , token: }
