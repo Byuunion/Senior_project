@@ -45,6 +45,8 @@ CREATE TABLE user_invite (username_from VARCHAR(15),
 username_to VARCHAR(15),
 PRIMARY KEY (username_from, username_to),
 FOREIGN KEY (username_from) references user_login(username),
+ON DELETE CASCADE
+ON UPDATE CASCADE
 FOREIGN KEY (username_to) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
