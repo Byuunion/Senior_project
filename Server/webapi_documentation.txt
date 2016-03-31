@@ -19,6 +19,10 @@ Profile
 	
 	/user/profile PUT: Updates profile to whatever you pass in. {username: , xxx: , xx, x: , token: } USERNAME AND TOKEN WILL NOT BE UPDATED BUT NEEDED
 	
+Profile Location
+
+	/user/profile/location/:username PUT: Updates user profile's lat/long values {current_lat: , current_long: , token: }
+	
 Login
 
 	/user/login/:username/:password GET: Creates a new token and writes it to the db and returns it 

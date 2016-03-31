@@ -960,6 +960,61 @@ app.put('/user/profile/', function(req, res) {
 	});
 });
 
+app.put('/user/profile/location/:username', function(req, res) {
+
+    var connection = mysql.createConnection(mysqlConfig);
+	
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected. Update User Profile Location");
+		else console.log("Error connecting database.");
+	});
+
+	var username = req.param.username;
+
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
+        if (err || data.length === 0){
+			var response;
+			response.success = false;
+			response.success_message = "Failed to find existing token from: " + username + ".";
+			res.json(response);
+		}
+		else{
+		
+			var token = data[0].token;
+		
+			var response = {
+				success: null,
+				success_message: "User location updated"
+			};
+		
+			if(req.body.token === token){
+				var data = {
+					current_lat: req.body.current_lat,
+					current_long: req.body.current_long
+				};
+				
+				connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
+					if (err){
+						response.success = false;
+						response.success_message = "Failed to update location of user: " + username + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "Successfully updates location of user: " + username + ".";
+					}
+					res.json(response);
+				});
+			}
+			else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
+		}
+	    connection.end();
+	});
+});
+
 app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
 
