@@ -94,7 +94,7 @@ namespace MeetMeet_Native_Portable.Droid
 		}
 
 		public override void OnSaveInstanceState(Bundle outState)
-		{
+		{  
 			base.OnSaveInstanceState(outState);
 			outState.PutInt("current_play_id", _currentPlayId);
 		}

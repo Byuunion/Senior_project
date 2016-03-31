@@ -67,7 +67,7 @@ namespace MeetMeet_Native_Portable.Droid
         {
            
 			base.OnCreate(bundle);
-			Config.context = this;
+			//Config.context = this;
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -77,7 +77,6 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
 			//mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
 			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
-			mProfileListSample = FindViewById<Button> (Resource.Id.TestProfileList);
 
 			//Click Events
 
@@ -88,14 +87,9 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignIn.Click += MButtonSignIn_Click;
 
 			mLocationButton.Click += delegate {
-				StartActivity (typeof(LocationActivity));
+				StartActivity (typeof(HomeActivity));
 			};
-
-			// ProfileListSample Click
-			mProfileListSample.Click += delegate {
-				StartActivity (typeof(ProfileMainActivity));
-			};
-
+				
             msgText = FindViewById<TextView>(Resource.Id.msgText);
 
             if (IsPlayServicesAvailable())

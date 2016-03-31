@@ -39,7 +39,17 @@ namespace MeetMeet_Native_Portable.Droid
             var padding = Convert.ToInt32(TypedValue.ApplyDimension(ComplexUnitType.Dip, 4, Activity.Resources.DisplayMetrics));
             text.SetPadding(padding, padding, padding, padding);
             text.TextSize = 24;
-			text.Text = nearbyBios[ShownPlayId];
+
+			try {
+				text.Text = nearbyBios[ShownPlayId];
+			}
+			catch(IndexOutOfRangeException e) {
+				string error = "\n\nServer offline\n\n" + e.Message;
+				System.Diagnostics.Debug.WriteLine (error);
+				nearbyBios = new string[1];
+				nearbyBios [0] = error;
+			}
+			
 
             scroller.AddView(text);
 
