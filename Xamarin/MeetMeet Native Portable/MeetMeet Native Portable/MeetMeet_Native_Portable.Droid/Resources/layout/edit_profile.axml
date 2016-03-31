@@ -25,13 +25,14 @@
         android:hint="Write Your Interests" />
     <Button
         android:text="Save"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:id="@+id/btnEditProfileSave"
         android:textSize="20dp"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:height="70dp"
+        android:height="20dp"
         android:paddingTop="2dp"
         android:background="@drawable/ButtonSignInStyle"
         android:layout_centerHorizontal="true" />

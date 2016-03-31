@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <TextView
+        android:text="JFUZZY"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:id="@+id/useWhoSentInvite"
+        android:textSize="50dp"
+        android:textStyle="italic"
+        android:gravity="center" />
+    <TextView
+        android:text="Would Like To MeetMeet"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/textView1"
+        android:textSize="55dp"
+        android:textStyle="bold"
+        android:gravity="center" />
+    <Button
+        android:id="@+id/BtnAcceptInvitation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/ButtonSignUpStyle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="15sp"
+        android:layout_marginBottom="10dp"
+        android:text="MeetMeet" />
+    <Button
+        android:id="@+id/BtnDeclineInvitation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/ButtonSignInStyle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="15sp"
+        android:text="Nah" />
+</LinearLayout>

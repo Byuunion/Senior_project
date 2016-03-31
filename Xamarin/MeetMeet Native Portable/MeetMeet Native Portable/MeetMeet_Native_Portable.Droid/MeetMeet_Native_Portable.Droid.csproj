@@ -123,6 +123,7 @@
     <AndroidResource Include="Resources\layout\msg_helper.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\rec_msg.png" />
     <AndroidResource Include="Resources\drawable-hdpi\sent_msg.png" />
+    <AndroidResource Include="Resources\layout\invite_request.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
