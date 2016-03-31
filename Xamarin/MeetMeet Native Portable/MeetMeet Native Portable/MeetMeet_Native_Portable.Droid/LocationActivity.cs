@@ -46,7 +46,7 @@ namespace MeetMeet_Native_Portable.Droid
 			provider = locationManager.GetBestProvider(criteria, false);
 			Location location = locationManager.GetLastKnownLocation(provider);
 
-			string username = "kshea12";
+			string username = "a";
 			// Initialize the location fields
 			if (location != null) {
 				Geolocation loc = new Geolocation (username, location.Latitude, location.Longitude);

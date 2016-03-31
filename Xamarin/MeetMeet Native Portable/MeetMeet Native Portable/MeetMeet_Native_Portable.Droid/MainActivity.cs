@@ -15,6 +15,7 @@ using System.Threading;
 
 using Android.Gms.Common;
 using ClientApp;
+using Newtonsoft.Json;
 
 
 namespace MeetMeet_Native_Portable.Droid
@@ -31,8 +32,6 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mButtonSignUp;
 		private Button mButtonSignIn;
 		//private ProgressBar mProgressBar;
-		private Button mLocationButton;
-		private Button mProfileListSample;
 
 		// User data
 		public string userNameSignIn;
@@ -65,9 +64,7 @@ namespace MeetMeet_Native_Portable.Droid
         /// <param name="bundle">Bundle.</param>
         protected override void OnCreate(Bundle bundle)
         {
-           
 			base.OnCreate(bundle);
-			//Config.context = this;
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -76,7 +73,6 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSignUp = FindViewById<Button> (Resource.Id.SignUpButton);
 			mButtonSignIn = FindViewById<Button> (Resource.Id.SignInButton);
 			//mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
-			mLocationButton = FindViewById<Button> (Resource.Id.TestLocationButton);
 
 			//Click Events
 
@@ -85,10 +81,6 @@ namespace MeetMeet_Native_Portable.Droid
 
 			//Sign in Click opens 
 			mButtonSignIn.Click += MButtonSignIn_Click;
-
-			mLocationButton.Click += delegate {
-				StartActivity (typeof(HomeActivity));
-			};
 				
             msgText = FindViewById<TextView>(Resource.Id.msgText);
 
@@ -151,15 +143,19 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		public async void signInDialog_mOnSignInComplete(Object sender, OnSignInEventArgs e)
 		{
-			// here we send request to server
-			// just simulating here
 			userNameSignIn = e.Username;
 			userPasswordSignIn = e.Password;
 
 			if (await TryToLogin (userNameSignIn, userPasswordSignIn))
 			{
-				StartActivity(typeof(HomeActivity));
-			} 
+				var userProfile = await Getter<Profile>.GetObject (userNameSignIn, serverURL + profile_ext + "/");
+
+				// pass profile object to HomeActivity
+				Intent intent = new Intent(this, typeof(HomeActivity));
+				var MySerializedObject = JsonConvert.SerializeObject(userProfile);
+				intent.PutExtra("UserProfile", MySerializedObject);
+				StartActivity(intent);
+			}
 		}
 
 		// Sign Up Click

@@ -328,9 +328,6 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070031
 			public const int SignUpButton = 2131165233;
 			
-			// aapt resource value: 0x7f070032
-			public const int TestLocationButton = 2131165234;
-			
 			// aapt resource value: 0x7f070020
 			public const int TextView01 = 2131165216;
 			
@@ -394,17 +391,17 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070013
 			public const int edittextprofile = 2131165203;
 			
-			// aapt resource value: 0x7f070035
-			public const int fragment1 = 2131165237;
+			// aapt resource value: 0x7f070034
+			public const int fragment1 = 2131165236;
 			
 			// aapt resource value: 0x7f070000
 			public const int icon_only = 2131165184;
 			
-			// aapt resource value: 0x7f070039
-			public const int imageButton1 = 2131165241;
+			// aapt resource value: 0x7f070038
+			public const int imageButton1 = 2131165240;
 			
-			// aapt resource value: 0x7f070036
-			public const int imageView1 = 2131165238;
+			// aapt resource value: 0x7f070035
+			public const int imageView1 = 2131165237;
 			
 			// aapt resource value: 0x7f070005
 			public const int light = 2131165189;
@@ -430,14 +427,14 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070008
 			public const int none = 2131165192;
 			
+			// aapt resource value: 0x7f070032
+			public const int progressBar1 = 2131165234;
+			
+			// aapt resource value: 0x7f070037
+			public const int relativeLayout1 = 2131165239;
+			
 			// aapt resource value: 0x7f070033
-			public const int progressBar1 = 2131165235;
-			
-			// aapt resource value: 0x7f070038
-			public const int relativeLayout1 = 2131165240;
-			
-			// aapt resource value: 0x7f070034
-			public const int scrollView1 = 2131165236;
+			public const int scrollView1 = 2131165235;
 			
 			// aapt resource value: 0x7f070001
 			public const int standard = 2131165185;
@@ -445,8 +442,8 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f07001c
 			public const int textView1 = 2131165212;
 			
-			// aapt resource value: 0x7f070037
-			public const int textView2 = 2131165239;
+			// aapt resource value: 0x7f070036
+			public const int textView2 = 2131165238;
 			
 			// aapt resource value: 0x7f070009
 			public const int titles_fragment = 2131165193;

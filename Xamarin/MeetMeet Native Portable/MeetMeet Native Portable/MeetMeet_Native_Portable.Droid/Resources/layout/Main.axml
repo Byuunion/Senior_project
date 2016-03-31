@@ -54,16 +54,6 @@
         android:layout_marginRight="20dp"
         android:text="Sign-Up"
         android:textSize="15sp" />
-    <Button
-        android:id="@+id/TestLocationButton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:background="@drawable/ButtonSignInStyle"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="15sp"
-        android:text="Home" />
     <RelativeLayout
         android:layout_weight="35"
         android:layout_width="match_parent"
