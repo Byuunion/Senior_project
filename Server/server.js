@@ -106,6 +106,7 @@ app.get('/user/interest/:username', function(req, res) {
     });
 });
 
+/*
 //Gets messages sent to username param
 app.get('/user/message/:username', function(req, res) {
     var connection = mysql.createConnection(mysqlConfig);
@@ -115,19 +116,24 @@ app.get('/user/message/:username', function(req, res) {
 		else console.log("Error connecting database.");
 	});
 
+	var response = {
+		success: null,
+		success_message: null,
+		token: null
+	};
     connection.query('SELECT * FROM user_message WHERE username_to = ' + connection.escape(req.params.username), function(err, data){
         if (err){
-			var response;
-			response.success = false;
-			response.success_message = "Failed to get messsages to: " + req.params.username + ".";
-			res.json(response);
+				response.success = false;
+				response.success_message = "Failed to get messsages to: " + req.params.username + ".";
+				res.json(response);
+			
 		}
         else res.json(data);
 		
 		connection.end();
     });
 });
-
+*/
 //Pass in username and password from the app's url
 app.get('/user/login/:username/:password', function(req, res) {
 
@@ -532,7 +538,7 @@ app.post('/user/message', function(req, res) {
 							'registration_ids': [ to ],
 							'data': {
 								'message_code': '1',
-								'from': req.body.username_from,
+								'username_from': req.body.username_from,
 								'message': req.body.message_text
 							}
 						});
@@ -1051,8 +1057,109 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
     connection.end();
 });
 
+
+
 app.post('/user/group/message', function(req, res) {
-	//user/group/message POST {username_from: , token: , message:}
+	var connection = mysql.createConnection(mysqlConfig);
+	
+    connection.connect(function(err){
+        if(!err) console.log("Database is connected.  Post Group Message.");
+		else console.log("Error connecting database.");
+	});
+	
+	var sender = req.body.username_from;
+
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(sender), function(err, data){
+		if (err || data.length === 0){
+			response.success = false;
+			response.success_message = "Failed to find existing token from: " + sender + ".";
+			res.json(response);
+		}
+		else{
+			var token = data[0].token;
+			console.log('Got here');
+			var response = {
+				success: null,
+				success_message: null
+			};
+
+			if(req.body.token === token){
+				
+				
+				
+				connection.query(	'SELECT gcm_regid ' +
+									'FROM user_gcm ' + 
+									'WHERE username IN (SELECT username ' + 
+														'FROM user_group ' + 
+														'WHERE id IN (	SELECT id ' +  
+																		'FROM user_group ' + 
+																		'WHERE username = ' + connection.escape(sender) + ') ' + 
+																		'AND username <> ' + connection.escape(sender) + ')', function(err, gcm_users){
+					if (err || data.length === 0){
+						response.success = false;
+						response.success_message = "Failed to find existing gcm_regid from: " + sender + ".";
+						res.json(response);
+					}
+					
+					else{
+						var to = gcm_users.map(function(item){return item.gcm_regid;});
+						console.log(to);
+						var postData = JSON.stringify({
+							'registration_ids': to,
+							'data': {
+								'message_code': '2',
+								'username_from': req.body.username_from,
+								'message': req.body.message_text
+							}
+						});
+						
+						console.log('JSON string: ' + postData);
+
+						var options = {
+							hostname: 'gcm-http.googleapis.com',
+							path: '/gcm/send',
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+								'Content-Length': postData.length,
+								'Authorization': 'key=' + GOOGLE_API_KEY
+							}
+						};
+						
+						var myReq = http.request(options, function (myRes) {
+							console.log('STATUS: ' + myRes.statusCode);
+							
+							console.log('HEADERS: ' + JSON.stringify(myRes.headers));
+							myRes.setEncoding('utf8');
+							myRes.on('data', function (chunk) {
+								console.log('BODY: ' + chunk);
+							});
+							myRes.on('end', function (){
+								console.log('No more data in response.')
+							})
+						});
+						
+						myReq.on('error', function (e) {
+							console.log('problem with request: ' + e.message);
+						});
+						
+						myReq.write(postData);
+						myReq.end();
+
+						response.success = true;
+						response.success_message = 'something happened';	
+						res.json(response);
+					}
+				});
+			}
+			 else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
+		}
+		connection.end();
+	});           
 });
 
 
