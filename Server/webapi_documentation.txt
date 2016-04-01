@@ -81,3 +81,9 @@ Group Message
 Remove the user from their current group
 
 	/user/group DELETE {username: , token: }
+
+Add a positive rating
+	/user/pos_rating/:username PUT {rating_username: , token: }
+
+Add a negative rating
+	/user/neg_rating/:username PUT {rating_username: , token: }

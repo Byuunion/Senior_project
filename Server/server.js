@@ -129,7 +129,6 @@ app.get('/user/message/:username', function(req, res) {
 });
 
 //Pass in username and password from the app's url
-//Hash not implemented yet
 app.get('/user/login/:username/:password', function(req, res) {
 
     var connection = mysql.createConnection(mysqlConfig);
@@ -1056,10 +1055,6 @@ app.post('/user/group/message', function(req, res) {
 	//user/group/message POST {username_from: , token: , message:}
 });
 
-app.get('/user/group/message', function(req, res) {
-	
-
-});
 
 app.delete('/user/group', function(req, res) {
 	var connection = mysql.createConnection(mysqlConfig);
@@ -1095,6 +1090,105 @@ app.delete('/user/group', function(req, res) {
 					else{
 						response.success = true;
 						response.success_message = "User information deleted from Database";
+						res.json(response);
+					}
+				});
+			}
+			else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
+		}
+		connection.end();
+	});
+});
+
+app.put('/user/pos_rating/:username', function(req, res) {
+	var connection = mysql.createConnection(mysqlConfig);
+	
+	connection.connect(function(err){
+        if(!err) console.log("Database is connected. Increase user rating.");
+		else console.log("Error connecting database.");
+	});
+
+    var rating_user = req.body.rating_username;
+	var rated_user = req.params.username;
+	
+	var response = {
+				success: null,
+				success_message: null
+	};
+	
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(rating_user), function(err, data){
+        if (err || data.length === 0){
+			response.success = false;
+			response.success_message = "Failed to find existing token from: " + username + ".";
+			res.json(response);
+		}
+		else{
+			var token = data[0].token;
+		
+			if(req.body.token === token){
+				
+				connection.query('UPDATE user_profile SET positive_votes = positive_votes + 1 WHERE username = ' + connection.escape(rated_user), function(err, data){
+					if (err){
+						response.success = false;
+						response.success_message = "Failed add positive vote for: " + rated_user + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "User rating increased";
+						res.json(response);
+					}
+				});
+			}
+			else{
+				response.success = false;
+				response.success_message = "Token didn't match";
+				res.json(response);
+			}
+		}
+		connection.end();
+	});
+});
+
+
+app.put('/user/neg_rating/:username', function(req, res) {
+	var connection = mysql.createConnection(mysqlConfig);
+	
+	connection.connect(function(err){
+        if(!err) console.log("Database is connected. Decrease user rating.");
+		else console.log("Error connecting database.");
+	});
+
+    var rating_user = req.body.rating_username;
+	var rated_user = req.params.username;
+	
+	var response = {
+				success: null,
+				success_message: null
+	};
+	
+    connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(rating_user), function(err, data){
+        if (err || data.length === 0){
+			response.success = false;
+			response.success_message = "Failed to find existing token from: " + username + ".";
+			res.json(response);
+		}
+		else{
+			var token = data[0].token;
+		
+			if(req.body.token === token){
+				
+				connection.query('UPDATE user_profile SET negative_votes = negative_votes + 1 WHERE username = ' + connection.escape(rated_user), function(err, data){
+					if (err){
+						response.success = false;
+						response.success_message = "Failed add negative vote for: " + rated_user + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "User rating decreased";
 						res.json(response);
 					}
 				});
