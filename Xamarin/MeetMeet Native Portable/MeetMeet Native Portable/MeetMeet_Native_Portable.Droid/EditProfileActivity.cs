@@ -63,12 +63,15 @@ namespace MeetMeet_Native_Portable.Droid
 		
 		}
 
-		void MButtonEditProfileSave_Click (object sender, EventArgs e)
+		async void MButtonEditProfileSave_Click (object sender, EventArgs e)
 		{
 			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 
 			{
-				mOnEditProfileComplete.Invoke (this, new OnEditProfileEventArgs (mTxtGender.Text, mTxtProfile.Text));
-				//this.Dismiss ();
+				Profile testProf = new Profile (MainActivity.username, mTxtGender.Text, mTxtProfile.Text, MainActivity.user_token);
+				if (await Updater.UpdateObject (testProf, MainActivity.serverURL, MainActivity.profile_ext)) 
+				{
+					SetContentView (Resource.Layout.location);
+				}
 			}
 		}
 	}
