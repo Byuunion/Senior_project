@@ -69,6 +69,11 @@ namespace MeetMeet_Native_Portable
 			}
 		}
 
+		public async void UpdateGeolocation2(String token)
+		{
+			await Updater.UpdateObject(new {username = this.username, current_lat = latitude, current_long = longitude, token},  serverURL, profileExt);
+		}
+
 		public async Task<List<Geolocation>> GetNearbyUsers()
 		{
 			var resource = minLat + "/" + maxLat + "/" + minLong + "/" + maxLong + "/" + latitude + "/" + longitude;

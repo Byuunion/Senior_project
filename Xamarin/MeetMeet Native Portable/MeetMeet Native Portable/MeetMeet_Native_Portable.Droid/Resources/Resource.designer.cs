@@ -310,9 +310,6 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f07001a
 			public const int EditProfileButton = 2131165210;
 			
-			// aapt resource value: 0x7f070019
-			public const int GetLocationButton = 2131165209;
-			
 			// aapt resource value: 0x7f07002f
 			public const int MeetMeet = 2131165231;
 			
@@ -321,6 +318,9 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070015
 			public const int RelativeLayout01 = 2131165205;
+			
+			// aapt resource value: 0x7f070019
+			public const int SetLocationButton = 2131165209;
 			
 			// aapt resource value: 0x7f070030
 			public const int SignInButton = 2131165232;
@@ -358,6 +358,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f07002d
 			public const int TextView10 = 2131165229;
 			
+			// aapt resource value: 0x7f070016
+			public const int UsernameTextView = 2131165206;
+			
 			// aapt resource value: 0x7f070006
 			public const int adjust_height = 2131165190;
 			
@@ -366,9 +369,6 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070003
 			public const int auto = 2131165187;
-			
-			// aapt resource value: 0x7f070016
-			public const int blankspace = 2131165206;
 			
 			// aapt resource value: 0x7f070011
 			public const int btnDialogEmail = 2131165201;

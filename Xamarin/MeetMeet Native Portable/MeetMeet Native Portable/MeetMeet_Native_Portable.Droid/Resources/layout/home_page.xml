@@ -12,8 +12,8 @@
         android:weightSum="100"
         android:layout_centerInParent="true">
         <TextView
-            android:id="@+id/blankspace"
-            android:text=""
+            android:id="@+id/UsernameTextView"
+            android:text="Username"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_height="0dp"
             android:layout_weight="12"
@@ -44,7 +44,7 @@
             android:textStyle="bold"
             android:textSize="25sp" />
         <Button
-            android:id="@+id/GetLocationButton"
+            android:id="@+id/SetLocationButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
@@ -52,7 +52,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textSize="15sp"
-            android:text="Get Location" />
+            android:text="Set Current Location" />
         <TextView
             android:id="@+id/txtOr"
             android:text="-or-"
