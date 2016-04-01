@@ -50,7 +50,7 @@ namespace MeetMeet_Native_Portable.Droid
         public static string user_token;
         public static string gcm_token;
 
-        private Credentials credentials;
+        public Credentials credentials;
         
 
         //var to check if play services work
@@ -149,7 +149,8 @@ namespace MeetMeet_Native_Portable.Droid
 			if (await TryToLogin (userNameSignIn, userPasswordSignIn))
 			{
 				var userProfile = await Getter<Profile>.GetObject (userNameSignIn, serverURL + profile_ext + "/");
-
+				username = credentials.username;
+				user_token = credentials.token;
 				// pass profile object to HomeActivity
 				Intent intent = new Intent(this, typeof(HomeActivity));
 				var MySerializedObject = JsonConvert.SerializeObject(userProfile);
@@ -198,6 +199,8 @@ namespace MeetMeet_Native_Portable.Droid
 
 			if (await TryToSignUp (userNameSignUp, userPasswordSignUp))
 			{
+				username = credentials.username;
+				user_token = credentials.token;
 				string userGender = null;
 				string userProfile = null;
 				Profile myProfile = new Profile (credentials.username, userGender, userProfile, credentials.token);
