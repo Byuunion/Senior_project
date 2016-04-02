@@ -133,7 +133,6 @@ namespace MeetMeet_Native_Portable.Droid
 
 			signInDialog.mOnSignInComplete += signInDialog_mOnSignInComplete;
 
-
         }
 
 		/// <summary>
@@ -170,13 +169,19 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 
 			//Pull up dialog
-			FragmentTransaction transaction = FragmentManager.BeginTransaction();
-			SignUp signUpDialog = new SignUp();
-			signUpDialog.Show(transaction, "Dialog Fragment");
+			//FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			//SignUp signUpDialog = new SignUp();
+			//signUpDialog.Show(transaction, "Dialog Fragment");
 
 			//Subscribing to Signup Event
 
-			signUpDialog.mOnSignUpComplete += signUpDialog_mOnSignUpComplete;
+			//signUpDialog.mOnSignUpComplete += signUpDialog_mOnSignUpComplete;
+
+			// Test for invite dialog
+
+			FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			InviteRequestActivity inviteDialog = new InviteRequestActivity ();
+			inviteDialog.Show (transaction, "Invite Fragment");
 
 		}
 

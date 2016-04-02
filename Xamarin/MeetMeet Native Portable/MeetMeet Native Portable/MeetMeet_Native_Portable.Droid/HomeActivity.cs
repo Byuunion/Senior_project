@@ -8,10 +8,8 @@ using Android.Locations;
 using Android.Content;
 
 
-
 namespace MeetMeet_Native_Portable.Droid
 {
-
 	/// <summary>
 	/// Will provide functionality for home page.
 	/// </summary>

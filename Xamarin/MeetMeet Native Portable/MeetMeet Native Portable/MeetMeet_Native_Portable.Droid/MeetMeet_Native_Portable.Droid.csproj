@@ -95,6 +95,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="HomeActivity.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="InviteRequestActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
