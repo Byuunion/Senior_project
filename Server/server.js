@@ -1034,16 +1034,21 @@ app.get('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong', functi
 							success: null,
 							success_message: null
 	};
-
-    connection.query('SELECT * FROM (SELECT * FROM user_profile WHERE (current_lat >='
-        + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat)
-        + ') AND (current_long >= ' + connection.escape(req.params.min_long)
-        + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')) AS reducedProfiles '
-        + ' WHERE acos(sin('  + connection.escape(req.params.yourLat) + ')' + ' * sin(current_lat) '
-        + '+ cos(' + connection.escape(req.params.yourLat) + ') * cos(current_lat) '
-        + ' * cos( current_long - ' + connection.escape(req.params.yourLong) + ')) <='
-        + radius, function(err,data){
-     //connection.query('SELECT username FROM user_profile WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + ' AND current_lat <= ' + connection.escape(req.params.max_lat) + ') AND (current_long >= ' + connection.escape(req.params.min_long) + ' AND current_long <= ' + connection.escape(req.params.max_long) + ')', function(err, data){ 
+		connection.query('SELECT * ' +
+							'FROM (SELECT * ' + 
+									' FROM user_profile ' + 
+									' WHERE (current_lat >= ' + connection.escape(req.params.min_lat) + 
+									' AND current_lat <= ' + connection.escape(req.params.max_lat) + ')' + 
+									' AND (current_long >= ' + connection.escape(req.params.min_long) + 
+									' AND current_long <= ' + connection.escape(req.params.max_long) + '))' + 
+							' AS reducedProfiles ' + 
+							'WHERE 3959 * acos ' + 
+							'( cos ( radians (' + connection.escape(req.params.yourLat) + ')) ' + 
+							' * cos ( radians (current_lat)) ' + 
+							' * cos ( radians (current_long) - radians( ' + connection.escape(req.params.yourLong) + ')) ' + 
+							' + sin ( radians ( ' + connection.escape(req.params.yourLat) + ')) ' + 
+							' * sin ( radians (current_lat)) ' + 
+							') <= 5 ', function(err,data){
                 if (err){
                         response.success = false;
                         response.success_message = "Failed to get nearby users.";
