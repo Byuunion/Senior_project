@@ -23,9 +23,20 @@
         android:textStyle="bold"
         android:gravity="center" />
     <Button
-        android:id="@+id/BtnAcceptInvitation"
+        android:id="@+id/BtnInviteCheckProfile"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
+        android:background="@drawable/ButtonSignUpStyle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="15sp"
+        android:layout_marginBottom="10dp"
+        android:text="Check Profile"
+        android:backgroundTint="#ff20cb26" />
+    <Button
+        android:id="@+id/BtnAcptMeetInvitation"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:background="@drawable/ButtonSignUpStyle"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -33,9 +44,9 @@
         android:layout_marginBottom="10dp"
         android:text="MeetMeet" />
     <Button
-        android:id="@+id/BtnDeclineInvitation"
+        android:id="@+id/BtnDeclineMeetInvitation"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:background="@drawable/ButtonSignInStyle"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
