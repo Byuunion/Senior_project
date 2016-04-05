@@ -80,7 +80,15 @@ namespace MeetMeet_Native_Portable
         {
             string content = await GetAbstract(resource, url);
             System.Diagnostics.Debug.WriteLine("String gotten from server " + content);
-            return JsonConvert.DeserializeObject<T>(content);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(content);
+            }
+            catch
+            {
+                return default(T);
+            }
+            
         }
     }
 }

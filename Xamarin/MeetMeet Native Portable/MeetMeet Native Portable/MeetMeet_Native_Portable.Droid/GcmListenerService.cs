@@ -18,6 +18,24 @@ namespace ClientApp
             SendNotification(message);
 			int ms_code = 0;
 			int.TryParse((data.GetString ("message_code")), out ms_code);
+
+            if(ms_code == 1)
+            {
+                /*
+                *Put single user messages call here
+                */
+            }
+            else if(ms_code == 2)
+            {
+                /*
+                *Put group user message call here
+                */
+            }
+            else if(ms_code == 3){
+                /*
+                * Put invite code here
+                */
+            }
 			string username = data.GetString ("username_from");
         }
 
