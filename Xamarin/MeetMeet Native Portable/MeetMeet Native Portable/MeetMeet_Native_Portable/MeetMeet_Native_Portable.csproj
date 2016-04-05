@@ -34,6 +34,7 @@
     <Compile Include="Credentials.cs" />
     <Compile Include="Deleter.cs" />
     <Compile Include="Getter.cs" />
+    <Compile Include="MessageSender.cs" />
     <Compile Include="Updatable.cs" />
     <Compile Include="Poster.cs" />
     <Compile Include="Profile.cs" />

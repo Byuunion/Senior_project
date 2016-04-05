@@ -509,6 +509,10 @@ app.post('/user/message', function(req, res) {
 	});
 	
 	var sender = req.body.username_from;
+	var response = {
+				success: null,
+				success_message: null
+			};
 
     connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(sender), function(err, data){
 		if (err || data.length === 0){
@@ -519,10 +523,7 @@ app.post('/user/message', function(req, res) {
 		else{
 			var token = data[0].token;
 
-			var response = {
-				success: null,
-				success_message: null
-			};
+			
 
 			if(req.body.token === token){
 				connection.query('SELECT gcm_regid FROM user_gcm WHERE username = ' + connection.escape(sender), function(err, gcm_user){
@@ -537,7 +538,7 @@ app.post('/user/message', function(req, res) {
 						var postData = JSON.stringify({
 							'registration_ids': [ to ],
 							'data': {
-								'message_code': '1',
+								'message_code': req.body.message_code,
 								'username_from': req.body.username_from,
 								'message': req.body.message_text
 							}
@@ -1112,7 +1113,7 @@ app.post('/user/group/message', function(req, res) {
 						var postData = JSON.stringify({
 							'registration_ids': to,
 							'data': {
-								'message_code': '2',
+								'message_code': req.body.message_code,
 								'username_from': req.body.username_from,
 								'message': req.body.message_text
 							}

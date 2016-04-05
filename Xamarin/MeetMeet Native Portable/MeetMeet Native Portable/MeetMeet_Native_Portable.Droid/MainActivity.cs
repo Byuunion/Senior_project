@@ -46,6 +46,8 @@ namespace MeetMeet_Native_Portable.Droid
         public static string profile_ext = "user/profile";
         public static string location_ext = "user/profile/location";
         public static string gcm_regid_ext = "user/gcmregid";
+        public static string group_message = "user/group/message";
+        public static string single_message = "user/message";
         public static string username;
         public static string user_token;
         public static string gcm_token;

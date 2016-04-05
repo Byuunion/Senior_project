@@ -46,9 +46,9 @@ Interest
 	
 Messages	
 
-	/user/message/:username GET: Returns the user's message(s)
+	/user/message/:username GET: Returns the user's message(s) //Depracated/doesn't work, should use GCM listener instead
 	
-	/user/message/ POST: {username_to: , username_from: , message_text: , token: }
+	/user/message POST: {username_to: , username_from: , message_text: , token: , message_code: }
 
 GCM Registration
 
@@ -76,7 +76,7 @@ Invite
 
 Group Message
 
-	/user/group/message POST {username_from: , token: , message: }
+	/user/group/message POST {username_from: , token: , message: , message_code: }
 
 Remove the user from their current group
 
