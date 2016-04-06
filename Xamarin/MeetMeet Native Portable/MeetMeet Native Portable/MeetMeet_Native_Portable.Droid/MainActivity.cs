@@ -309,7 +309,7 @@ namespace MeetMeet_Native_Portable.Droid
 
             if (loggedIn)
             {
-                if (await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL, gcm_regid_ext + "/" + username))
+                if (await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL, gcm_regid_ext))
                 {
                     return true;
                 }
