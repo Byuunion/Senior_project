@@ -48,8 +48,18 @@ namespace MeetMeet_Native_Portable
 		{
 			return this.username;
 		}
+			
 
-		public async void UpdateGeolocation()
+		public async void UpdateGeolocation(String token)
+		{
+			var userProfile = await Getter<Profile>.GetObject(username, serverURL + profileExt + "/");
+			userProfile.current_lat = latitude;
+			userProfile.current_long = longitude;
+			userProfile.token = token;
+			await Updater.UpdateObject (userProfile, serverURL, profileExt);
+		}
+
+		public async void PrototypeUpdateGeolocation()
 		{
 			Credentials test = new Credentials(username);
 			var loggedIn = await test.doLogin("a", serverURL);
@@ -67,11 +77,6 @@ namespace MeetMeet_Native_Portable
 					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/", testProfile.username);
 				}
 			}
-		}
-
-		public async void UpdateGeolocation2(String token)
-		{
-			await Updater.UpdateObject(new {username = this.username, current_lat = latitude, current_long = longitude, token},  serverURL, profileExt);
 		}
 
 		public async Task<List<Geolocation>> GetNearbyUsers()

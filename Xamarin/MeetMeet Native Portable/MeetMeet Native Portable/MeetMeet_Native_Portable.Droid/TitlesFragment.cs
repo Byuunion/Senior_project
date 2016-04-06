@@ -39,7 +39,7 @@ namespace MeetMeet_Native_Portable.Droid
 			Location location = locationManager.GetLastKnownLocation(provider);
 			Geolocation currentLocation = new Geolocation ("a", location.Latitude, location.Longitude);
 			//Geolocation currentLocation = new Geolocation ("kshea12", 39.75259742, -75.21786803);
-			currentLocation.UpdateGeolocation ();
+			currentLocation.PrototypeUpdateGeolocation ();
 			/**
 			Task<List<Geolocation>> task3 = Task<List<Geolocation>>.Factory.StartNew(() => 
 				{ 

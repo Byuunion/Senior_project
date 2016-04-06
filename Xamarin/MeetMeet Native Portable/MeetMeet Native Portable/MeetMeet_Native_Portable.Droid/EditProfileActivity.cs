@@ -74,12 +74,13 @@ namespace MeetMeet_Native_Portable.Droid
 				Profile testProf = new Profile (MainActivity.username, mTxtGender.Text, mTxtProfile.Text, MainActivity.user_token);
 				if (await Updater.UpdateObject (testProf, MainActivity.serverURL, MainActivity.profile_ext)) 
 				{
-					var userProfile = await Getter<Profile>.GetObject (MainActivity.username, MainActivity.serverURL + MainActivity.profile_ext + "/");
+					//var userProfile = await Getter<Profile>.GetObject (MainActivity.username, MainActivity.serverURL + MainActivity.profile_ext + "/");
 					// pass profile object to HomeActivity
-					Intent intent = new Intent(this, typeof(HomeActivity));
-					var MySerializedObject = JsonConvert.SerializeObject(userProfile);
-					intent.PutExtra("UserProfile", MySerializedObject);
-					StartActivity(intent);
+					//Intent intent = new Intent(this, typeof(HomeActivity));
+					//var MySerializedObject = JsonConvert.SerializeObject(userProfile);
+					//intent.PutExtra("UserProfile", MySerializedObject);
+					//StartActivity(intent);
+					StartActivity(typeof(HomeActivity));
 				}
 			}
 		}

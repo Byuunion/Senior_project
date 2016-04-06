@@ -16,7 +16,7 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity(Label = "Home", Icon = "@drawable/icon")]
 	public class HomeActivity : Activity, ILocationListener
 	{
-		private Profile userProfile;
+		//private Profile userProfile;
 		private LocationManager locationManager;
 		private String provider;
 
@@ -42,8 +42,8 @@ namespace MeetMeet_Native_Portable.Droid
 			Config.context = this;
 
 			// Get profile object from sign-in
-			var MyJsonString = Intent.GetStringExtra("UserProfile");
-			userProfile = JsonConvert.DeserializeObject<Profile>(MyJsonString);
+			//var MyJsonString = Intent.GetStringExtra("UserProfile");
+			//userProfile = JsonConvert.DeserializeObject<Profile>(MyJsonString);
 
 			// Set our view from the home_page resource
 			SetContentView (Resource.Layout.home_page);
@@ -55,7 +55,7 @@ namespace MeetMeet_Native_Portable.Droid
 			mTextViewUsername = FindViewById<TextView> (Resource.Id.UsernameTextView);
 
 			// Set username text
-			mTextViewUsername.Text = userProfile.username;
+			mTextViewUsername.Text = MainActivity.username;//userProfile.username;
 
 			//Click Events
 
@@ -94,10 +94,7 @@ namespace MeetMeet_Native_Portable.Droid
 		}
 
 		public void OnLocationChanged(Location location) {
-			double lat = location.Latitude;
-			double lng = location.Longitude;
-			//userlatitudeField.Text = Convert.ToString(lat);
-			//userlongitudeField.Text = Convert.ToString(lng);
+			// constantly updates location
 		}
 
 		public void OnStatusChanged(String provider, Availability status, Bundle extras) {
@@ -118,11 +115,9 @@ namespace MeetMeet_Native_Portable.Droid
 		private void mButtonSetLocation_Click (object sender, EventArgs e)
 		{
 			Location location = locationManager.GetLastKnownLocation(provider);
-			Geolocation currentLocation = new Geolocation (userProfile.username,location.Latitude, location.Longitude);
-			//Geolocation currentLocation = new Geolocation (userProfile.username, 39.75259742, -75.21786803);
-			//currentLocation.UpdateGeolocation ();
-			currentLocation.UpdateGeolocation2 (userProfile.token);
-
+			Geolocation currentLocation = new Geolocation (MainActivity.username,location.Latitude, location.Longitude);
+			//Geolocation currentLocation = new Geolocation (MainActivity.username, 39.75259742, -75.21786803);
+			currentLocation.UpdateGeolocation (MainActivity.user_token);
 		}
 	}
 }

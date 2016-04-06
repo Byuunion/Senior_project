@@ -50,7 +50,7 @@ namespace MeetMeet_Native_Portable.Droid
 			// Initialize the location fields
 			if (location != null) {
 				Geolocation loc = new Geolocation (username, location.Latitude, location.Longitude);
-				loc.UpdateGeolocation ();
+				loc.PrototypeUpdateGeolocation ();
 
 				userlatitudeField.Text = Convert.ToString(loc.latitude);
 				userlongitudeField.Text = Convert.ToString(loc.longitude);
