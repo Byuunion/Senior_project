@@ -24,7 +24,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mBtnDclnMeetInvite;
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-			{
+		{
 			base.OnCreateView (inflater, container, savedInstanceState);
 
 			var view = inflater.Inflate (Resource.Layout.invite_request, container, false);
@@ -37,14 +37,19 @@ namespace MeetMeet_Native_Portable.Droid
 
 			//Button Function
 
-			// mBtnCheckProfileInvite.Click += 
+			// mBtnCheckProfileInvite.Click += Pull Profile or perhaps have slide fragment to be 
 
 			//mBtnAcptMeetInvite.Click += MessagingCenter.Send<HomeActivity> (this, "Accept");
 
-			//mBtnDclnMeetInvite.Click += MessagingCenter.Send<HomeActivity> (this, "Decline");
+			mBtnDclnMeetInvite.Click += DismissBox; 
 
 			return view;
-			}
-}
+		}
+
+		void DismissBox (object sender, EventArgs e)
+		{
+			this.Dismiss ();
+		}
+	}
 }
 

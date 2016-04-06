@@ -5,19 +5,16 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-    <TextView
-        android:text="JFUZZY"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:id="@+id/useWhoSentInvite"
-        android:textSize="50dp"
-        android:textStyle="italic"
-        android:gravity="center" />
+    <fragment
+        class="MeetMeet_Native_Portable.Droid.TitlesFragment"
+        android:id="@+id/profile_fragment"
+        android:layout_width="0px"
+        android:layout_height="100dp" />
     <TextView
         android:text="Would Like To MeetMeet"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:id="@+id/textView1"
         android:textSize="55dp"
         android:textStyle="bold"
