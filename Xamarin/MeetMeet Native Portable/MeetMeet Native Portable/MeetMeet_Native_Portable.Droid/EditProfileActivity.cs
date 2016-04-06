@@ -51,14 +51,23 @@ namespace MeetMeet_Native_Portable.Droid
 
 		public EventHandler <OnEditProfileEventArgs> mOnEditProfileComplete;
 
-		protected override void OnCreate (Bundle savedInstanceState)
+		async protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 			SetContentView (Resource.Layout.edit_profile);
 			// Create your application here
 
 			mTxtGender = FindViewById<EditText>(Resource.Id.edittextgender);
+			var userProfile = await Getter<Profile>.GetObject(MainActivity.username, MainActivity.serverURL + MainActivity.profile_ext + "/");
+			if (userProfile.gender != null)
+				{
+					mTxtGender.Text = userProfile.gender;
+				}
 			mTxtProfile = FindViewById<EditText>(Resource.Id.edittextprofile);
+			if (userProfile.bio != null)
+				{
+					mTxtProfile.Text = userProfile.bio;
+				}
 			mButtonEditProfileSave = FindViewById<Button> (Resource.Id.btnEditProfileSave);
 
 			//Save Click Event
