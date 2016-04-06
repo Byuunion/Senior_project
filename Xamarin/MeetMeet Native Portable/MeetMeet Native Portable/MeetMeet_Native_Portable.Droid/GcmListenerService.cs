@@ -32,9 +32,9 @@ namespace ClientApp
                 */
             }
             else if(ms_code == 3){
-                /*
-                * Put invite code here
-                */
+
+				var intent = new Intent(this, typeof(InviteRequestActivity));
+				StartService(intent);
             }
 			string username = data.GetString ("username_from");
         }
