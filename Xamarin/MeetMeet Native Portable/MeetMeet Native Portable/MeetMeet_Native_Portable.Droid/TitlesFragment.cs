@@ -37,20 +37,8 @@ namespace MeetMeet_Native_Portable.Droid
 			Criteria criteria = new Criteria();
 			provider = locationManager.GetBestProvider(criteria, false);
 			Location location = locationManager.GetLastKnownLocation(provider);
-			Geolocation currentLocation = new Geolocation ("a", location.Latitude, location.Longitude);
-			//Geolocation currentLocation = new Geolocation ("kshea12", 39.75259742, -75.21786803);
-			currentLocation.PrototypeUpdateGeolocation ();
-			/**
-			Task<List<Geolocation>> task3 = Task<List<Geolocation>>.Factory.StartNew(() => 
-				{ 
-					return currentLocation.GetNearbyUsers().Result;
-				});
-			currentLocation.UpdateGeolocation ();
-
-			List<Geolocation> nearbyUserslist = task3.Result;
-			int numUsers = nearbyUserslist.Count;
-			string[] nearbyUsers = new string[numUsers];
-			**/
+			Geolocation currentLocation = new Geolocation (MainActivity.username, location.Latitude, location.Longitude);
+			//Geolocation currentLocation = new Geolocation (MainActivity.username, 39.77689537, -75.11926562);
 
 			Task<List<Profile>> task3 = Task<List<Profile>>.Factory.StartNew(() => 
 				{ 
@@ -66,7 +54,7 @@ namespace MeetMeet_Native_Portable.Droid
 				System.Diagnostics.Debug.WriteLine ("\n\nServer offline\n\n" + error);
 			}
 
-				
+
 			int numUsers = nearbyUserslist.Count;
 			string[] nearbyUsers = new string[numUsers];
 			nearbyBios = new string[numUsers];
