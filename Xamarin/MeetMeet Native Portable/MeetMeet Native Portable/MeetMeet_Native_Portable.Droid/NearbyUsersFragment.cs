@@ -63,7 +63,10 @@ namespace MeetMeet_Native_Portable.Droid
 			for (int i = 0; i < numUsers; i++)
 			{
 				nearbyUsers [i] = nearbyUserslist [i].username;
-				nearbyBios [i] = nearbyUserslist [i].bio;
+				nearbyBios [i] = "⇧ " + nearbyUserslist[i].positive_votes 
+					+ "\n⇩ " + nearbyUserslist[i].negative_votes 
+					+ "\n\n" + nearbyUserslist [i].gender
+					+ "\n\n" + nearbyUserslist [i].bio;
 			}
 		
 			var adapter = new ArrayAdapter<String>(Activity, Android.Resource.Layout.SimpleListItemChecked, nearbyUsers);

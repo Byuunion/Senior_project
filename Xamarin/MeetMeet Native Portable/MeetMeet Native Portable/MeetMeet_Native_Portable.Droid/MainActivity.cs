@@ -147,17 +147,19 @@ namespace MeetMeet_Native_Portable.Droid
 			userNameSignIn = e.Username;
 			userPasswordSignIn = e.Password;
 
-			if (await TryToLogin (userNameSignIn, userPasswordSignIn))
-			{
+			if (await TryToLogin (userNameSignIn, userPasswordSignIn)) {
 				var userProfile = await Getter<Profile>.GetObject (userNameSignIn, serverURL + profile_ext + "/");
 				username = credentials.username;
 				user_token = credentials.token;
+				userProfile.token = credentials.token;
 				// pass profile object to HomeActivity
-				Intent intent = new Intent(this, typeof(HomeActivity));
-				var MySerializedObject = JsonConvert.SerializeObject(userProfile);
-				intent.PutExtra("UserProfile", MySerializedObject);
-				StartActivity(intent);
-			}
+				Intent intent = new Intent (this, typeof(HomeActivity));
+				var serializedProfile = JsonConvert.SerializeObject (userProfile);
+				intent.PutExtra ("UserProfile", serializedProfile);
+				StartActivity (intent);
+			} 
+			else
+				Toast.MakeText (this, "Login Unsuccessful ", ToastLength.Short).Show();
 		}
 
 		// Sign Up Click
@@ -192,12 +194,6 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		async void signUpDialog_mOnSignUpComplete(Object sender, OnSignUpEventArgs e)
 		{
-			// here we send request to server
-			// just simulating here
-			//Thread thread = new Thread(ActLikeARequest);
-			//thread.Start ();
-			//string userPassword = e.Password;
-
 			userNameSignUp = e.UserName;
 			userEmailSignUp = e.Email;
 			userPasswordSignUp = e.Password;
@@ -211,16 +207,13 @@ namespace MeetMeet_Native_Portable.Droid
 				Profile myProfile = new Profile (credentials.username, userGender, userProfile, credentials.token);
 				if (await Poster.PostObject (myProfile, serverURL +  profile_ext)) 
 				{
-					StartActivity (typeof(EditProfileActivity));
+					// pass profile object to EditProfileActivity
+					Intent intent = new Intent(this, typeof(EditProfileActivity));
+					var serializedProfile = JsonConvert.SerializeObject(myProfile);
+					intent.PutExtra("UserProfile", serializedProfile);
+					StartActivity(intent);
 				}
 			} 
-			//await TryToSignUp(userNameSignUp, userPasswordSignUp);
-
-			// Post to server code
-
-			//Success
-
-			//Failure
 		}
 
 		// Part of thread simulation

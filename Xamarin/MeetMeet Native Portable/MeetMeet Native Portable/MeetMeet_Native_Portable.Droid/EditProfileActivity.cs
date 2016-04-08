@@ -40,8 +40,8 @@ namespace MeetMeet_Native_Portable.Droid
 			Profile = profile;
 			//Email = email;
 		}
-
 	}
+
 	[Activity (Label = "EditProfileActivity")]			
 	public class EditProfileActivity : Activity
 	{
@@ -49,48 +49,51 @@ namespace MeetMeet_Native_Portable.Droid
 		private EditText mTxtProfile;
 		private Button mButtonEditProfileSave;
 
+		private Profile userProfile;
+
 		public EventHandler <OnEditProfileEventArgs> mOnEditProfileComplete;
 
 		async protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
-			SetContentView (Resource.Layout.edit_profile);
-			// Create your application here
 
+			// Set our view from the home_page resource
+			SetContentView (Resource.Layout.edit_profile);
+
+			// Get profile object from other activities
+			var jsonString = Intent.GetStringExtra("UserProfile");
+			userProfile = JsonConvert.DeserializeObject<Profile>(jsonString);
+
+			//References for view items
 			mTxtGender = FindViewById<EditText>(Resource.Id.edittextgender);
-			var userProfile = await Getter<Profile>.GetObject(MainActivity.username, MainActivity.serverURL + MainActivity.profile_ext + "/");
-			if (userProfile.gender != null)
-				{
-					mTxtGender.Text = userProfile.gender;
-				}
 			mTxtProfile = FindViewById<EditText>(Resource.Id.edittextprofile);
-			if (userProfile.bio != null)
-				{
-					mTxtProfile.Text = userProfile.bio;
-				}
 			mButtonEditProfileSave = FindViewById<Button> (Resource.Id.btnEditProfileSave);
 
-			//Save Click Event
-
+			if (userProfile.gender != null)
+				mTxtGender.Text = userProfile.gender;
+			if (userProfile.bio != null)
+				mTxtProfile.Text = userProfile.bio;
+			
+			// Save Profile Click Event
 			mButtonEditProfileSave.Click += MButtonEditProfileSave_Click;
-		
 		}
 
 		async void MButtonEditProfileSave_Click (object sender, EventArgs e)
 		{
 			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 
 			{
-				Profile testProf = new Profile (MainActivity.username, mTxtGender.Text, mTxtProfile.Text, MainActivity.user_token);
-				if (await Updater.UpdateObject (testProf, MainActivity.serverURL, MainActivity.profile_ext)) 
+				userProfile.gender = mTxtGender.Text;
+				userProfile.bio = mTxtProfile.Text;
+				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL, MainActivity.profile_ext)) 
 				{
-					//var userProfile = await Getter<Profile>.GetObject (MainActivity.username, MainActivity.serverURL + MainActivity.profile_ext + "/");
 					// pass profile object to HomeActivity
-					//Intent intent = new Intent(this, typeof(HomeActivity));
-					//var MySerializedObject = JsonConvert.SerializeObject(userProfile);
-					//intent.PutExtra("UserProfile", MySerializedObject);
-					//StartActivity(intent);
-					StartActivity(typeof(HomeActivity));
+					Intent intent = new Intent(this, typeof(HomeActivity));
+					var serializedObject = JsonConvert.SerializeObject(userProfile);
+					intent.PutExtra("UserProfile", serializedObject);
+					StartActivity(intent);
 				}
+				else
+					Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show();
 			}
 		}
 	}

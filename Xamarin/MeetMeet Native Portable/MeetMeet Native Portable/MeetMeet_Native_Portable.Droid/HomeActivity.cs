@@ -16,7 +16,7 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity(Label = "Home", Icon = "@drawable/icon")]
 	public class HomeActivity : Activity, ILocationListener
 	{
-		//private Profile userProfile;
+		private Profile userProfile;
 		private LocationManager locationManager;
 		private String provider;
 
@@ -38,12 +38,15 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnCreate (bundle);
 
+			// Set our view from the home_page resource
+			SetContentView (Resource.Layout.home_page);
+
 			// Set context to this activity to be passed to NearbyUsersFragment
 			Config.context = this;
 
-			// Get profile object from sign-in
-			//var MyJsonString = Intent.GetStringExtra("UserProfile");
-			//userProfile = JsonConvert.DeserializeObject<Profile>(MyJsonString);
+			// Get profile object from another activity
+			var jsonString = Intent.GetStringExtra("UserProfile");
+			userProfile = JsonConvert.DeserializeObject<Profile>(jsonString);
 
 			// Set our view from the home_page resource
 			SetContentView (Resource.Layout.home_page);
@@ -55,10 +58,9 @@ namespace MeetMeet_Native_Portable.Droid
 			mTextViewUsername = FindViewById<TextView> (Resource.Id.UsernameTextView);
 
 			// Set username text
-			mTextViewUsername.Text = MainActivity.username;//userProfile.username;
+			mTextViewUsername.Text = userProfile.username; //MainActivity.username;
 
 			//Click Events
-
 			// Find Nearby Users Click
 			mButtonNearbyUsers.Click += delegate {
 				StartActivity (typeof(NearbyUsersActivity));
@@ -69,13 +71,16 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Edit Profile Click
 			mButtonEditProfile.Click += delegate {
-				StartActivity (typeof(EditProfileActivity));
+				Intent intent = new Intent(this, typeof(EditProfileActivity));
+				var serializedObject = JsonConvert.SerializeObject(userProfile);
+				intent.PutExtra("UserProfile", serializedObject);
+				StartActivity(intent);
 			};
 
 			// Get the location manager
 			locationManager = (LocationManager) GetSystemService(Context.LocationService);
 
-			// Define the criteria how to select the location provider -> use default
+			// Define the criteria how to select the location provider
 			Criteria criteria = new Criteria();
 			criteria.Accuracy = Accuracy.Fine;
 			provider = locationManager.GetBestProvider(criteria, true);
@@ -99,7 +104,6 @@ namespace MeetMeet_Native_Portable.Droid
 
 		public void OnStatusChanged(String provider, Availability status, Bundle extras) {
 			// TODO Auto-generated method stub
-
 		}
 
 		public void OnProviderEnabled(String provider) {
@@ -115,9 +119,11 @@ namespace MeetMeet_Native_Portable.Droid
 		private void mButtonSetLocation_Click (object sender, EventArgs e)
 		{
 			Location location = locationManager.GetLastKnownLocation(provider);
-			Geolocation currentLocation = new Geolocation (MainActivity.username,location.Latitude, location.Longitude);
-			//Geolocation currentLocation = new Geolocation (MainActivity.username, 39.75259742, -75.21786803);
-			currentLocation.UpdateGeolocation (MainActivity.user_token);
+			userProfile.current_lat = location.Latitude;
+			userProfile.current_long = location.Longitude;
+			Geolocation currentLocation = new Geolocation (userProfile.username,location.Latitude, location.Longitude);
+			currentLocation.UpdateGeolocation (userProfile.token);
+			Toast.MakeText (this, "Set Location Successfully", ToastLength.Short).Show();
 		}
 	}
 }
