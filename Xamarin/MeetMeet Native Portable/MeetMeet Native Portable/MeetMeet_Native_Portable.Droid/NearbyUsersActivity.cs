@@ -5,12 +5,12 @@ using Android.Support.V4.App;
 namespace MeetMeet_Native_Portable.Droid
 {
 	[Activity(Label = "Nearby Users")]
-	public class ProfileMainActivity : FragmentActivity
+	public class NearbyUsersActivity : FragmentActivity
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
-			SetContentView (Resource.Layout.activity_main);
+			SetContentView (Resource.Layout.nearby_users);
 		}
 	}
 }

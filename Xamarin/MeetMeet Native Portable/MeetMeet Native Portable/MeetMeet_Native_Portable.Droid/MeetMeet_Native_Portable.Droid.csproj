@@ -84,11 +84,7 @@
     <Compile Include="SignUp.cs" />
     <Compile Include="SignIn.cs" />
     <Compile Include="LocationActivity.cs" />
-    <Compile Include="DetailsActivity.cs" />
-    <Compile Include="DetailsFragment.cs" />
-    <Compile Include="ProfileMainActivity.cs" />
     <Compile Include="Shakespeare.cs" />
-    <Compile Include="TitlesFragment.cs" />
     <Compile Include="RegistrationIntentService.cs" />
     <Compile Include="InstanceIdListenerService.cs" />
     <Compile Include="EditProfileActivity.cs" />
@@ -96,6 +92,10 @@
     <Compile Include="HomeActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="InviteRequestActivity.cs" />
+    <Compile Include="NearbyUsersActivity.cs" />
+    <Compile Include="NearbyUsersFragment.cs" />
+    <Compile Include="NearbyProfileActivity.cs" />
+    <Compile Include="NearbyProfileFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -119,7 +119,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\edit_text_style.xml" />
     <AndroidResource Include="Resources\layout\dialog_sign_in.axml" />
     <AndroidResource Include="Resources\layout\location.axml" />
-    <AndroidResource Include="Resources\layout\activity_main.axml" />
     <AndroidResource Include="Resources\layout\edit_profile.axml" />
     <AndroidResource Include="Resources\layout\messaging.axml" />
     <AndroidResource Include="Resources\layout\msg_helper.axml" />
@@ -127,6 +126,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\sent_msg.png" />
     <AndroidResource Include="Resources\layout\invite_request.axml" />
     <AndroidResource Include="Resources\layout\home_page.xml" />
+    <AndroidResource Include="Resources\layout\nearby_users.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

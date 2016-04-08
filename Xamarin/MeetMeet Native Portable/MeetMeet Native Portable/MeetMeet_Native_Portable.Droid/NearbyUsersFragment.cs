@@ -11,10 +11,10 @@ using System.Collections.Generic;
 
 namespace MeetMeet_Native_Portable.Droid
 {
-	public class TitlesFragment : ListFragment
+	public class NearbyUsersFragment : ListFragment
 	{
-		private int _currentPlayId;
-		private bool _isDualPane;
+		private int selectedUserId;
+		private bool isDualPane;
 		private LocationManager locationManager;
 		private String provider;
 		private string[] nearbyBios;
@@ -23,19 +23,20 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnActivityCreated(savedInstanceState);
 
-			var detailsFrame = Activity.FindViewById<View>(Resource.Id.details);
+			var ProfileFrame = Activity.FindViewById<View>(Resource.Id.UserProfile);
 
 			// If running on a tablet, then the layout in Resources/Layout-Large will be loaded. 
 			// That layout uses fragments, and defines the detailsFrame. We use the visiblity of 
 			// detailsFrame as this distinguisher between tablet and phone.
-			_isDualPane = detailsFrame != null && detailsFrame.Visibility == ViewStates.Visible;
+			isDualPane = ProfileFrame != null && ProfileFrame.Visibility == ViewStates.Visible;
 
 
 			// Get the location manager
 			locationManager = (LocationManager) Config.context.GetSystemService(Context.LocationService);
 			// Define the criteria how to select the location provider -> use default
 			Criteria criteria = new Criteria();
-			provider = locationManager.GetBestProvider(criteria, false);
+			criteria.Accuracy = Accuracy.Fine;
+			provider = locationManager.GetBestProvider(criteria, true);
 			Location location = locationManager.GetLastKnownLocation(provider);
 			Geolocation currentLocation = new Geolocation (MainActivity.username, location.Latitude, location.Longitude);
 			//Geolocation currentLocation = new Geolocation (MainActivity.username, 39.77689537, -75.11926562);
@@ -70,47 +71,47 @@ namespace MeetMeet_Native_Portable.Droid
 
 			if (savedInstanceState != null)
 			{
-				_currentPlayId = savedInstanceState.GetInt("current_play_id", 0);
+				selectedUserId = savedInstanceState.GetInt("selected_user_id", 0);
 			}
 
-			if (_isDualPane)
+			if (isDualPane)
 			{
 				ListView.ChoiceMode = ChoiceMode.Single;
-				ShowDetails(_currentPlayId);
+				ShowProfile(selectedUserId);
 			}
 		}
 
 		public override void OnSaveInstanceState(Bundle outState)
 		{  
 			base.OnSaveInstanceState(outState);
-			outState.PutInt("current_play_id", _currentPlayId);
+			outState.PutInt("selected_user_id", selectedUserId);
 		}
 
 		public override void OnListItemClick(ListView l, View v, int position, long id)
 		{
-			ShowDetails(position);
+			ShowProfile(position);
 		}
 
-		private void ShowDetails(int playId)
+		private void ShowProfile(int userId)
 		{
-			_currentPlayId = playId;
-			if (_isDualPane)
+			selectedUserId = userId;
+			if (isDualPane)
 			{
 				// We can display everything in-place with fragments.
 				// Have the list highlight this item and show the data.
-				ListView.SetItemChecked(playId, true);
+				ListView.SetItemChecked(userId, true);
 
 				// Check what fragment is shown, replace if needed.
-				var details = FragmentManager.FindFragmentById(Resource.Id.details) as DetailsFragment;
-				if (details == null || details.ShownPlayId != playId)
+				var nearbyProfile = FragmentManager.FindFragmentById(Resource.Id.UserProfile) as NearbyProfileFragment;
+				if (nearbyProfile == null || nearbyProfile.ShownUserId != userId)
 				{
 					// Make new fragment to show this selection.
-					details = DetailsFragment.NewInstance(playId, nearbyBios);
+					nearbyProfile = NearbyProfileFragment.NewInstance(userId, nearbyBios);
 
 					// Execute a transaction, replacing any existing
 					// fragment with this one inside the frame.
 					var ft = FragmentManager.BeginTransaction();
-					ft.Replace(Resource.Id.details, details);
+					ft.Replace(Resource.Id.UserProfile, nearbyProfile);
 					ft.SetTransition(FragmentTransaction.TransitFragmentFade);
 					ft.Commit();
 				}
@@ -118,11 +119,11 @@ namespace MeetMeet_Native_Portable.Droid
 			else
 			{
 				// Otherwise we need to launch a new activity to display
-				// the dialog fragment with selected text.
+				// the nearby profile fragment with user data.
 				var intent = new Intent();
 
-				intent.SetClass(Activity, typeof (DetailsActivity));
-				intent.PutExtra("current_play_id", playId);
+				intent.SetClass(Activity, typeof (NearbyProfileActivity));
+				intent.PutExtra("selected_user_id", userId);
 				StartActivity(intent);
 			}
 		}

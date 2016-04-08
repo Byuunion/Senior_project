@@ -61,7 +61,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Find Nearby Users Click
 			mButtonNearbyUsers.Click += delegate {
-				StartActivity (typeof(ProfileMainActivity));
+				StartActivity (typeof(NearbyUsersActivity));
 			};
 
 			// Set Current Location Click 

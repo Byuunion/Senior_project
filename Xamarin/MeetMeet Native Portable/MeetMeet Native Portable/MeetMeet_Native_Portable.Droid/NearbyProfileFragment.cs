@@ -8,21 +8,21 @@ using Android.Widget;
 
 namespace MeetMeet_Native_Portable.Droid
 {
-    internal class DetailsFragment : Fragment
+    internal class NearbyProfileFragment : Fragment
     {
 		private static string[] nearbyBios;
 		
-        public static DetailsFragment NewInstance(int playId, string[] bios)
+        public static NearbyProfileFragment NewInstance(int userId, string[] bios)
         {
 			nearbyBios = bios;
-            var detailsFrag = new DetailsFragment {Arguments = new Bundle()};
-            detailsFrag.Arguments.PutInt("current_play_id", playId);
-            return detailsFrag;
+			var nearbyProfileFrag = new NearbyProfileFragment {Arguments = new Bundle()};
+			nearbyProfileFrag.Arguments.PutInt("selected_user_id", userId);
+            return nearbyProfileFrag;
         }
 
-        public int ShownPlayId
+        public int ShownUserId
         {
-            get { return Arguments.GetInt("current_play_id", 0); }
+			get { return Arguments.GetInt("selected_user_id", 0); }
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -41,7 +41,7 @@ namespace MeetMeet_Native_Portable.Droid
             text.TextSize = 24;
 
 			try {
-				text.Text = nearbyBios[ShownPlayId];
+				text.Text = nearbyBios[ShownUserId];
 			}
 			catch(IndexOutOfRangeException e) {
 				string error = "\n\nServer offline\n\n" + e.Message;

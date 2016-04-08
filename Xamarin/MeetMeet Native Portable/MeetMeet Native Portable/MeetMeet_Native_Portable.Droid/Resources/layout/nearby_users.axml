@@ -4,13 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <fragment
-        class="MeetMeet_Native_Portable.Droid.TitlesFragment"
-        android:id="@+id/titles_fragment"
+        class="MeetMeet_Native_Portable.Droid.NearbyUsersFragment"
+        android:id="@+id/nearby_users_fragment"
         android:layout_weight="1"
         android:layout_width="0px"
         android:layout_height="match_parent" />
     <FrameLayout
-        android:id="@+id/details"
+        android:id="@+id/UserProfile"
         android:layout_weight="1"
         android:layout_width="0px"
         android:layout_height="match_parent" />
