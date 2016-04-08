@@ -23,6 +23,9 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mBtnAcptMeetInvite;
 		private Button mBtnDclnMeetInvite;
 
+		public static Credentials credentials;
+		public static string serverURL = "http://52.91.212.179:8800/";
+
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			base.OnCreateView (inflater, container, savedInstanceState);
@@ -39,7 +42,12 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// mBtnCheckProfileInvite.Click += Pull Profile or perhaps have slide fragment to be 
 
-			//mBtnAcptMeetInvite.Click += MessagingCenter.Send<HomeActivity> (this, "Accept");
+			mBtnAcptMeetInvite.Click += delegate {
+				//InviteAccept ();
+
+				MessageSender.RespondGroupInvite("userFrom", credentials, serverURL,"Lets Meet!");
+			};
+	
 
 			mBtnDclnMeetInvite.Click += DismissBox; 
 
@@ -50,6 +58,11 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			this.Dismiss ();
 		}
+
+		static void InviteAccept(){
+			MessageSender.RespondGroupInvite("a",credentials,serverURL,"yes");
+		}
+
 	}
 }
 

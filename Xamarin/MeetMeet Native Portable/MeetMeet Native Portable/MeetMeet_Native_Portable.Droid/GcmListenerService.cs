@@ -19,6 +19,8 @@ namespace ClientApp
 			int ms_code = 0;
 			int.TryParse((data.GetString ("message_code")), out ms_code);
 
+			string username = data.GetString ("username_from");
+
             if(ms_code == 1)
             {
                 /*
@@ -33,10 +35,11 @@ namespace ClientApp
             }
             else if(ms_code == 3){
 
+				//this may work
 				var intent = new Intent(this, typeof(InviteRequestActivity));
 				StartService(intent);
             }
-			string username = data.GetString ("username_from");
+			//string username = data.GetString ("username_from");
         }
 
         void SendNotification(string message)

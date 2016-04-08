@@ -34,7 +34,7 @@ namespace MeetMeet_Native_Portable
 
         /// <param name="response"></param> should be true or false
         /// <param name="url"></param> http://52.91.212.179:8800/user/message/user/group/invite
-        public async Task<Boolean> RespondGroupInvite(string username_to, Credentials this_user, string url, string response)
+        public static async Task<Boolean> RespondGroupInvite(string username_to, Credentials this_user, string url, string response)
         {
             return await Updater.UpdateObject(new { username_to = username_to, username_from = this_user.username, token = this_user.token, response = response }, url, "");
         }
