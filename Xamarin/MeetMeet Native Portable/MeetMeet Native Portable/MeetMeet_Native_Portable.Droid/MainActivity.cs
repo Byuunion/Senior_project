@@ -152,7 +152,7 @@ namespace MeetMeet_Native_Portable.Droid
 				username = credentials.username;
 				user_token = credentials.token;
 				userProfile.token = credentials.token;
-				// pass profile object to HomeActivity
+				//pass profile object to HomeActivity
 				Intent intent = new Intent (this, typeof(HomeActivity));
 				var serializedProfile = JsonConvert.SerializeObject (userProfile);
 				intent.PutExtra ("UserProfile", serializedProfile);

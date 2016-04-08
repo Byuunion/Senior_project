@@ -364,6 +364,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070039
 			public const int UserProfile = 2131165241;
 			
+			// aapt resource value: 0x7f070019
+			public const int UsernameInviteTextView = 2131165209;
+			
 			// aapt resource value: 0x7f070014
 			public const int UsernameTextView = 2131165204;
 			
@@ -432,9 +435,6 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070002
 			public const int none = 2131165186;
-			
-			// aapt resource value: 0x7f070019
-			public const int profile_fragment = 2131165209;
 			
 			// aapt resource value: 0x7f070031
 			public const int progressBar1 = 2131165233;

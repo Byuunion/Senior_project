@@ -5,11 +5,16 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-    <fragment
-        class="MeetMeet_Native_Portable.Droid.TitlesFragment"
-        android:id="@+id/profile_fragment"
-        android:layout_width="0px"
-        android:layout_height="100dp" />
+    <TextView
+        android:id="@+id/UsernameInviteTextView"
+        android:text="UsernameRequest"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_height="75dp"
+        android:layout_width="match_parent"
+        android:textColor="#368DEB"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="25sp" />
     <TextView
         android:text="Would Like To MeetMeet"
         android:textAppearance="?android:attr/textAppearanceLarge"

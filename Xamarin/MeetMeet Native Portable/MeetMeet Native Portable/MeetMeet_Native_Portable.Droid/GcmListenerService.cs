@@ -36,8 +36,9 @@ namespace ClientApp
             else if(ms_code == 3){
 
 				//this may work
-				var intent = new Intent(this, typeof(InviteRequestActivity));
-				StartService(intent);
+				Intent intent = new Intent(this, typeof(InviteRequestActivity));
+				intent.PutExtra ("username_from", username);
+				StartActivity(intent);
             }
 			//string username = data.GetString ("username_from");
         }
