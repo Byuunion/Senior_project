@@ -28,7 +28,7 @@ namespace MeetMeet_Native_Portable
             if (response.IsSuccessStatusCode)
             {
                 string responseString = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine("Get was successful, string is " + responseString);
+                System.Diagnostics.Debug.WriteLine("Get for " + url + resource + " was successful, string is " + responseString);
                 content = await response.Content.ReadAsStringAsync();
             }
             else
@@ -46,7 +46,7 @@ namespace MeetMeet_Native_Portable
             {
                 return JsonConvert.DeserializeObject<List<T>>(content);
             }
-            catch(Exception e)
+            catch
             {
                 return new List<T>();
             } 

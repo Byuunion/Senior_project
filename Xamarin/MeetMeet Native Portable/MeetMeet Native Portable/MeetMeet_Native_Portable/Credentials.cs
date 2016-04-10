@@ -26,10 +26,9 @@ namespace MeetMeet_Native_Portable
             System.Diagnostics.Debug.WriteLine("Resource trying to get " + resource);
             var tempToken = await Getter<Token>.GetObjectNotFromList(resource, url);
 
-            mToken = tempToken.token;
-
-            if (token != default(String))
+            if (tempToken != default(Token))
             {
+                mToken = tempToken.token;
                 return true;
             }
             else
