@@ -32,7 +32,12 @@ namespace ClientApp
                 /*
                 *Put group user message call here
                 */
-            }
+
+				//this may work
+				//Intent intent = new Intent(this, typeof(InviteRequestActivity));
+				//intent.PutExtra ("username_from", username);
+				//StartActivity(intent);
+			}
             else if(ms_code == 3){
 
 				//this may work

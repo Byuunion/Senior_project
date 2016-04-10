@@ -64,7 +64,9 @@ namespace MeetMeet_Native_Portable.Droid
 
 			//Button Function
 
-			// mBtnCheckProfileInvite.Click += Pull Profile or perhaps have slide fragment to be 
+			mBtnCheckProfileInvite.Click += delegate {
+				StartActivity (typeof(NearbyUsersActivity));
+			};
 
 			mBtnAcptMeetInvite.Click += delegate {
 				//InviteAccept ();
