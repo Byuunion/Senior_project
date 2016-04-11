@@ -107,6 +107,7 @@
     <AndroidResource Include="Resources\layout\dialog_send_msg.axml" />
     <None Include="Resources\layout\layout-large\activity_main.axml" />
     <AndroidResource Include="Resources\layout\view_profile.axml" />
+    <AndroidResource Include="Resources\menu\home_menu.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -142,5 +143,8 @@
   </Target>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_stat_ic_notification.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\menu\" />
   </ItemGroup>
 </Project>

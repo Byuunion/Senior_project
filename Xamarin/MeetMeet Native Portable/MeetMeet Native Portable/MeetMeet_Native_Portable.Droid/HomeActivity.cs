@@ -6,6 +6,7 @@ using Android.OS;
 using Newtonsoft.Json;
 using Android.Locations;
 using Android.Content;
+using Android.Views;
 
 
 namespace MeetMeet_Native_Portable.Droid
@@ -84,6 +85,50 @@ namespace MeetMeet_Native_Portable.Droid
 			Criteria criteria = new Criteria();
 			criteria.Accuracy = Accuracy.Fine;
 			provider = locationManager.GetBestProvider(criteria, true);
+		}
+
+		public override bool OnCreateOptionsMenu(IMenu menu)
+		{
+			MenuInflater.Inflate(Resource.Menu.home_menu, menu);
+			return base.OnPrepareOptionsMenu(menu);
+		}
+
+		public override bool OnOptionsItemSelected(IMenuItem item)
+		{
+			Dialog dialog = null;
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			switch (item.ItemId)
+			{
+			case Resource.Id.logout:
+				// Create the logout confirmation dialog
+				builder.SetMessage (Resource.String.logout_question)
+					.SetCancelable (false)
+					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
+						userProfile = null;
+						StartActivity (typeof(MainActivity));
+					})
+					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {
+						//cancel
+					});
+				dialog = builder.Create ();
+				dialog.Show ();
+				return true;
+			case Resource.Id.deleteUser:
+				builder.SetMessage (Resource.String.delete_question)
+					.SetCancelable (false)
+					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
+						Deleter.DeleteProfile(userProfile.username, MainActivity.serverURL+"user");
+						userProfile = null;
+						StartActivity (typeof(MainActivity));
+					})
+					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {
+						//cancel
+					});
+				dialog = builder.Create ();
+				dialog.Show ();
+				return true;
+			}
+			return base.OnOptionsItemSelected(item);
 		}
 
 		/* Request updates at startup */
