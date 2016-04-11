@@ -70,9 +70,9 @@ Find Users
 
 Invite
 
-	/user/group/invite POST {username_inviter: , username_receiver: , token: }
+	/user/group/invite POST {username_inviter: , username_responder: , token: }
 
-	/user/group/invite PUT {username_inviter: , username_receiver: , token: , response: BOOLEAN!!!!!! } 
+	/user/group/invite PUT {username_inviter: , username_responder: , token: , response: BOOLEAN!!!!!! } 
 
 Group Message
 
