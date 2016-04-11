@@ -45,7 +45,7 @@ namespace MeetMeet_Native_Portable.Droid
 			// Set our view from the home_page resource
 			SetContentView (Resource.Layout.invite_request);
 
-			userNameFrom = Intent.GetStringExtra ("usernameFrom") ?? "Data not available";
+			userNameFrom = Intent.GetStringExtra ("username_from") ?? "Data not available";
 
 			// Button Reference
 

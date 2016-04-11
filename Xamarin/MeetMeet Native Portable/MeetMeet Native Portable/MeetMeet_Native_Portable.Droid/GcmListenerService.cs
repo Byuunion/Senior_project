@@ -20,6 +20,7 @@ namespace ClientApp
 			int.TryParse((data.GetString ("message_code")), out ms_code);
 
 			string username = data.GetString ("username_from");
+			System.Diagnostics.Debug.WriteLine (username);
 
             if(ms_code == 1)
             {
@@ -40,6 +41,7 @@ namespace ClientApp
 
 				Intent intent = new Intent(this, typeof(InviteRequestActivity));
 				intent.PutExtra ("username_from", username);
+				intent.SetFlags (ActivityFlags.NewTask);
 				StartActivity(intent);
 			}
             else if(ms_code == 3){
