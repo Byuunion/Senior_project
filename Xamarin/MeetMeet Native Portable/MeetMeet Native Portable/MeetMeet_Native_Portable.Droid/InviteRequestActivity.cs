@@ -65,13 +65,16 @@ namespace MeetMeet_Native_Portable.Droid
 			//Button Function
 
 			mBtnCheckProfileInvite.Click += delegate {
-				StartActivity (typeof(NearbyUsersActivity));
+				Intent intent = new Intent(this, typeof(ViewProfile));
+				intent.PutExtra ("username_from", userNameFrom);
+				StartActivity(intent);
 			};
 
 			mBtnAcptMeetInvite.Click += delegate {
 				//InviteAccept ();
 
-				MessageSender.RespondGroupInvite(userNameFrom,credentials, serverURL,"Lets Meet!");
+				MessageSender.RespondGroupInvite(userNameFrom,credentials, serverURL,"true");
+				base.OnBackPressed();
 			};
 	
 

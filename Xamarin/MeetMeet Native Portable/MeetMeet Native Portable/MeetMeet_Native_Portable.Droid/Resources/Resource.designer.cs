@@ -379,6 +379,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070006
 			public const int auto = 2131165190;
 			
+			// aapt resource value: 0x7f07003b
+			public const int bioviewprofile = 2131165243;
+			
 			// aapt resource value: 0x7f07000f
 			public const int btnDialogEmail = 2131165199;
 			
@@ -433,8 +436,14 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f070038
 			public const int nearby_users_fragment = 2131165240;
 			
+			// aapt resource value: 0x7f07003d
+			public const int negativevoteviewprofile = 2131165245;
+			
 			// aapt resource value: 0x7f070002
 			public const int none = 2131165186;
+			
+			// aapt resource value: 0x7f07003c
+			public const int positivevoteviewprofile = 2131165244;
 			
 			// aapt resource value: 0x7f070031
 			public const int progressBar1 = 2131165233;
@@ -471,6 +480,9 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f070009
 			public const int txtUserNameSignIn = 2131165193;
+			
+			// aapt resource value: 0x7f07003a
+			public const int usernameviewprofile = 2131165242;
 			
 			// aapt resource value: 0x7f070005
 			public const int wide = 2131165189;
@@ -533,6 +545,9 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f030009
 			public const int nearby_users = 2130903049;
+			
+			// aapt resource value: 0x7f03000a
+			public const int view_profile = 2130903050;
 			
 			static Layout()
 			{
