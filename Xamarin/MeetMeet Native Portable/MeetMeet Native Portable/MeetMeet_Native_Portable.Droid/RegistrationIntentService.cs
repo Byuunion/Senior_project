@@ -10,7 +10,7 @@ namespace ClientApp
 {
 	[Service(Exported = false)]
 	class RegistrationIntentService : IntentService
-	{
+	{   
 		static object locker = new object();
 
 		public RegistrationIntentService() : base("RegistrationIntentService") { }
@@ -27,6 +27,14 @@ namespace ClientApp
 						"47160214403", GoogleCloudMessaging.InstanceIdScope, null);
 						//senderID generated from google dev. console
 					Log.Info ("RegistrationIntentService", "GCM Registration Token: " + token);
+
+                    instanceID.DeleteToken(token, GoogleCloudMessaging.InstanceIdScope);
+                    instanceID.DeleteInstanceID();
+
+                    instanceID = InstanceID.GetInstance(this);
+                    token = instanceID.GetToken(
+                        "47160214403", GoogleCloudMessaging.InstanceIdScope, null);
+
 
                     //Make the token accessible by our code
                     MainActivity.gcm_token = token;
@@ -51,5 +59,5 @@ namespace ClientApp
 			var pubSub = GcmPubSub.GetInstance(this);
 			pubSub.Subscribe(token, "/topics/global", null);
 		}
-	}
+    }
 }
