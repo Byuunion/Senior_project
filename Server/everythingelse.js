@@ -24,12 +24,19 @@ var mysqlConfig = {
 	database: 'userdb',
 };
 
-var connection = mysql.createConnection(mysqlConfig);
 	
 router.route('/user')
 	.get(function(req, res){
-		connect("Get Users.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Get Users.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		connection.query('SELECT * FROM user_profile', function(err, data) {
 			if (err){
 				var response;
@@ -44,7 +51,15 @@ router.route('/user')
 	})
 	
 	.delete(function(req,res){
-		connect("Delete User.");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Delete User.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username;
 		
@@ -89,8 +104,16 @@ router.route('/user')
 
 router.route('/user/profile/:username')
 	.get(function(req, res){
-		connect("Get User Profile.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Get User Profile.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		connection.query('SELECT * FROM user_profile WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err){
 				var response;
@@ -106,8 +129,16 @@ router.route('/user/profile/:username')
 	
 router.route('/user/language/:username')
 	.get(function(req, res){
-		connect("Get User Language.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Get User Language.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		connection.query('SELECT * FROM user_language WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err){
 				var response;
@@ -123,8 +154,16 @@ router.route('/user/language/:username')
 
 router.route('/user/interest/:username')
 	.get(function(req, res){
-		connect("Get User Interest.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Get User Interest.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		connection.query('SELECT * FROM user_interest WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err){
 				var response;
@@ -142,8 +181,16 @@ router.route('/user/interest/:username')
 router.route('/user/login/:username/:password')
 	.get(function(req, res){
 		//Pass in username and password from the app's url
-		connect("Get User Login.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Get User Login.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		var response = {
 			success: null,
 			success_message: null,
@@ -194,7 +241,15 @@ router.route('/user/login/:username/:password')
 	
 router.route('/user/profile')
 	.post(function(req, res){
-		connect("Post User Profile.");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Profile.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username;
 		
@@ -247,8 +302,16 @@ router.route('/user/profile')
 	})
 	
 	.put(function(req, res){
-		connect("Update User Profile Location");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Update User Profile Location.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		var username = req.body.username;
 		
 		var response = {
@@ -297,7 +360,15 @@ router.route('/user/profile')
 	
 router.route('/user/interest')
 	.post(function(req, res){
-		connect("Post User Interest.");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Interest.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username;
 		
@@ -347,7 +418,15 @@ router.route('/user/interest')
 	
 router.route('/user/language')
 	.post(function(req, res){
-		connect("Post User Language.");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Language.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username;
 		
@@ -398,7 +477,15 @@ router.route('/user/language')
 router.route('/user/login')
 	.post(function(req, res){	
 		//Create account
-		connect("Post User Login.");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Login.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username;
 		var token = hat();
@@ -438,8 +525,16 @@ router.route('/user/login')
 	
 router.route('/user/profile/location/:username')
 	.put(function(req, res){
-		connect("Update User Profile Location");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Update User Profile Location.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		var username = req.param.username;
 
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
@@ -489,8 +584,16 @@ router.route('/user/profile/location/:username')
 				
 router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 	.put(function(req, res){
-		connect("Get Geolocation Users");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Get Geolocation Users");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		var radius = 0.00126291; // 5 miles
 
 		var response = {
@@ -528,7 +631,15 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 	
 router.route('/user/gcmregid')
 	.post(function(req, res){
-		connect("Post User Gcmregid");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Gcmregid.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var response = {
 				success: null,
@@ -575,7 +686,15 @@ router.route('/user/gcmregid')
 	
 	.put(function(req, res){
 		//Updates user's gcmregid
-		connect("Put gcmregid");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Put gcmregid.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
 			if (err) throw err;
@@ -614,8 +733,16 @@ router.route('/user/gcmregid')
 	
 router.route('/user/pos_rating/:username')
 	.put(function(req, res){		
-		connect("Increase user rating.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Increase user rating.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		var rating_user = req.body.rating_username;
 		var rated_user = req.params.username;
 		
@@ -660,7 +787,15 @@ router.route('/user/pos_rating/:username')
 	
 router.route('/user/neg_rating/:username')
 	.put(function(req, res){
-		connect("Decrease user rating.");
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Decrease user rating.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 
 		var rating_user = req.body.rating_username;
 		var rated_user = req.params.username;
@@ -706,8 +841,16 @@ router.route('/user/neg_rating/:username')
 	
 router.route('/user/group')
 	.delete(function(req, res){
-		connect("Delete User from group.");
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Delete User from group.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 		var username = req.body.username;
 		
 		var response = {
@@ -748,12 +891,5 @@ router.route('/user/group')
 		});
 	});
 	
-
-function connect(log){
-	connection.connect(function(err){
-			if(!err) console.log("Database is connected. " + log);
-			else console.log("Error connecting database.");
-		});
-}
 
 module.exports = router; // HAS TO BE AT THE BOTTOM

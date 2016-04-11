@@ -21,12 +21,18 @@ var mysqlConfig = {
 	database: 'userdb',
 };
 
-var connection = mysql.createConnection(mysqlConfig);
-
 router.route('/user/message')
 	.post(function(req, res) {
 		//Token from sender needed
-		connect("Post User Message");
+		var connection = mysql.createConnection(mysqlConfig);
+		
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Message");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var sender = req.body.username_from;
 		var response = {
@@ -62,7 +68,16 @@ router.route('/user/message')
 
 router.route('/user/group/message')
 	.post(function(req, res) {
-		connect("Post Group Message");
+	
+		var connection = mysql.createConnection(mysqlConfig);
+		
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post Group Message");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var sender = req.body.username_from;
 
@@ -74,7 +89,6 @@ router.route('/user/group/message')
 			}
 			else{
 				var token = data[0].token;
-				console.log('Got here');
 				var response = {
 					success: null,
 					success_message: null
@@ -163,7 +177,15 @@ router.route('/user/group/message')
 router.route('/user/group/invite')
 	.post(function(req, res) {
 		//Posting an invite
-		connect("Post User Invite");
+		var connection = mysql.createConnection(mysqlConfig);
+		
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Invite");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username_inviter;
 		
@@ -171,9 +193,9 @@ router.route('/user/group/invite')
 				success: null,
 				success_message: null
 			};
-			
+		console.log("1");
 		if(username !== req.body.username_responder){
-			connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(username) + ' AND username_to = ' + connection.escape(req.body.username_to), function(err, data1){
+			connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(username) + ' AND username_to = ' + connection.escape(req.body.username_responder), function(err, data1){
 				if(data1.length === 0){ //Not yet invited
 					connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 						if (err || data.length === 0){
@@ -183,9 +205,8 @@ router.route('/user/group/invite')
 						}
 						else{
 							var token = data[0].token;
-						
+
 							if(req.body.token === token){
-							
 								var data = {
 									username_from: username,
 									username_to: req.body.username_responder
@@ -195,17 +216,18 @@ router.route('/user/group/invite')
 									if (err){
 										response.success = false;
 										response.success_message = "Failed to post invite from: " + username + ".";
-										res.json(response);
+										res.json(response);		
+
 									}
 									else{
 										//response.success = true;
 										//response.success_message = "Successfully created invite.";	
 										send_single_message(req.body.username_inviter, req.body.username_responder, req.body.message_text, req.body.message_code, function(results) {
 											response = results
+											console.log(response);
 											res.json(response);
 										});
-									}
-									
+									}		
 								});
 							}
 							else{
@@ -236,7 +258,15 @@ router.route('/user/group/invite')
 	.put(function(req, res) {
 		//Responding to an invite
 		//Username_to's token
-		connect("Put User Invite");
+		var connection = mysql.createConnection(mysqlConfig);
+		
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Put User Invite");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
 		
 		var username = req.body.username_responder;
 		
@@ -246,7 +276,8 @@ router.route('/user/group/invite')
 		};
 		
 		// Accept group invite
-		if(req.body.response == 'true'){
+		console.log(req.body.response);
+		if(req.body.response == true){
 			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err || data.length === 0){
 					response.success = false;
@@ -432,16 +463,17 @@ router.route('/user/group/invite')
 	})
 
 	
-function connect(log){
-	connection.connect(function(err){
-			if(!err) console.log("Database is connected." + log);
-			else console.log("Error connecting database.");
-	});
-}
-	
 function send_single_message(username_from, username_to, message_text, message_code, callback){
 	var connection = mysql.createConnection(mysqlConfig);
-	
+		
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Send Single Message");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
 	var response = {
 		success: null,
 		success_message: null
@@ -504,8 +536,6 @@ function send_single_message(username_from, username_to, message_text, message_c
 			response.success_message = 'message sent to GCM';	
 			callback(response);
 		}
-		connection.end();
-		
 	});
 }
 
