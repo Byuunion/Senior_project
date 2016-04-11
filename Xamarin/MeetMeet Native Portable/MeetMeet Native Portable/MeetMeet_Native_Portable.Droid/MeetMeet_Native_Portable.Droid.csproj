@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GcmListenerService.cs" />
+    <Compile Include="MessagingActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignUp.cs" />
@@ -96,13 +97,16 @@
     <Compile Include="NearbyUsersFragment.cs" />
     <Compile Include="NearbyProfileActivity.cs" />
     <Compile Include="NearbyProfileFragment.cs" />
+    <Compile Include="ViewProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\layout\dialog_send_msg.axml" />
     <None Include="Resources\layout\layout-large\activity_main.axml" />
+    <AndroidResource Include="Resources\layout\view_profile.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
