@@ -96,6 +96,7 @@
     <Compile Include="NearbyUsersFragment.cs" />
     <Compile Include="NearbyProfileActivity.cs" />
     <Compile Include="NearbyProfileFragment.cs" />
+    <Compile Include="MessagingActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
