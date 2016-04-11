@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#ffffffff"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:minWidth="300dp"
-    android:minHeight="400dp"
-    android:visibility="visible">
-    <Space
-        android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/editsenduser"
+        android:text="Send Msg To:"
+        android:textSize="10pt"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp" />
+    <EditText
+        android:id="@+id/edittextmsg"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/space1" />
-    <TextView
-        android:text="New Message"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:textColor="#ff1175ff"
-        android:textAlignment="center" />
+        android:hint="Write Your Message Here!" />
     <Button
         android:text="Send"
-        android:id="@+id/button1" />
-</RelativeLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:id="@+id/btnSendMsg"
+        android:textSize="20dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:height="20dp"
+        android:paddingTop="2dp"
+        android:background="@drawable/ButtonSignInStyle"
+        android:layout_centerHorizontal="true" />
+</LinearLayout>

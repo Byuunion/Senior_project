@@ -103,6 +103,7 @@
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Resources\layout\layout-large\activity_main.axml" />
+    <None Include="Resources\layout\dialog_send_msg.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
