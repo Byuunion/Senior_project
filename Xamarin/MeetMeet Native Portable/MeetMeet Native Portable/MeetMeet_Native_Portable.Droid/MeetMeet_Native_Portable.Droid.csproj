@@ -131,7 +131,6 @@
     <AndroidResource Include="Resources\layout\invite_request.axml" />
     <AndroidResource Include="Resources\layout\home_page.xml" />
     <AndroidResource Include="Resources\layout\nearby_users.axml" />
-    <AndroidResource Include="Resources\layout\view_profile.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
