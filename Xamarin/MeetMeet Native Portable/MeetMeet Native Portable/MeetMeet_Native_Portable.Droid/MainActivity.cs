@@ -150,14 +150,32 @@ namespace MeetMeet_Native_Portable.Droid
             if (await TryToLogin(userNameSignIn, userPasswordSignIn))
             {
                 var userProfile = await Getter<Profile>.GetObject(userNameSignIn, serverURL + profile_ext + "/");
-                username = credentials.username;
-                user_token = credentials.token;
-                userProfile.token = credentials.token;
-                //pass profile object to HomeActivity
-                Intent intent = new Intent(this, typeof(HomeActivity));
-                var serializedProfile = JsonConvert.SerializeObject(userProfile);
-                intent.PutExtra("UserProfile", serializedProfile);
-                StartActivity(intent);
+                if(userProfile == default(Profile))
+                {
+                    Toast.MakeText(this, "You don't have a profile to show", ToastLength.Short).Show();
+                    string userGender = null;
+                    string userBio = null;
+                    Profile myProfile = new Profile(credentials.username, userGender, userBio, credentials.token);
+                    if (await Poster.PostObject(myProfile, serverURL + profile_ext))
+                    {
+                        // pass profile object to EditProfileActivity
+                        Intent intent = new Intent(this, typeof(EditProfileActivity));
+                        var serializedProfile = JsonConvert.SerializeObject(myProfile);
+                        intent.PutExtra("UserProfile", serializedProfile);
+                        StartActivity(intent);
+                    }
+                }
+                else
+                {
+                    username = credentials.username;
+                    user_token = credentials.token;
+                    userProfile.token = credentials.token;
+                    //pass profile object to HomeActivity
+                    Intent intent = new Intent(this, typeof(HomeActivity));
+                    var serializedProfile = JsonConvert.SerializeObject(userProfile);
+                    intent.PutExtra("UserProfile", serializedProfile);
+                    StartActivity(intent);
+                }
             }
             else
                 Toast.MakeText(this, "Login Unsuccessful ", ToastLength.Short).Show();
@@ -204,8 +222,8 @@ namespace MeetMeet_Native_Portable.Droid
                 username = credentials.username;
                 user_token = credentials.token;
                 string userGender = null;
-                string userProfile = null;
-                Profile myProfile = new Profile(credentials.username, userGender, userProfile, credentials.token);
+                string userBio = null;
+                Profile myProfile = new Profile(credentials.username, userGender, userBio, credentials.token);
                 if (await Poster.PostObject(myProfile, serverURL + profile_ext))
                 {
                     // pass profile object to EditProfileActivity
@@ -215,6 +233,8 @@ namespace MeetMeet_Native_Portable.Droid
                     StartActivity(intent);
                 }
             }
+            else
+                Toast.MakeText(this, "Signup Unsuccessful ", ToastLength.Short).Show();
         }
 
         // Part of thread simulation

@@ -583,7 +583,8 @@ router.route('/user/profile/location/:username')
 
 				
 router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
-	.put(function(req, res){
+	.get(function(req, res){
+		console.log("Attempting to find users around " + req.params.yourLat + " " + req.params.yourLong );
 		var connection = mysql.createConnection(mysqlConfig);
 
 		connection.connect(function(err){
@@ -600,6 +601,7 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 								success: null,
 								success_message: null
 		};
+		
 			connection.query('SELECT * ' +
 								'FROM (SELECT * ' + 
 										' FROM user_profile ' + 
