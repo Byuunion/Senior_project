@@ -37,6 +37,10 @@ namespace ClientApp
 				//Intent intent = new Intent(this, typeof(InviteRequestActivity));
 				//intent.PutExtra ("username_from", username);
 				//StartActivity(intent);
+
+				Intent intent = new Intent(this, typeof(InviteRequestActivity));
+				intent.PutExtra ("username_from", username);
+				StartActivity(intent);
 			}
             else if(ms_code == 3){
 
