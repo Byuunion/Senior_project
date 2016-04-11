@@ -31,7 +31,9 @@ namespace MeetMeet_Native_Portable.Droid
         // Main Menu Items
         private Button mButtonSignUp;
         private Button mButtonSignIn;
-        //private ProgressBar mProgressBar;
+        
+		private Button mButtonTestSendMsg;
+		//private ProgressBar mProgressBar;
 
         // User data
         public string userNameSignIn;
@@ -74,7 +76,10 @@ namespace MeetMeet_Native_Portable.Droid
             //References for Main Menu Items
             mButtonSignUp = FindViewById<Button>(Resource.Id.SignUpButton);
             mButtonSignIn = FindViewById<Button>(Resource.Id.SignInButton);
-            //mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
+            
+			//send msg test button
+			mButtonTestSendMsg = FindViewById<Button> (Resource.Id.sendMsgTest);
+			//mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
 
             //Click Events
 
@@ -91,7 +96,12 @@ namespace MeetMeet_Native_Portable.Droid
                 var intent = new Intent(this, typeof(RegistrationIntentService));
                 StartService(intent);
             }
-
+			//testing send msg dialogue
+			mButtonTestSendMsg.Click += MButtonSendMsg_Click;
+				//delegate {
+				//Intent intent = new Intent(this, typeof(MessagingActivity));
+				//StartService(intent);
+			//}; 
         }
 
         //checks to make sure google play services are running
@@ -117,6 +127,14 @@ namespace MeetMeet_Native_Portable.Droid
         }
 
 
+		void MButtonSendMsg_Click(object sender, EventArgs e)
+		{
+			FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			MessagingActivity msgAct = new MessagingActivity ();
+			msgAct.Show (transaction, "Dialog Fragment");
+
+
+		}
         // Sign In Click
 
         /// <summary>
