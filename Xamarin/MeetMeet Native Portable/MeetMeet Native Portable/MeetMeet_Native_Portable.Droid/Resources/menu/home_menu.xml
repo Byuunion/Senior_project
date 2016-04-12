@@ -3,6 +3,8 @@
 		    <item android:id="@+id/logout"
 		          android:title="@string/Logout"
 		          android:showAsAction="ifRoom"/>
+		    <item android:id="@+id/editProfile"
+		          android:title="@string/edit_profile" />
 		    <item android:id="@+id/deleteUser"
 		          android:title="@string/delete_account" />
 		</menu>

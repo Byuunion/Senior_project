@@ -59,7 +59,7 @@ namespace MeetMeet_Native_Portable.Droid
 			mTextViewUsername = FindViewById<TextView> (Resource.Id.UsernameTextView);
 
 			// Set username text
-			mTextViewUsername.Text = userProfile.username; //MainActivity.username;
+			mTextViewUsername.Text = userProfile.username;
 
 			//Click Events
 			// Find Nearby Users Click
@@ -107,13 +107,19 @@ namespace MeetMeet_Native_Portable.Droid
 						userProfile = null;
 						StartActivity (typeof(MainActivity));
 					})
-					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {
-						//cancel
-					});
+					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
 				dialog = builder.Create ();
 				dialog.Show ();
 				return true;
+			case Resource.Id.editProfile:
+				// Pass profile object and start EditProfileActivity
+				Intent intent = new Intent(this, typeof(EditProfileActivity));
+				var serializedObject = JsonConvert.SerializeObject(userProfile);
+				intent.PutExtra("UserProfile", serializedObject);
+				StartActivity(intent);
+				return true;
 			case Resource.Id.deleteUser:
+				// Create the delete user confirmation dialog
 				builder.SetMessage (Resource.String.delete_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
@@ -121,9 +127,7 @@ namespace MeetMeet_Native_Portable.Droid
 						userProfile = null;
 						StartActivity (typeof(MainActivity));
 					})
-					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {
-						//cancel
-					});
+					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
 				dialog = builder.Create ();
 				dialog.Show ();
 				return true;

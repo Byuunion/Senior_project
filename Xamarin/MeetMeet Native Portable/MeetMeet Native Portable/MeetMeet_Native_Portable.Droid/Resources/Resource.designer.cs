@@ -397,8 +397,11 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f080004
 			public const int dark = 2131230724;
 			
+			// aapt resource value: 0x7f080044
+			public const int deleteUser = 2131230788;
+			
 			// aapt resource value: 0x7f080043
-			public const int deleteUser = 2131230787;
+			public const int editProfile = 2131230787;
 			
 			// aapt resource value: 0x7f080009
 			public const int editsenduser = 2131230729;
@@ -713,20 +716,23 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f05001b
 			public const int common_signin_button_text_long = 2131034139;
 			
-			// aapt resource value: 0x7f050026
-			public const int delete_account = 2131034150;
-			
-			// aapt resource value: 0x7f050028
-			public const int delete_question = 2131034152;
-			
 			// aapt resource value: 0x7f050027
-			public const int logout_question = 2131034151;
-			
-			// aapt resource value: 0x7f05002a
-			public const int no = 2131034154;
+			public const int delete_account = 2131034151;
 			
 			// aapt resource value: 0x7f050029
-			public const int yes = 2131034153;
+			public const int delete_question = 2131034153;
+			
+			// aapt resource value: 0x7f050026
+			public const int edit_profile = 2131034150;
+			
+			// aapt resource value: 0x7f050028
+			public const int logout_question = 2131034152;
+			
+			// aapt resource value: 0x7f05002b
+			public const int no = 2131034155;
+			
+			// aapt resource value: 0x7f05002a
+			public const int yes = 2131034154;
 			
 			static String()
 			{
