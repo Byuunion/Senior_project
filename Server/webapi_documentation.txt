@@ -83,7 +83,15 @@ Remove the user from their current group
 	/user/group DELETE {username: , token: }
 
 Add a positive rating
+
 	/user/pos_rating/:username PUT {rating_username: , token: }
 
 Add a negative rating
+
 	/user/neg_rating/:username PUT {rating_username: , token: }
+
+Manages userblack list
+
+	/user/blacklist/:username PUT {block_user: , token: }
+	
+	/user/blacklist/:username/:block_username/:token DELETE

@@ -195,6 +195,7 @@ router.route('/user/group/invite')
 			};
 		console.log("1");
 		if(username !== req.body.username_responder){
+			console.log("sending invite to " + req.body.username_responder);
 			connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(username) + ' AND username_to = ' + connection.escape(req.body.username_responder), function(err, data1){
 				if(data1.length === 0){ //Not yet invited
 					connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
@@ -205,7 +206,7 @@ router.route('/user/group/invite')
 						}
 						else{
 							var token = data[0].token;
-
+							console.log("sending invite to " + req.body.username_responder);
 							if(req.body.token === token){
 								var data = {
 									username_from: username,
@@ -215,7 +216,7 @@ router.route('/user/group/invite')
 								connection.query('INSERT INTO user_invite SET ?', data, function(err, rows) {
 									if (err){
 										response.success = false;
-										response.success_message = "Failed to post invite from: " + username + ".";
+										response.success_message = "Failed to post invite from: " + username + " to " + data.username_to + ".";
 										res.json(response);		
 
 									}
@@ -277,7 +278,7 @@ router.route('/user/group/invite')
 		
 		// Accept group invite
 		console.log(req.body.response);
-		if(req.body.response == true){
+		if(req.body.response == 'true'){
 			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err || data.length === 0){
 					response.success = false;

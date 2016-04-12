@@ -44,10 +44,21 @@ ON UPDATE CASCADE
 CREATE TABLE user_invite (username_from VARCHAR(15),
 username_to VARCHAR(15),
 PRIMARY KEY (username_from, username_to),
-FOREIGN KEY (username_from) references user_login(username),
+FOREIGN KEY (username_from) references user_login(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+FOREIGN KEY (username_to) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
-FOREIGN KEY (username_to) references user_login(username)
+);
+
+CREATE TABLE user_blacklist (username VARCHAR(15), 
+block_username VARCHAR(15),
+PRIMARY KEY (username, block_username),
+FOREIGN KEY (username) references user_login(username)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+FOREIGN KEY (block_username) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );

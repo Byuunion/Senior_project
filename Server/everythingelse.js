@@ -99,7 +99,7 @@ router.route('/user')
 			}
 			connection.end();
 		});
-	});
+	})
 	
 
 router.route('/user/profile/:username')
@@ -125,7 +125,7 @@ router.route('/user/profile/:username')
 			
 			connection.end();
 		});
-	});
+	})
 	
 router.route('/user/language/:username')
 	.get(function(req, res){
@@ -150,7 +150,7 @@ router.route('/user/language/:username')
 			
 			connection.end();
 		});
-	});
+	})
 
 router.route('/user/interest/:username')
 	.get(function(req, res){
@@ -175,7 +175,7 @@ router.route('/user/interest/:username')
 			
 			connection.end();
 		});
-	});
+	})
 
 
 router.route('/user/login/:username/:password')
@@ -236,7 +236,7 @@ router.route('/user/login/:username/:password')
 				});
 			}
 		});
-	});
+	})
 
 	
 router.route('/user/profile')
@@ -355,7 +355,7 @@ router.route('/user/profile')
 			}
 			connection.end();
 		});
-	});
+	})
 
 	
 router.route('/user/interest')
@@ -413,7 +413,7 @@ router.route('/user/interest')
 			}
 			connection.end();
 		});
-	});
+	})
 
 	
 router.route('/user/language')
@@ -471,7 +471,7 @@ router.route('/user/language')
 			}
 			connection.end();
 		});
-	});
+	})
 
 	
 router.route('/user/login')
@@ -520,7 +520,7 @@ router.route('/user/login')
 				connection.end();
 			});		
 		});
-	});
+	})
 
 	
 router.route('/user/profile/location/:username')
@@ -535,7 +535,7 @@ router.route('/user/profile/location/:username')
 			}
 		});
 		
-		var username = req.param.username;
+		var username = req.params.username;
 
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err || data.length === 0){
@@ -579,7 +579,7 @@ router.route('/user/profile/location/:username')
 			}
 			connection.end();
 		});
-	});
+	})
 
 				
 router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
@@ -628,7 +628,7 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 					res.json(data);
 			});
 		connection.end();
-	});
+	})
 
 	
 router.route('/user/gcmregid')
@@ -730,7 +730,7 @@ router.route('/user/gcmregid')
 				connection.end();
 			}
 		});
-	});
+	})
 
 	
 router.route('/user/pos_rating/:username')
@@ -784,7 +784,7 @@ router.route('/user/pos_rating/:username')
 			}
 			connection.end();
 		});
-	});
+	})
 
 	
 router.route('/user/neg_rating/:username')
@@ -838,7 +838,7 @@ router.route('/user/neg_rating/:username')
 			}
 			connection.end();
 		});
-	});
+	})
 	
 	
 router.route('/user/group')
@@ -891,7 +891,123 @@ router.route('/user/group')
 			}
 			connection.end();
 		});
-	});
+	})
 	
+router.route('/user/blacklist')
+	.post(function(req, res){
+		var connection = mysql.createConnection(mysqlConfig);
 
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Blacklist.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
+		var username = req.body.username;
+		
+		var response = {
+			success: null,
+			success_message: null
+		};
+		if(username !== req.body.block_username){
+			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
+				if (err || data.length === 0){
+					response.success = false;
+					response.success_message = "Failed to token from: " + username + ".";
+					res.json(response);
+				}
+				else{
+					var token = data[0].token;
+
+					if(req.body.token === token){
+
+						var data = {
+							username: username,
+							block_username: req.body.block_username
+						};
+
+						connection.query('INSERT INTO user_blacklist SET ?', data, function(err) {
+							if (err){
+								response.success = false;
+								response.success_message = "Failed to block user: " + username + ".";
+							}
+							else{
+								response.success = true;
+								response.success_message = "Successfully blocked user: " + username + ".";
+							}
+							res.json(response);
+						});
+					}
+					else{
+						response.success = false;
+						response.success_message = "Token didn't match";	
+						res.json(response);
+					}
+				}
+				connection.end();
+			});
+		}
+		else{
+			response.success = false;
+			response.success_message = "Silly rabbit. You can't block yourself. What's wrong with you?";
+			res.json(response);
+		}	
+	})
+	
+router.route('/user/blacklist/:username/:block_username/:token')
+	.delete(function(req, res){
+		var connection = mysql.createConnection(mysqlConfig);
+
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Post User Blacklist.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
+		var username = req.params.username;
+		
+		var response = {
+					success: null,
+					success_message: null
+		};
+
+		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
+			if (err || data.length === 0){
+				response.success = false;
+				response.success_message = "Failed to find existing token from: " + username + ".";
+				res.json(response);
+			}
+			else{
+				var token = data[0].token;
+				var data = {
+						username: username,
+						block_username: req.params.block_username
+				}
+				if(req.params.token === token){
+					connection.query('DELETE FROM user_blacklist WHERE username = ? AND block_username = ?', [username,req.params.block_username], function(err, data){
+						if (err){
+							response.success = false;
+							response.success_message = "Failed to remove block on user: " + req.params.username + ".";
+						}
+						else{
+							response.success = true;
+							response.success_message = "Successfully removed black on user: " + req.params.block_username + ".";
+						}
+						res.json(response);
+					});
+				}
+				else{
+					response.success = false;
+					response.success_message = "Token didn't match";
+					res.json(response);
+				}
+			}
+			connection.end();
+		})
+	})
+	
 module.exports = router; // HAS TO BE AT THE BOTTOM
