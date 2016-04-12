@@ -24,7 +24,7 @@ namespace MeetMeet_Native_Portable.Droid
 		// Main Menu Items
 		private Button mButtonNearbyUsers;
 		private Button mButtonUpdateLocation;
-		private Button mButtonEditProfile;
+		private Button mButtonSendMessage;
 
 		// Show username at top to show Profile was passed correctly
 		private TextView mTextViewUsername;
@@ -55,7 +55,7 @@ namespace MeetMeet_Native_Portable.Droid
 			// References for Home Menu Items
 			mButtonNearbyUsers = FindViewById<Button> (Resource.Id.NearbyUsersButton);
 			mButtonUpdateLocation = FindViewById<Button> (Resource.Id.SetLocationButton);
-			mButtonEditProfile = FindViewById<Button> (Resource.Id.EditProfileButton);
+			mButtonSendMessage = FindViewById<Button> (Resource.Id.SendMessageButton);
 			mTextViewUsername = FindViewById<TextView> (Resource.Id.UsernameTextView);
 
 			// Set username text
@@ -70,8 +70,8 @@ namespace MeetMeet_Native_Portable.Droid
 			// Set Current Location Click 
 			mButtonUpdateLocation.Click += mButtonSetLocation_Click;		
 
-			// Edit Profile Click
-			mButtonEditProfile.Click += delegate {
+			// Send Message Click
+			mButtonSendMessage.Click += delegate {
 				Intent intent = new Intent(this, typeof(EditProfileActivity));
 				var serializedObject = JsonConvert.SerializeObject(userProfile);
 				intent.PutExtra("UserProfile", serializedObject);
