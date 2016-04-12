@@ -72,6 +72,9 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Send Message Click
 			mButtonSendMessage.Click += delegate {
+
+				//******* Replace with messaging code *******
+
 				Intent intent = new Intent(this, typeof(EditProfileActivity));
 				var serializedObject = JsonConvert.SerializeObject(userProfile);
 				intent.PutExtra("UserProfile", serializedObject);
@@ -105,7 +108,9 @@ namespace MeetMeet_Native_Portable.Droid
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
 						userProfile = null;
-						StartActivity (typeof(MainActivity));
+						Intent logoutIntent = new Intent(this, typeof(MainActivity));
+						logoutIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+						StartActivity (logoutIntent);
 					})
 					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
 				dialog = builder.Create ();
@@ -113,10 +118,10 @@ namespace MeetMeet_Native_Portable.Droid
 				return true;
 			case Resource.Id.editProfile:
 				// Pass profile object and start EditProfileActivity
-				Intent intent = new Intent(this, typeof(EditProfileActivity));
+				Intent editIntent = new Intent(this, typeof(EditProfileActivity));
 				var serializedObject = JsonConvert.SerializeObject(userProfile);
-				intent.PutExtra("UserProfile", serializedObject);
-				StartActivity(intent);
+				editIntent.PutExtra("UserProfile", serializedObject);
+				StartActivity(editIntent);
 				return true;
 			case Resource.Id.deleteUser:
 				// Create the delete user confirmation dialog
@@ -125,7 +130,9 @@ namespace MeetMeet_Native_Portable.Droid
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
 						Deleter.DeleteProfile(userProfile.username, MainActivity.serverURL+"user");
 						userProfile = null;
-						StartActivity (typeof(MainActivity));
+						Intent deleteIntent = new Intent(this, typeof(MainActivity));
+						deleteIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+						StartActivity (deleteIntent);
 					})
 					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
 				dialog = builder.Create ();
