@@ -27,8 +27,7 @@ namespace MeetMeet_Native_Portable
             {
                 System.Diagnostics.Debug.WriteLine("Response received");
                 System.Diagnostics.Debug.WriteLine(task.Status);
-                return true;
-
+                return task.Result.IsSuccessStatusCode;
             }
             else {
                 System.Diagnostics.Debug.WriteLine("Response timeout");

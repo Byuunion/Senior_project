@@ -14,7 +14,6 @@ namespace MeetMeet_Native_Portable
         private static async Task<string> GetAbstract(string resource, string url)
         {
             HttpClient client;
-            string content = null;
             var uri = new Uri(url + resource);
 
             client = new HttpClient();
@@ -23,20 +22,26 @@ namespace MeetMeet_Native_Portable
             var response = await client.GetAsync(uri);
 
             System.Diagnostics.Debug.WriteLine("Response: " + await response.Content.ReadAsStringAsync());
-
+            
 
             if (response.IsSuccessStatusCode)
             {
                 string responseString = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine("Get for " + url + resource + " was successful, string is " + responseString);
-                content = await response.Content.ReadAsStringAsync();
+                if (responseString.Contains("\"success\":false"))
+                {
+                    return default(string);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Get for " + url + resource + " was successful, string is " + responseString);
+                    return responseString;
+                }
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Get was not successful");
+                return default(String);
             }
-
-            return content;
         }
 
         public static async Task<List<T>> GetObjectList(string resource, string url)
@@ -80,15 +85,21 @@ namespace MeetMeet_Native_Portable
         {
             string content = await GetAbstract(resource, url);
             System.Diagnostics.Debug.WriteLine("String gotten from server " + content);
-            try
+            if(content != default(string))
             {
-                return JsonConvert.DeserializeObject<T>(content);
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(content);
+                }
+                catch
+                {
+                    return default(T);
+                }
             }
-            catch
+            else
             {
                 return default(T);
             }
-            
         }
     }
 }

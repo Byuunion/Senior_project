@@ -278,8 +278,9 @@ namespace MeetMeet_Native_Portable.Droid
             {
                 credentials = new Credentials(username);
                 System.Diagnostics.Debug.WriteLine("Trying to log in");
-                var loggedIn = await credentials.doLogin(password, serverURL);
+                bool loggedIn = await credentials.doLogin(password, serverURL);
 
+                System.Diagnostics.Debug.WriteLine("Finished doLogin, token is " + credentials.token);
                 if (loggedIn)
                 {
                     return await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL, gcm_regid_ext);
