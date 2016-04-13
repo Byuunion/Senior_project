@@ -62,7 +62,7 @@ Get all Users
 	
 Delete specific User Keeps Messages
 	
-	/user DELETE: Deletes all references to the username from all tables. {username: , token: }
+	/user/:username/:token DELETE: Deletes all references to the username from all tables.
 
 Find Users
 
@@ -80,7 +80,7 @@ Group Message
 
 Remove the user from their current group
 
-	/user/group DELETE {username: , token: }
+	/user/group/:username/:token DELETE
 
 Add a positive rating
 

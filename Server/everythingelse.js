@@ -13,8 +13,6 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-
-
 //Config for database
 var mysqlConfig = {
 	host: 'userdb.cydfufqp5imu.us-east-1.rds.amazonaws.com',
@@ -50,6 +48,7 @@ router.route('/user')
 		});
 	})
 	
+router.route('/user/:username/:token')	
 	.delete(function(req,res){
 		var connection = mysql.createConnection(mysqlConfig);
 
@@ -61,7 +60,7 @@ router.route('/user')
 			}
 		});
 		
-		var username = req.body.username;
+		var username = req.params.username;
 		
 		var response = {
 					success: null,
@@ -77,7 +76,7 @@ router.route('/user')
 			else{
 				var token = data[0].token;
 			
-				if(req.body.token === token){
+				if(req.params.token === token){
 					//Delete Cascades through tables
 					connection.query('DELETE FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 						if (err){
@@ -841,7 +840,7 @@ router.route('/user/neg_rating/:username')
 	})
 	
 	
-router.route('/user/group')
+router.route('/user/group/:username/:token')
 	.delete(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
 
@@ -853,7 +852,7 @@ router.route('/user/group')
 			}
 		});
 		
-		var username = req.body.username;
+		var username = req.params.username;
 		
 		var response = {
 					success: null,
@@ -869,7 +868,7 @@ router.route('/user/group')
 			else{
 				var token = data[0].token;
 			
-				if(req.body.token === token){
+				if(req.params.token === token){
 					//Delete Cascades through tables
 					connection.query('DELETE FROM user_group WHERE username = ' + connection.escape(username), function(err, data){
 						if (err){
