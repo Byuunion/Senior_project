@@ -45,7 +45,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 		void mBtnSendMsg_Click(object sender, EventArgs e)
 		{
-			MessageSender.SendSingleMessage(mUsernameTextView.Text, mMsgTextTextView.Text , MainActivity.credentials, "http://52.91.212.179:8800/user/message");
+			MessageSender.SendSingleMessage( mMsgTextTextView.Text, mUsernameTextView.Text, MainActivity.credentials, "http://52.91.212.179:8800/user/message");
 		}
 	}
 }
