@@ -50,6 +50,8 @@ namespace MeetMeet_Native_Portable.Droid
         public static string gcm_regid_ext = "user/gcmregid";
         public static string group_message = "user/group/message";
         public static string single_message = "user/message";
+		public static string pos_rating = "user/pos_rating";
+		public static string neg_rating = "user/neg_rating";
         public static string username;
         public static string user_token;
         public static string gcm_token;
@@ -305,7 +307,7 @@ namespace MeetMeet_Native_Portable.Droid
         private async Task<Boolean> TryToSignUp(string username, string password)
         {
             credentials = new Credentials(username);
-            System.Diagnostics.Debug.WriteLine("Trying to log in");
+            System.Diagnostics.Debug.WriteLine("Trying to sign up");
             try
             {
                 var loggedIn = await credentials.doSignUp(password, serverURL);

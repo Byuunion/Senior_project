@@ -23,10 +23,9 @@ namespace MeetMeet_Native_Portable
 
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {
-                System.Diagnostics.Debug.WriteLine("Response received");
-                System.Diagnostics.Debug.WriteLine(task.Status);
-                return true;
-
+                string response = await task.Result.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine("Post response received. String is: " + response);
+                return task.Result.IsSuccessStatusCode && !response.Contains("\"success\":false");
             }
             else {
                 System.Diagnostics.Debug.WriteLine("Response timeout");

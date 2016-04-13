@@ -70,21 +70,24 @@ namespace MeetMeet_Native_Portable.Droid
 
 		async void MUpvote_Click (object sender, EventArgs e)
 		{
-			/*profile.positive_votes = profile.positive_votes + 1;
-			if (await Updater.UpdateObject (profile, MainActivity.serverURL, MainActivity.profile_ext)) {
+			System.Diagnostics.Debug.WriteLine ("Trying to send positive vote to user " + profile.username + " from user " + MainActivity.credentials.username);
+			if (await Updater.UpdateObject (new {rating_username = MainActivity.credentials.username, token = MainActivity.credentials.token}, 
+				MainActivity.serverURL, MainActivity.pos_rating + "/" + profile.username)) {
+				Toast.MakeText (this, "Successfully rated user!", ToastLength.Short).Show();
 			}
 			else
-				Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show();*/
+				Toast.MakeText (this, "Unable to send positive vote", ToastLength.Short).Show();
 		}
 
 		async void MDownvote_Click (object sender, EventArgs e)
 		{
-			/*profile.negative_votes = profile.negative_votes - 1;
-			if (await Updater.UpdateObject (profile, MainActivity.serverURL, MainActivity.profile_ext)) {
+			System.Diagnostics.Debug.WriteLine ("Trying to send negative vote to user " + profile.username + " from user " + MainActivity.credentials.username);
+			if (await Updater.UpdateObject (new {rating_username = MainActivity.credentials.username, token = MainActivity.credentials.token}, 
+				MainActivity.serverURL, MainActivity.neg_rating + "/" + profile.username)) {
+				Toast.MakeText (this, "Successfully rated user!", ToastLength.Short).Show();
 			}
-			else{
-				Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show();
-			}*/
+			else
+				Toast.MakeText (this, "Unable to send negative vote", ToastLength.Short).Show();
 		}
 	}
 }

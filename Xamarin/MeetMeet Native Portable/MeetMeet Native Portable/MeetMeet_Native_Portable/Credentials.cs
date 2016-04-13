@@ -41,6 +41,7 @@ namespace MeetMeet_Native_Portable
         {
             if(await Poster.PostObject(new { username = this.username, password = password }, url + login))
             {
+                System.Diagnostics.Debug.WriteLine("Successfully signed up user: " + this.username);
                 return await doLogin(password, url);
             }
 

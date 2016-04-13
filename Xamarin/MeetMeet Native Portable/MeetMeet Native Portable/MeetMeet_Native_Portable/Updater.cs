@@ -17,6 +17,7 @@ namespace MeetMeet_Native_Portable
             client.MaxResponseContentBufferSize = 256000;
 
             var uri = new Uri(url + resource);
+			System.Diagnostics.Debug.WriteLine ("Sending update request to: " + uri);
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var task = client.PutAsync(uri, content);
