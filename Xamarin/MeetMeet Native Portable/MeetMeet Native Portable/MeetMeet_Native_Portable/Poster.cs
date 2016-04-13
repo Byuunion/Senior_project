@@ -19,7 +19,7 @@ namespace MeetMeet_Native_Portable
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var task = client.PostAsync(uri, content);
             
-            
+			System.Diagnostics.Debug.WriteLine("Trying to post object: " + json + " to: " + uri);
 
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {

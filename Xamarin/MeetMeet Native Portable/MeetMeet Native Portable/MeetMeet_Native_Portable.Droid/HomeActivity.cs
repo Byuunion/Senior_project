@@ -128,7 +128,7 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.delete_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
-						Deleter.DeleteProfile(userProfile.username, MainActivity.serverURL+"user");
+						Deleter.DeleteObject(userProfile.username, MainActivity.serverURL+"user");
 						userProfile = null;
 						Intent deleteIntent = new Intent(this, typeof(MainActivity));
 						deleteIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);

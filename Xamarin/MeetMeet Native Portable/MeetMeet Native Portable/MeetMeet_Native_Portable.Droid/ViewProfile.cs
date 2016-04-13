@@ -27,6 +27,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mDownvote;
 		private Button mInvite;
 		private Button mBlock;
+		private Button mUnblock;
 
 		public static string userNameFrom;
 		public static string serverURL = "http://52.91.212.179:8800/";
@@ -46,7 +47,8 @@ namespace MeetMeet_Native_Portable.Droid
 			mUpvote = FindViewById<Button> (Resource.Id.upvoteButton);
 			mDownvote = FindViewById<Button> (Resource.Id.downvoteButton);
 			mInvite = FindViewById<Button> (Resource.Id.inviteViewProfileButton);
-			mBlock = FindViewById<Button> (Resource.Id.inviteViewProfileButton);
+			mBlock = FindViewById<Button> (Resource.Id.blockViewProfileButton);
+			mUnblock = FindViewById<Button> (Resource.Id.unblockViewProfileButton);
 
 			// Passed username 
 
@@ -72,7 +74,19 @@ namespace MeetMeet_Native_Portable.Droid
 
 			mInvite.Click += MInvite_Click;
 			mBlock.Click += MBlock_Click;
+			mUnblock.Click += MUnblock_Click;
 
+		}
+
+		async void MUnblock_Click (object sender, EventArgs e)
+		{
+			System.Diagnostics.Debug.WriteLine ("Trying to block user " + profile.username);
+			if (await Deleter.DeleteObject (MainActivity.blacklist_user + "/" + MainActivity.credentials.username + "/" + profile.username + "/" + MainActivity.credentials.token, 
+				MainActivity.serverURL )) {
+				Toast.MakeText (this, "Successfully unblocked user!", ToastLength.Short).Show ();
+			} else {
+				Toast.MakeText (this, "Unable to unblock user", ToastLength.Short).Show ();
+			}
 		}
 
 	
@@ -107,7 +121,13 @@ namespace MeetMeet_Native_Portable.Droid
 
 		async void MBlock_Click (object sender, EventArgs e)
 		{
-
+			System.Diagnostics.Debug.WriteLine ("Trying to block user " + profile.username);
+			if (await Poster.PostObject (new {username = MainActivity.credentials.username, block_username = profile.username, token = MainActivity.credentials.token}, 
+				   MainActivity.serverURL + MainActivity.blacklist_user)) {
+				Toast.MakeText (this, "Successfully blocked user!", ToastLength.Short).Show ();
+			} else {
+				Toast.MakeText (this, "Unable to block user", ToastLength.Short).Show ();
+			}
 		}
 
 	}

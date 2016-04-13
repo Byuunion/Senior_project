@@ -910,32 +910,40 @@ router.route('/user/blacklist')
 			success: null,
 			success_message: null
 		};
+		
 		if(username !== req.body.block_username){
+			console.log("trying to block user " + req.body.block_username);
 			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err || data.length === 0){
 					response.success = false;
-					response.success_message = "Failed to token from: " + username + ".";
+					response.success_message = "Failed to find token from: " + username + ".";
 					res.json(response);
 				}
 				else{
 					var token = data[0].token;
-
+					
 					if(req.body.token === token){
-
+						console.log("tokens matched " + req.body.block_username);
 						var data = {
 							username: username,
 							block_username: req.body.block_username
 						};
-
+						console.log("attempting to insert " + data.username + " " + data.block_username);
 						connection.query('INSERT INTO user_blacklist SET ?', data, function(err) {
 							if (err){
+								console.log("errored attempting to insert user");
 								response.success = false;
-								response.success_message = "Failed to block user: " + username + ".";
+								console.log("errored attempting to insert user");
+								response.success_message = "Failed to block user: " + data.block_username + ".";
+								console.log("errored attempting to insert user");
 							}
 							else{
+								console.log("successfully inserted user");
 								response.success = true;
-								response.success_message = "Successfully blocked user: " + username + ".";
+								response.success_message = "Successfully blocked user: " + data.block_username + ".";
+								
 							}
+							console.log("finished insert attemp " + data.username + " " + data.block_username);
 							res.json(response);
 						});
 					}
