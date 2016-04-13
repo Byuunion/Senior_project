@@ -29,7 +29,7 @@ namespace MeetMeet_Native_Portable
         /// <param name="url"></param> http://52.91.212.179:8800/user/message/user/group/invite
         public static async Task<Boolean> SendGroupInvite(string username_to, Credentials this_user, string url)
         {
-            return await Poster.PostObject(new { username_inviter = username_to, username_responder = this_user.username, token = this_user.token }, url);
+			return await Poster.PostObject(new { username_inviter = this_user.username, username_responder = username_to, token = this_user.token, message_text = "You have been invited to a group", message_code = 2 }, url);
         }
 
         /// <param name="response"></param> should be true or false

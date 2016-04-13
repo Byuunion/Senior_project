@@ -53,6 +53,7 @@ namespace MeetMeet_Native_Portable.Droid
 		public static string pos_rating = "user/pos_rating";
 		public static string neg_rating = "user/neg_rating";
 		public static string blacklist_user = "user/blacklist";
+		public static string group_invite = "user/group/invite";
         public static string username;
         public static string user_token;
         public static string gcm_token;
