@@ -47,4 +47,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/downvoteButton" />
+    <Button
+        android:text="Invite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inviteViewProfileButton" />
+    <Button
+        android:text="Block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/blockViewProfileButton" />
 </LinearLayout>

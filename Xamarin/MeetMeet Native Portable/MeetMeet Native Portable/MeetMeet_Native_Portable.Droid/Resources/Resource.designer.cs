@@ -382,6 +382,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f08003f
 			public const int bioviewprofile = 2131230783;
 			
+			// aapt resource value: 0x7f080045
+			public const int blockViewProfileButton = 2131230789;
+			
 			// aapt resource value: 0x7f080012
 			public const int btnDialogEmail = 2131230738;
 			
@@ -397,14 +400,14 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f080007
 			public const int dark = 2131230727;
 			
-			// aapt resource value: 0x7f080046
-			public const int deleteUser = 2131230790;
+			// aapt resource value: 0x7f080048
+			public const int deleteUser = 2131230792;
 			
 			// aapt resource value: 0x7f080043
 			public const int downvoteButton = 2131230787;
 			
-			// aapt resource value: 0x7f080045
-			public const int editProfile = 2131230789;
+			// aapt resource value: 0x7f080047
+			public const int editProfile = 2131230791;
 			
 			// aapt resource value: 0x7f080009
 			public const int editsenduser = 2131230729;
@@ -430,6 +433,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f080038
 			public const int imageView1 = 2131230776;
 			
+			// aapt resource value: 0x7f080044
+			public const int inviteViewProfileButton = 2131230788;
+			
 			// aapt resource value: 0x7f080008
 			public const int light = 2131230728;
 			
@@ -448,8 +454,8 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f08002d
 			public const int linearLayout5 = 2131230765;
 			
-			// aapt resource value: 0x7f080044
-			public const int logout = 2131230788;
+			// aapt resource value: 0x7f080046
+			public const int logout = 2131230790;
 			
 			// aapt resource value: 0x7f080030
 			public const int msgText = 2131230768;

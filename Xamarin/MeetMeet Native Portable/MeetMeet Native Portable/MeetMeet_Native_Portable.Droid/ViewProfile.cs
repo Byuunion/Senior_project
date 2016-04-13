@@ -25,11 +25,13 @@ namespace MeetMeet_Native_Portable.Droid
 		private TextView mnegativevoteviewprofile;
 		private Button	mUpvote;
 		private Button mDownvote;
+		private Button mInvite;
+		private Button mBlock;
 
 		public static string userNameFrom;
 		public static string serverURL = "http://52.91.212.179:8800/";
 		public static Profile profile;
-
+		public static Credentials credentials;
 
 		async protected override void OnCreate (Bundle savedInstanceState)
 		{
@@ -43,6 +45,8 @@ namespace MeetMeet_Native_Portable.Droid
 			mnegativevoteviewprofile = FindViewById<TextView> (Resource.Id.negativevoteviewprofile);
 			mUpvote = FindViewById<Button> (Resource.Id.upvoteButton);
 			mDownvote = FindViewById<Button> (Resource.Id.downvoteButton);
+			mInvite = FindViewById<Button> (Resource.Id.inviteViewProfileButton);
+			mBlock = FindViewById<Button> (Resource.Id.inviteViewProfileButton);
 
 			// Passed username 
 
@@ -66,8 +70,12 @@ namespace MeetMeet_Native_Portable.Droid
 			mUpvote.Click += MUpvote_Click;
 			mDownvote.Click += MDownvote_Click;
 
+			mInvite.Click += MInvite_Click;
+			mBlock.Click += MBlock_Click;
+
 		}
 
+	
 		async void MUpvote_Click (object sender, EventArgs e)
 		{
 			System.Diagnostics.Debug.WriteLine ("Trying to send positive vote to user " + profile.username + " from user " + MainActivity.credentials.username);
@@ -89,6 +97,19 @@ namespace MeetMeet_Native_Portable.Droid
 			else
 				Toast.MakeText (this, "Unable to send negative vote", ToastLength.Short).Show();
 		}
+
+		async void MInvite_Click (object sender, EventArgs e)
+		{
+			if (await MessageSender.SendGroupInvite (profile.username, credentials, serverURL)) {
+				Toast.MakeText (this, "Invite Sent!", ToastLength.Short).Show ();
+			}
+		}
+
+		async void MBlock_Click (object sender, EventArgs e)
+		{
+
+		}
+
 	}
 }
 
