@@ -216,7 +216,7 @@ router.route('/user/group/invite')
 								connection.query('INSERT INTO user_invite SET ?', data, function(err, rows) {
 									if (err){
 										response.success = false;
-										response.success_message = "Failed to post invite from: " + username + " to " + data.username_to + ".";
+										response.success_message = "Failed to post invite from: " + data.username + " to " + data.username_to + ".";
 										res.json(response);		
 
 									}
@@ -269,6 +269,7 @@ router.route('/user/group/invite')
 			}
 		});
 		
+		console.log(req.body.username_responder + " " + req.body.username_inviter);
 		var username = req.body.username_responder;
 		
 		var response = {
@@ -277,7 +278,7 @@ router.route('/user/group/invite')
 		};
 		
 		// Accept group invite
-		console.log(req.body.response);
+		console.log("response " + req.body.response)
 		if(req.body.response == 'true'){
 			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err || data.length === 0){
@@ -286,10 +287,11 @@ router.route('/user/group/invite')
 					//res.json(response);
 				}
 				else{
+					console.log("found token for " + username);
 					var token = data[0].token;
 				
 					if(req.body.token === token){
-						
+						console.log("token matched");
 						var data = {
 							username_from: username,
 							username_to: req.body.username_inviter
@@ -298,14 +300,17 @@ router.route('/user/group/invite')
 						var sql = 'SELECT username_from, username_to FROM user_invite WHERE username_from = ? AND username_to = ?';
 						var inserts = [req.body.username_inviter, username];
 						sql = mysql.format(sql, inserts);
+						console.log(sql);
 						//connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(req.body.username_from) + ', username_to = ' + connection.escape(username), function(err, data){
 						connection.query(sql, function(err, data){
 							if(err || data.length === 0){
 								response.success = false;
 								response.success_message = "Invite does not exist";
+								console.log("invite does not exist");
 								res.json(response);
 							}
 							else{
+								console.log("invite exists");
 								connection.query('SELECT * FROM user_group WHERE username = ' + connection.escape(username), function(err, receiver_data) {
 									if(err){
 										response.success = false;
@@ -318,19 +323,27 @@ router.route('/user/group/invite')
 											response.success_message = "Receiver is already in a group";
 											//res.json(response);
 											
+											console.log("trying to delete existing invite");
 											var sql = 'DELETE FROM user_invite WHERE username_from = ? AND username_to = ?';
-											var inserts = [req.body.username_responder, username];
+											var inserts = [req.body.username_inviter, username];
 											sql = mysql.format(sql, inserts);
-											
+											console.log("trying to insert into group");
 											connection.query(sql, function(err, data){	
 												if(err){
 													response.success = false;
 													response.success_message = "Error inserting into group";
+													res.json(response);
 												}
 												else{
+													console.log("successful deletion");
+													send_single_message(req.body.username_responder, req.body.username_inviter, 'Invite Accepted', '1', function(results) {
+																				response = results;
+																				console.log(response);
+																				res.json(response);
+																			});
 													response.success = true;
 												}
-												res.json(response);
+												//res.json(response);
 												connection.end();
 											});
 										}
