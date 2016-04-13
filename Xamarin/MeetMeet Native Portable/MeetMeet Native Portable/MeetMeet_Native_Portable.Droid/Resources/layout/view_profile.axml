@@ -37,4 +37,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/negativevoteviewprofile"
         android:editable="false" />
+    <Button
+        android:text="Upvote User"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/upvoteButton" />
+    <Button
+        android:text="Downvote User"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/downvoteButton" />
 </LinearLayout>

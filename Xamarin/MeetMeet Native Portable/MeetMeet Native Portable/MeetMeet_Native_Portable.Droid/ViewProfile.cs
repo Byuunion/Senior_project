@@ -23,9 +23,12 @@ namespace MeetMeet_Native_Portable.Droid
 		private TextView mbioviewprofile;
 		private TextView mpositivevoteviewprofile;
 		private TextView mnegativevoteviewprofile;
+		private Button	mUpvote;
+		private Button mDownvote;
 
-		public string userNameFrom;
+		public static string userNameFrom;
 		public static string serverURL = "http://52.91.212.179:8800/";
+		public static Profile profile;
 
 
 		async protected override void OnCreate (Bundle savedInstanceState)
@@ -38,6 +41,8 @@ namespace MeetMeet_Native_Portable.Droid
 			mbioviewprofile = FindViewById<TextView> (Resource.Id.bioviewprofile);
 			mpositivevoteviewprofile = FindViewById<TextView> (Resource.Id.positivevoteviewprofile);
 			mnegativevoteviewprofile = FindViewById<TextView> (Resource.Id.negativevoteviewprofile);
+			mUpvote = FindViewById<Button> (Resource.Id.upvoteButton);
+			mDownvote = FindViewById<Button> (Resource.Id.downvoteButton);
 
 			// Passed username 
 
@@ -45,7 +50,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 
 			// Get user and bio
-			Profile profile = await Getter<Profile>.GetObject(userNameFrom, serverURL + "user/profile/");
+		    profile = await Getter<Profile>.GetObject(userNameFrom, serverURL + "user/profile/");
 			string username = profile.username;
 			string bio = profile.bio;
 			int posvote = profile.positive_votes;
@@ -57,6 +62,29 @@ namespace MeetMeet_Native_Portable.Droid
 			mbioviewprofile.Text = bio;
 			mpositivevoteviewprofile.Text = ("" + posvote);
 			mnegativevoteviewprofile.Text = ("" + negvote);
+
+			mUpvote.Click += MUpvote_Click;
+			mDownvote.Click += MDownvote_Click;
+
+		}
+
+		async void MUpvote_Click (object sender, EventArgs e)
+		{
+			/*profile.positive_votes = profile.positive_votes + 1;
+			if (await Updater.UpdateObject (profile, MainActivity.serverURL, MainActivity.profile_ext)) {
+			}
+			else
+				Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show();*/
+		}
+
+		async void MDownvote_Click (object sender, EventArgs e)
+		{
+			/*profile.negative_votes = profile.negative_votes - 1;
+			if (await Updater.UpdateObject (profile, MainActivity.serverURL, MainActivity.profile_ext)) {
+			}
+			else{
+				Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show();
+			}*/
 		}
 	}
 }

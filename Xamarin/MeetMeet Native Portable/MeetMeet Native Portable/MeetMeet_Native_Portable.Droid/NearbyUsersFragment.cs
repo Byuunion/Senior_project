@@ -13,11 +13,13 @@ namespace MeetMeet_Native_Portable.Droid
 {
 	public class NearbyUsersFragment : ListFragment
 	{
+		private int supaPosition;
 		private int selectedUserId;
 		private bool isDualPane;
 		private LocationManager locationManager;
 		private String provider;
 		private string[] nearbyBios;
+		private List<Profile> nearbyUserslist;
 
 		public override void OnActivityCreated(Bundle savedInstanceState)
 		{
@@ -46,7 +48,7 @@ namespace MeetMeet_Native_Portable.Droid
 					return currentLocation.GetNearbyProfiles().Result;
 				});
 			
-			List<Profile> nearbyUserslist = new List<Profile>();
+			nearbyUserslist = new List<Profile>();
 			try{
 				nearbyUserslist = task3.Result;
 			}
@@ -92,7 +94,14 @@ namespace MeetMeet_Native_Portable.Droid
 
 		public override void OnListItemClick(ListView l, View v, int position, long id)
 		{
+			if(supaPosition==position)
+			{
+				Intent intent2 = new Intent(Context.ApplicationContext,typeof(ViewProfile));
+				intent2.PutExtra ("username_from", nearbyUserslist [supaPosition].username);
+				StartActivity (intent2);
+			}
 			ShowProfile(position);
+			supaPosition = position;
 		}
 
 		private void ShowProfile(int userId)

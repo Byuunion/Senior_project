@@ -94,10 +94,10 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="InviteRequestActivity.cs" />
     <Compile Include="NearbyUsersActivity.cs" />
-    <Compile Include="NearbyUsersFragment.cs" />
     <Compile Include="NearbyProfileActivity.cs" />
     <Compile Include="NearbyProfileFragment.cs" />
     <Compile Include="ViewProfile.cs" />
+    <Compile Include="NearbyUsersFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
