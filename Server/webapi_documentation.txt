@@ -92,6 +92,6 @@ Add a negative rating
 
 Manages userblack list
 
-	/user/blacklist/:username PUT {block_user: , token: }
+	/user/blacklist/ POST {username: , token: , block_username: }
 	
 	/user/blacklist/:username/:block_username/:token DELETE
