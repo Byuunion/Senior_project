@@ -70,21 +70,43 @@ namespace MeetMeet_Native_Portable.Droid
 				StartActivity(intent);
 			};
 
-			mBtnAcptMeetInvite.Click += delegate {
+			mBtnAcptMeetInvite.Click += MBtnAcptMeetInvite_Click;
+
+				//delegate {
 				//InviteAccept ();
 
-				MessageSender.RespondGroupInvite(userNameFrom,credentials, serverURL,"true");
-				base.OnBackPressed();
-			};
+				//MessageSender.RespondGroupInvite(userNameFrom,credentials, serverURL,"true");
+
+				//base.OnBackPressed();
+			//};
 	
 
-			mBtnDclnMeetInvite.Click += delegate {
-
-				base.OnBackPressed ();
-			};
+			mBtnDclnMeetInvite.Click += MBtnDclnMeetInvite_Click;
 
 			//return view;
 		}
+
+		 async void MBtnDclnMeetInvite_Click (object sender, EventArgs e)
+		 {
+			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, serverURL + MainActivity.group_invite, "false")) {
+				Toast.MakeText (this, "Response Sent!", ToastLength.Short).Show ();
+				base.OnBackPressed ();
+			} else {
+				Toast.MakeText (this, "Response Failed!", ToastLength.Short).Show ();
+			}
+		 }
+
+		 async void MBtnAcptMeetInvite_Click (object sender, EventArgs e)
+		 {
+			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, serverURL + MainActivity.group_invite, "true")) {
+				Toast.MakeText (this, "Response Sent!", ToastLength.Short).Show ();
+				base.OnBackPressed ();
+			} else {
+				Toast.MakeText (this, "Response Failed!", ToastLength.Short).Show ();
+			}
+
+
+		 }
 	}
 }
 
