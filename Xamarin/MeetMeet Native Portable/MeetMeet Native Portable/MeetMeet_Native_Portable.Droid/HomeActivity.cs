@@ -71,15 +71,7 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonUpdateLocation.Click += mButtonSetLocation_Click;		
 
 			// Send Message Click
-			mButtonSendMessage.Click += delegate {
-
-				//******* Replace with messaging code *******
-
-				Intent intent = new Intent(this, typeof(EditProfileActivity));
-				var serializedObject = JsonConvert.SerializeObject(userProfile);
-				intent.PutExtra("UserProfile", serializedObject);
-				StartActivity(intent);
-			};
+			mButtonSendMessage.Click += MButtonSendMsg_Click;
 
 			// Get the location manager
 			locationManager = (LocationManager) GetSystemService(Context.LocationService);
@@ -88,6 +80,15 @@ namespace MeetMeet_Native_Portable.Droid
 			Criteria criteria = new Criteria();
 			criteria.Accuracy = Accuracy.Fine;
 			provider = locationManager.GetBestProvider(criteria, true);
+		}
+
+		void MButtonSendMsg_Click(object sender, EventArgs e)
+		{
+			FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			MessagingActivity msgAct = new MessagingActivity ();
+			msgAct.Show (transaction, "Dialog Fragment");
+
+
 		}
 
 		public override bool OnCreateOptionsMenu(IMenu menu)
