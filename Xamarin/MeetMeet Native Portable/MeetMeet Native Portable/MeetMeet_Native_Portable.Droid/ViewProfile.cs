@@ -116,7 +116,11 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			if (await MessageSender.SendGroupInvite (profile.username, MainActivity.credentials, MainActivity.serverURL + MainActivity.group_invite)) {
 				Toast.MakeText (this, "Invite Sent!", ToastLength.Short).Show ();
+			} else {
+
+				Toast.MakeText (this, "Invite Failed!", ToastLength.Short).Show ();
 			}
+
 		}
 
 		async void MBlock_Click (object sender, EventArgs e)

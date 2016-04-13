@@ -99,6 +99,9 @@ namespace MeetMeet_Native_Portable.Droid
 		 async void MBtnAcptMeetInvite_Click (object sender, EventArgs e)
 		 {
 			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, serverURL + MainActivity.group_invite, "true")) {
+
+				MessageSender.SendSingleMessage (MainActivity.credentials.username + " accepts your invite!", userNameFrom, MainActivity.credentials, serverURL + MainActivity.single_message);  
+
 				Toast.MakeText (this, "Response Sent!", ToastLength.Short).Show ();
 				base.OnBackPressed ();
 			} else {
