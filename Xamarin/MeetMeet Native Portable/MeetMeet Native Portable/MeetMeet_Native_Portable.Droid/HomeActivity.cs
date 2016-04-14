@@ -25,6 +25,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mButtonNearbyUsers;
 		private Button mButtonUpdateLocation;
 		private Button mButtonSendMessage;
+		private Button mButtonGroupSendMessage;
 
 		// Show username at top to show Profile was passed correctly
 		private TextView mTextViewUsername;
@@ -56,7 +57,9 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonNearbyUsers = FindViewById<Button> (Resource.Id.NearbyUsersButton);
 			mButtonUpdateLocation = FindViewById<Button> (Resource.Id.SetLocationButton);
 			mButtonSendMessage = FindViewById<Button> (Resource.Id.SendMessageButton);
+			mButtonGroupSendMessage = FindViewById<Button> (Resource.Id.btnGroupMessage);
 			mTextViewUsername = FindViewById<TextView> (Resource.Id.UsernameTextView);
+
 
 			// Set username text
 			mTextViewUsername.Text = userProfile.username;
@@ -73,6 +76,10 @@ namespace MeetMeet_Native_Portable.Droid
 			// Send Message Click
 			mButtonSendMessage.Click += MButtonSendMsg_Click;
 
+			//Send Group Message Click
+
+			mButtonGroupSendMessage.Click += MButtonGroupSendMessage_Click;
+
 			// Get the location manager
 			locationManager = (LocationManager) GetSystemService(Context.LocationService);
 
@@ -80,6 +87,11 @@ namespace MeetMeet_Native_Portable.Droid
 			Criteria criteria = new Criteria();
 			criteria.Accuracy = Accuracy.Fine;
 			provider = locationManager.GetBestProvider(criteria, true);
+		}
+
+		void MButtonGroupSendMessage_Click (object sender, EventArgs e)
+		{
+			
 		}
 
 		void MButtonSendMsg_Click(object sender, EventArgs e)

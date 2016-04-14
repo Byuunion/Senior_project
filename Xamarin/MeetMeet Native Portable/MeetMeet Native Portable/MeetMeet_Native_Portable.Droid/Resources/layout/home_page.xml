@@ -68,11 +68,22 @@
             android:id="@+id/SendMessageButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="10"
             android:background="@drawable/ButtonSignInStyle"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textSize="15sp"
             android:text="Send Message" />
+        <Button
+            android:id="@+id/btnGroupMessage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:background="@drawable/ButtonSignUpStyle"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="15sp"
+            android:text="Group Message" />
     </LinearLayout>
 </RelativeLayout>
