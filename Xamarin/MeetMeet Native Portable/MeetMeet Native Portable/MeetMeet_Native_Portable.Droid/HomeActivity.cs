@@ -84,10 +84,12 @@ namespace MeetMeet_Native_Portable.Droid
 
 		void MButtonSendMsg_Click(object sender, EventArgs e)
 		{
-			FragmentTransaction transaction = FragmentManager.BeginTransaction();
-			MessagingActivity msgAct = new MessagingActivity ();
-			msgAct.Show (transaction, "Dialog Fragment");
+			//FragmentTransaction transaction = FragmentManager.BeginTransaction();
+			//MessagingActivity msgAct = new MessagingActivity ();
+			//msgAct.Show (transaction, "Dialog Fragment");
 
+			Intent intent = new Intent(this, typeof(MessageSpinner));
+			StartActivity(intent);
 
 		}
 
