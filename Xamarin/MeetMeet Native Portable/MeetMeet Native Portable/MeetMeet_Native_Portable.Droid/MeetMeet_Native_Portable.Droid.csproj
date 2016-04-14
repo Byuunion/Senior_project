@@ -112,6 +112,8 @@
     <AndroidResource Include="Resources\menu\home_menu.xml" />
     <AndroidResource Include="Resources\layout\message_spinner.axml" />
     <AndroidResource Include="Resources\layout\group_message.axml" />
+    <AndroidResource Include="Resources\layout\dialog_view_msg.axml" />
+
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
