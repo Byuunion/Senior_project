@@ -80,6 +80,7 @@ router.route('/user/group/message')
 		});
 		
 		var sender = req.body.username_from;
+		console.log("Sending group message for group of: " + sender);
 
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(sender), function(err, data){
 			if (err || data.length === 0){
@@ -105,10 +106,10 @@ router.route('/user/group/message')
 															'WHERE id IN (	SELECT id ' +  
 																			'FROM user_group ' + 
 																			'WHERE username = ' + connection.escape(sender) + ') ' + 
-																			'AND username <> ' + connection.escape(sender) + ')', function(err, gcm_users){
+															'AND username <> ' + connection.escape(sender) + ')', function(err, gcm_users){
 						if (err || gcm_users.length === 0){
 							response.success = false;
-							response.success_message = "Failed to find existing gcm_regid from: " + sender + ".";
+							response.success_message = "Failed to find gcm_regid for group of: " + sender + ".";
 							res.json(response);
 						}
 						

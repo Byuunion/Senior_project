@@ -91,8 +91,11 @@ namespace MeetMeet_Native_Portable.Droid
 
 		void MButtonGroupSendMessage_Click (object sender, EventArgs e)
 		{
-			
+			Intent intent = new Intent(this, typeof(GroupMessageSpinner));
+			StartActivity(intent);
 		}
+
+
 
 		void MButtonSendMsg_Click(object sender, EventArgs e)
 		{

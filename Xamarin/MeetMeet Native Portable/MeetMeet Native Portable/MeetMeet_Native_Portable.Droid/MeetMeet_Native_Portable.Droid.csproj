@@ -99,6 +99,7 @@
     <Compile Include="ViewProfile.cs" />
     <Compile Include="NearbyUsersFragment.cs" />
     <Compile Include="MessageSpinner.cs" />
+    <Compile Include="GroupMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -110,6 +111,7 @@
     <AndroidResource Include="Resources\layout\view_profile.axml" />
     <AndroidResource Include="Resources\menu\home_menu.xml" />
     <AndroidResource Include="Resources\layout\message_spinner.axml" />
+    <AndroidResource Include="Resources\layout\group_message.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />

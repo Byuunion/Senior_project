@@ -51,6 +51,12 @@ namespace MeetMeet_Native_Portable.Droid
 			nearbyUserslist = new List<Profile>();
 			try{
 				nearbyUserslist = task3.Result;
+				foreach (Profile p in nearbyUserslist){
+					if(p.username.Equals(MainActivity.credentials.username)){
+						nearbyUserslist.Remove(p);
+						break;
+					}
+				}
 			}
 			catch(Exception e) {
 				string error = e.Message;
