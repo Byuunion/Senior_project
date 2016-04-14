@@ -193,7 +193,6 @@ router.route('/user/group/invite')
 				success: null,
 				success_message: null
 			};
-		console.log("1");
 		if(username !== req.body.username_responder){
 			console.log("sending invite to " + req.body.username_responder);
 			connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(username) + ' AND username_to = ' + connection.escape(req.body.username_responder), function(err, data1){
@@ -213,12 +212,12 @@ router.route('/user/group/invite')
 									username_to: req.body.username_responder
 								};
 								
+								console.log("checking database for invite");
 								connection.query('INSERT INTO user_invite SET ?', data, function(err, rows) {
 									if (err){
-										response.success = false;
 										response.success_message = "Failed to post invite from: " + data.username + " to " + data.username_to + ".";
-										res.json(response);		
-
+										console.log("Failed to post invite from: " + data.username + " to " + data.username_to + ".");	
+										
 									}
 									else{
 										//response.success = true;
@@ -241,9 +240,14 @@ router.route('/user/group/invite')
 					});	
 				}
 				else{ // Already invited by you
-					response.success = false;
-					response.success_message = "You have already invited that user";
-					res.json(response);
+					response.success = true;
+					response.success_message = "Reinviting user";
+					send_single_message(req.body.username_inviter, req.body.username_responder, req.body.message_text, req.body.message_code, function(results) {
+											response = results
+											console.log(response);
+											res.json(response);
+										});
+					//res.json(response);
 					connection.end();
 				}
 			});
@@ -492,65 +496,81 @@ function send_single_message(username_from, username_to, message_text, message_c
 		success: null,
 		success_message: null
 	};
-	
-	connection.query('SELECT gcm_regid FROM user_gcm WHERE username = ' + connection.escape(username_to), function(err, gcm_user){
-		if (err || gcm_user.length === 0){
+	connection.query('SELECT * FROM user_blacklist WHERE (username = ' + connection.escape(username_to) + ' AND block_username = ' + connection.escape(username_from) + ' ) OR ( username = ' + connection.escape(username_from) + ' AND block_username = ' + connection.escape(username_to) + ')', function(err, blocks){
+		if(err){
 			response.success = false;
-			response.success_message = "Failed to find existing gcm_regid from: " + username_to + ".";
-			console.log("Failed to find existing gcm_regid from: " + username_to + ".");
+			response.success_message = "Error checking blacklist for users: " + username_to + " " + username_from + ".";
+			console.log("Error checking blacklist for users: " + username_to + " " + username_from + ".");
+			callback(response);
+		}
+		else if (blocks.length > 0){
+			response.success = false;
+			response.success_message = "You have been blocked by that user.";
+			console.log("You have been blocked by that user.");
 			callback(response);
 		}
 		else{
-			console.log("Found existing gcm_regid from: " + username_to + ".");
-			var to = gcm_user[0].gcm_regid;
+			connection.query('SELECT gcm_regid FROM user_gcm WHERE username = ' + connection.escape(username_to), function(err, gcm_user){
+				if (err || gcm_user.length === 0){
+					response.success = false;
+					response.success_message = "Failed to find existing gcm_regid from: " + username_to + ".";
+					console.log("Failed to find existing gcm_regid from: " + username_to + ".");
+					callback(response);
+				}
+				else{
+					console.log("Found existing gcm_regid from: " + username_to + ".");
+					var to = gcm_user[0].gcm_regid;
 
-			var postData = JSON.stringify({
-				'registration_ids': [ to ],
-				'data': {
-					'message_code': message_code,
-					'username_from': username_from,
-					'message': message_text
+					var postData = JSON.stringify({
+						'registration_ids': [ to ],
+						'data': {
+							'message_code': message_code,
+							'username_from': username_from,
+							'message': message_text
+						}
+					});
+					
+					console.log('JSON string: ' + postData);
+
+					var options = {
+						hostname: 'gcm-http.googleapis.com',
+						path: '/gcm/send',
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Content-Length': postData.length,
+							'Authorization': 'key=' + GOOGLE_API_KEY
+						}
+					};
+					
+					var myReq = http.request(options, function (myRes) {
+						console.log('STATUS: ' + myRes.statusCode);
+						
+						console.log('HEADERS: ' + JSON.stringify(myRes.headers));
+						myRes.setEncoding('utf8');
+						myRes.on('data', function (chunk) {
+							console.log('BODY: ' + chunk);
+						});
+						myRes.on('end', function (){
+							console.log('No more data in response.')
+						})
+					});
+					
+					myReq.on('error', function (e) {
+						console.log('problem with request: ' + e.message);
+					});
+					
+					myReq.write(postData);
+					myReq.end();
+
+					response.success = true;
+					response.success_message = 'message sent to GCM';	
+					callback(response);
 				}
 			});
-			
-			console.log('JSON string: ' + postData);
-
-			var options = {
-				hostname: 'gcm-http.googleapis.com',
-				path: '/gcm/send',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Content-Length': postData.length,
-					'Authorization': 'key=' + GOOGLE_API_KEY
-				}
-			};
-			
-			var myReq = http.request(options, function (myRes) {
-				console.log('STATUS: ' + myRes.statusCode);
-				
-				console.log('HEADERS: ' + JSON.stringify(myRes.headers));
-				myRes.setEncoding('utf8');
-				myRes.on('data', function (chunk) {
-					console.log('BODY: ' + chunk);
-				});
-				myRes.on('end', function (){
-					console.log('No more data in response.')
-				})
-			});
-			
-			myReq.on('error', function (e) {
-				console.log('problem with request: ' + e.message);
-			});
-			
-			myReq.write(postData);
-			myReq.end();
-
-			response.success = true;
-			response.success_message = 'message sent to GCM';	
-			callback(response);
 		}
 	});
+	
 }
 
 module.exports = router; // HAS TO BE AT THE BOTTOM
