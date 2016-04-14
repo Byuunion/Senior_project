@@ -113,7 +113,7 @@
     <AndroidResource Include="Resources\layout\message_spinner.axml" />
     <AndroidResource Include="Resources\layout\group_message.axml" />
     <AndroidResource Include="Resources\layout\dialog_view_msg.axml" />
-
+    <AndroidResource Include="Resources\layout\msg_adapter.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -132,7 +132,6 @@
     <AndroidResource Include="Resources\layout\location.axml" />
     <AndroidResource Include="Resources\layout\edit_profile.axml" />
     <AndroidResource Include="Resources\layout\messaging.axml" />
-    <AndroidResource Include="Resources\layout\msg_helper.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\rec_msg.png" />
     <AndroidResource Include="Resources\drawable-hdpi\sent_msg.png" />
     <AndroidResource Include="Resources\layout\invite_request.axml" />
