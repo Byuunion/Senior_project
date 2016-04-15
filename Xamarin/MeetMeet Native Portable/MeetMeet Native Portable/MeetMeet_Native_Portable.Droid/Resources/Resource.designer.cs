@@ -415,14 +415,14 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f080040
 			public const int delButton = 2131230784;
 			
-			// aapt resource value: 0x7f080050
-			public const int deleteUser = 2131230800;
+			// aapt resource value: 0x7f080051
+			public const int deleteUser = 2131230801;
 			
 			// aapt resource value: 0x7f08004a
 			public const int downvoteButton = 2131230794;
 			
-			// aapt resource value: 0x7f08004f
-			public const int editProfile = 2131230799;
+			// aapt resource value: 0x7f080050
+			public const int editProfile = 2131230800;
 			
 			// aapt resource value: 0x7f080009
 			public const int editsenduser = 2131230729;
@@ -441,6 +441,9 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f08004b
 			public const int inviteViewProfileButton = 2131230795;
+			
+			// aapt resource value: 0x7f08004f
+			public const int leaveGroup = 2131230799;
 			
 			// aapt resource value: 0x7f080005
 			public const int light = 2131230725;
@@ -761,23 +764,29 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f05001b
 			public const int common_signin_button_text_long = 2131034139;
 			
-			// aapt resource value: 0x7f050027
-			public const int delete_account = 2131034151;
-			
-			// aapt resource value: 0x7f050029
-			public const int delete_question = 2131034153;
-			
-			// aapt resource value: 0x7f050026
-			public const int edit_profile = 2131034150;
-			
 			// aapt resource value: 0x7f050028
-			public const int logout_question = 2131034152;
+			public const int delete_account = 2131034152;
 			
 			// aapt resource value: 0x7f05002b
-			public const int no = 2131034155;
+			public const int delete_question = 2131034155;
+			
+			// aapt resource value: 0x7f050027
+			public const int edit_profile = 2131034151;
+			
+			// aapt resource value: 0x7f050026
+			public const int leave_group = 2131034150;
 			
 			// aapt resource value: 0x7f05002a
-			public const int yes = 2131034154;
+			public const int leave_group_question = 2131034154;
+			
+			// aapt resource value: 0x7f050029
+			public const int logout_question = 2131034153;
+			
+			// aapt resource value: 0x7f05002d
+			public const int no = 2131034157;
+			
+			// aapt resource value: 0x7f05002c
+			public const int yes = 2131034156;
 			
 			static String()
 			{

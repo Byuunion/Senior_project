@@ -10,9 +10,11 @@
 	<string name="Email">Email</string>
 
 	<string name="Logout">LOGOUT</string>
+	<string name="leave_group">Leave Group</string>
 	<string name="edit_profile">Edit Profile</string>
 	<string name="delete_account">Delete Account</string>
 	<string name="logout_question">Are you sure you want to logout?</string>
+	<string name="leave_group_question">Are you sure you want to LEAVE your group?</string>
 	<string name="delete_question">Are you sure you want to DELETE your MeetMeet account?</string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>

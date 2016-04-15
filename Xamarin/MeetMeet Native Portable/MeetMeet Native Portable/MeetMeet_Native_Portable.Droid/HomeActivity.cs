@@ -118,7 +118,7 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			Dialog dialog = null;
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			switch (item.ItemId)
+			switch (item.ItemId) 
 			{
 			case Resource.Id.logout:
 				// Create the logout confirmation dialog
@@ -134,6 +134,23 @@ namespace MeetMeet_Native_Portable.Droid
 				dialog = builder.Create ();
 				dialog.Show ();
 				return true;
+
+			case Resource.Id.leaveGroup:
+				// Create the leave group confirmation dialog
+				builder.SetMessage (Resource.String.leave_group_question)
+					.SetCancelable (false)
+					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
+						// ***********
+
+						//Leave group code
+
+						// ***********
+					})
+					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
+				dialog = builder.Create ();
+				dialog.Show ();
+				return true;
+
 			case Resource.Id.editProfile:
 				// Pass profile object and start EditProfileActivity
 				Intent editIntent = new Intent(this, typeof(EditProfileActivity));
@@ -141,6 +158,7 @@ namespace MeetMeet_Native_Portable.Droid
 				editIntent.PutExtra("UserProfile", serializedObject);
 				StartActivity(editIntent);
 				return true;
+
 			case Resource.Id.deleteUser:
 				// Create the delete user confirmation dialog
 				builder.SetMessage (Resource.String.delete_question)
