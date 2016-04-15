@@ -100,6 +100,7 @@
     <Compile Include="NearbyUsersFragment.cs" />
     <Compile Include="MessageSpinner.cs" />
     <Compile Include="GroupMessage.cs" />
+    <Compile Include="Orm\SqliteNet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -151,5 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\menu\" />
+    <Folder Include="Orm\" />
   </ItemGroup>
 </Project>
