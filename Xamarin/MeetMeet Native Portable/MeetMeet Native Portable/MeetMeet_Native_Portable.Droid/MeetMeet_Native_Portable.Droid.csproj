@@ -105,6 +105,8 @@
     <Compile Include="Orm\MessageDB.cs" />
     <Compile Include="Orm\MessageRepository.cs" />
     <Compile Include="MsgListAdapter.cs" />
+    <Compile Include="ViewMsg.cs" />
+    <Compile Include="ViewInbox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -119,6 +121,7 @@
     <AndroidResource Include="Resources\layout\group_message.axml" />
     <AndroidResource Include="Resources\layout\dialog_view_msg.axml" />
     <AndroidResource Include="Resources\layout\msg_adapter.axml" />
+    <AndroidResource Include="Resources\layout\home_page.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -140,7 +143,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\rec_msg.png" />
     <AndroidResource Include="Resources\drawable-hdpi\sent_msg.png" />
     <AndroidResource Include="Resources\layout\invite_request.axml" />
-    <AndroidResource Include="Resources\layout\home_page.xml" />
     <AndroidResource Include="Resources\layout\nearby_users.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

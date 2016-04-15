@@ -83,7 +83,7 @@ namespace MeetMeet_Native_Portable.Droid
             mButtonSignIn = FindViewById<Button>(Resource.Id.SignInButton);
             
 			//send msg test button
-			mButtonTestSendMsg = FindViewById<Button> (Resource.Id.sendMsgTest);
+			//mButtonTestSendMsg = FindViewById<Button> (Resource.Id.sendMsgTest);
 			//mProgressBar = FindViewById<ProgressBar> (Resource.Id.progressBar1);
 
             //Click Events
@@ -102,7 +102,7 @@ namespace MeetMeet_Native_Portable.Droid
                 StartService(intent);
             }
 			//testing send msg dialogue
-			mButtonTestSendMsg.Click += MButtonSendMsg_Click;
+			//mButtonTestSendMsg.Click += MButtonSendMsg_Click;
 				//delegate {
 				//Intent intent = new Intent(this, typeof(MessagingActivity));
 				//StartService(intent);
@@ -132,15 +132,14 @@ namespace MeetMeet_Native_Portable.Droid
         }
 
 
-		void MButtonSendMsg_Click(object sender, EventArgs e)
-		{
-			FragmentTransaction transaction = FragmentManager.BeginTransaction();
-			MessagingActivity msgAct = new MessagingActivity ();
-			msgAct.Show (transaction, "Dialog Fragment");
+		//void MButtonSendMsg_Click(object sender, EventArgs e)
+		//{
+		//	FragmentTransaction transaction = FragmentManager.BeginTransaction();
+		//	MessagingActivity msgAct = new MessagingActivity ();
+		//	msgAct.Show (transaction, "Dialog Fragment");
+		//}
 
-
-		}
-        // Sign In Click
+		// Sign In Click
 
         /// <summary>
         /// Starts Sign in dialog fragment via SignIn() when clicked.

@@ -5,6 +5,20 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:background="#ffffffff">
+    <TextView
+        android:text="Message With:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:background="#ff000000" />
+    <TextView
+        android:text="Username(s) go here"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/userNameTextView"
+        android:background="#ff000000" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="376dp"
@@ -23,7 +37,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send Message"
+            android:text="Send New Message"
             android:id="@+id/replyButton"
             android:layout_row="0"
             android:layout_column="0" />

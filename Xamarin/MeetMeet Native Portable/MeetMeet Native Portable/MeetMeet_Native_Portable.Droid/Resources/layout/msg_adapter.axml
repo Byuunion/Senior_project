@@ -21,20 +21,13 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="21dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="184.0dp"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/billView"
         android:layout_alignTop="@+id/textView2"
         android:layout_toRightOf="@+id/textView2"
         android:layout_marginLeft="22dp" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open"
-        android:id="@+id/openButton"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/delButton" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="46.5dp"

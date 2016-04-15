@@ -58,7 +58,7 @@ namespace MeetMeet_Native_Portable.Droid
 			MessageRepository.SaveMessage(task);
 
 			//closes window
-			//Finish();
+			Dismiss();
 		}
 	}
 }
