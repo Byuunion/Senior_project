@@ -3,6 +3,8 @@
 		    <item android:id="@+id/logout"
 		          android:title="@string/Logout"
 		          android:showAsAction="ifRoom"/>
+		    <item android:id="@+id/viewMessages"
+		          android:title="@string/view_messages" />
 		   	<item android:id="@+id/leaveGroup"
 		          android:title="@string/leave_group" />
 		    <item android:id="@+id/editProfile"

@@ -135,6 +135,11 @@ namespace MeetMeet_Native_Portable.Droid
 				dialog.Show ();
 				return true;
 
+			case Resource.Id.viewMessages:
+				// Start ViewMessagesActivity 
+				StartActivity(typeof(NearbyUsersActivity));
+				return true;
+
 			case Resource.Id.leaveGroup:
 				// Create the leave group confirmation dialog
 				builder.SetMessage (Resource.String.leave_group_question)
