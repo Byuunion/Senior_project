@@ -30,14 +30,14 @@ Login
 	/user/login POST: Create account and token into db and returned it  {username: , password: }
 	
 
-Language
+Language ********unused, user bio is more general**********
 
 	/user/language/:username GET: Returns the user's language(s)
 	
 	/user/language POST: Add an user's language(s) {username: , language: , token: }
 	
 		
-Interest
+Interest ********unused, user bio is more general**********
 
 	/user/interest/:username GET: Returns the user's interest(s)
 	
