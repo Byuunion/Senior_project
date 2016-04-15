@@ -51,7 +51,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			//also save a copy to user's personal DB on device
 			//id auto increments so no need to worry about assigining one
-			task.Date = DateTime.Now.ToString;
+			task.Date = DateTime.Now.ToString();
 			task.UserName = mUsernameTextView.Text;
 			task.MsgText = mMsgTextTextView.Text;
 

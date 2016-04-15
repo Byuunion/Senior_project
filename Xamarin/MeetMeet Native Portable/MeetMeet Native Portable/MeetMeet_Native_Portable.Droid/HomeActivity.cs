@@ -91,7 +91,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 		void MButtonGroupSendMessage_Click (object sender, EventArgs e)
 		{
-			Intent intent = new Intent(this, typeof(GroupMessageSpinner));
+			Intent intent = new Intent(this, typeof(GroupMessage));
 			StartActivity(intent);
 		}
 
@@ -164,7 +164,7 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.delete_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
-						Deleter.DeleteObject(userProfile.username, MainActivity.serverURL+"user");
+						Deleter.DeleteObject("user/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token, MainActivity.serverURL);
 						userProfile = null;
 						Intent deleteIntent = new Intent(this, typeof(MainActivity));
 						deleteIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);

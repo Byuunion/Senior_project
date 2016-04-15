@@ -8,11 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
-        android:text="Nearby Users" />
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:text="Send Group Message" />
     <EditText
         android:id="@+id/sendMessageTxt"
         android:layout_width="fill_parent"

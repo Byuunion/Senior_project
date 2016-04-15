@@ -80,7 +80,7 @@ namespace MeetMeet_Native_Portable.Droid
 	class SignUp : DialogFragment
 	{
 		private EditText mTxtUserName;
-		private EditText mTxtEmail;
+		private EditText mTxtPassConfirm;
 		private EditText mTxtPassword;
 		private Button mBtnSignUp;
 
@@ -109,7 +109,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Resource for SignUp text
 			mTxtUserName=  view.FindViewById<EditText>(Resource.Id.txtUserName);
-			mTxtEmail=  view.FindViewById<EditText>(Resource.Id.txtEmail);
+			mTxtPassConfirm=  view.FindViewById<EditText>(Resource.Id.txtPassConfirm);
 			mTxtPassword=  view.FindViewById<EditText>(Resource.Id.txtPassword);
 			mBtnSignUp = view.FindViewById<Button> (Resource.Id.btnDialogEmail);
 
@@ -129,10 +129,12 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		void MBtnSignUp_Click (object sender, EventArgs e)
 		{
-			if(mTxtUserName.Text != "" && mTxtEmail.Text != "" && mTxtPassword.Text != "")
+			if(mTxtUserName.Text != "" && mTxtPassConfirm.Text != "" && mTxtPassword.Text != "")
 			{
-				mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtUserName.Text, mTxtEmail.Text, mTxtPassword.Text));
-				this.Dismiss ();
+				if (mTxtPassword.Text.Equals (mTxtPassConfirm.Text)) {
+					mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtUserName.Text, mTxtPassConfirm.Text, mTxtPassword.Text));
+					this.Dismiss ();
+				} 
 			}
 
 		}

@@ -20,8 +20,8 @@ using System.Threading.Tasks;
 
 namespace MeetMeet_Native_Portable.Droid
 {
-	[Activity (Label = "GroupMessageSpinner")]			
-	public class GroupMessageSpinner : Activity
+	[Activity (Label = "Group Message")]			
+	public class GroupMessage : Activity
 	{
 		private EditText mMessage;
 		private Button mSendMessage;
@@ -35,7 +35,7 @@ namespace MeetMeet_Native_Portable.Droid
 			base.OnCreate (bundle);
 
 			// Set our view 
-			SetContentView (Resource.Layout.message_spinner);
+			SetContentView (Resource.Layout.group_message);
 
 			mMessage = FindViewById<EditText> (Resource.Id.sendMessageTxt);
 			mSendMessage = FindViewById<Button> (Resource.Id.btnSendMsg);
