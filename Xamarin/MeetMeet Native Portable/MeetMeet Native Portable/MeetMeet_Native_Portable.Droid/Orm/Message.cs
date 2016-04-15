@@ -1,8 +1,11 @@
 ﻿
+using SQLite;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 
 using Android.App;
 using Android.Content;
@@ -11,17 +14,19 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace MeetMeet_Native_Portable.Droid
-{
-	[Activity (Label = "Message")]			
-	public class Message : Activity
-	{
-		protected override void OnCreate (Bundle savedInstanceState)
-		{
-			base.OnCreate (savedInstanceState);
 
-			// Create your application here
-		}
-	}
+namespace MeetMeet_Native_Portable.Droid
+{			
+	public class Message {
+	[PrimaryKey, AutoIncrement, Column("_id")]
+	public int Id { get; set; }
+	
+	public string Date { get; set;}
+
+	public string UserName { get; set; }
+	
+	public string MsgText { get; set; }
+
+		//String date = DateTime.Now.ToString;
 }
 
