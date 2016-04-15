@@ -627,7 +627,7 @@ router.route('/user/login/:username/:token')
 							connection.end();
 						}
 						else{
-							connection.query('DELETE FROM user_gcm WHERE username = ' + connection.escape(req.params.username), data, function(err, data1){
+							connection.query('UPDATE user_gcm SET gcm_regid = null WHERE username = ' + connection.escape(req.params.username), data, function(err, data1){
 								if(err){
 									console.log(err);
 									response.success = false;
