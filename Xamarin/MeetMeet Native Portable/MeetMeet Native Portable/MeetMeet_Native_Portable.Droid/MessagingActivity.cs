@@ -21,6 +21,8 @@ namespace MeetMeet_Native_Portable.Droid
 		private TextView mUsernameTextView;
 		private TextView mMsgTextTextView;
 
+		protected Message task = new Message();
+
 		public static Credentials credentials;
 		public static string serverURL = "http://52.91.212.179:8800/";
 
@@ -46,6 +48,17 @@ namespace MeetMeet_Native_Portable.Droid
 		void mBtnSendMsg_Click(object sender, EventArgs e)
 		{
 			MessageSender.SendSingleMessage( mMsgTextTextView.Text, mUsernameTextView.Text, MainActivity.credentials, "http://52.91.212.179:8800/user/message");
+
+			//also save a copy to user's personal DB on device
+			//id auto increments so no need to worry about assigining one
+			task.Date = DateTime.Now.ToString;
+			task.UserName = mUsernameTextView.Text;
+			task.MsgText = mMsgTextTextView.Text;
+
+			MessageRepository.SaveMessage(task);
+
+			//closes window
+			//Finish();
 		}
 	}
 }

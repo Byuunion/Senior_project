@@ -104,6 +104,7 @@
     <Compile Include="Orm\Message.cs" />
     <Compile Include="Orm\MessageDB.cs" />
     <Compile Include="Orm\MessageRepository.cs" />
+    <Compile Include="MsgListAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
