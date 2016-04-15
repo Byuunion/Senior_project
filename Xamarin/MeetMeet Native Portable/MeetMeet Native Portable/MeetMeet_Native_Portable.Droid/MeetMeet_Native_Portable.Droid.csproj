@@ -102,6 +102,8 @@
     <Compile Include="GroupMessage.cs" />
     <Compile Include="Orm\SqliteNet.cs" />
     <Compile Include="Orm\Message.cs" />
+    <Compile Include="Orm\MessageDB.cs" />
+    <Compile Include="Orm\MessageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
