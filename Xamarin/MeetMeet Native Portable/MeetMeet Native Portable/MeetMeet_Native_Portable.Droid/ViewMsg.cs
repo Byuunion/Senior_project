@@ -33,7 +33,9 @@ namespace MeetMeet_Native_Portable.Droid
 
 			//add code for buttons that are at the bottom
 
-		
+			/***Chris added this line so the project would compile***/
+			return view;
+			/********************************************************/
 		}
 
 	
@@ -44,7 +46,7 @@ namespace MeetMeet_Native_Portable.Droid
 			//open send msg dialog 
 			FragmentTransaction transaction = FragmentManager.BeginTransaction();
 			MessagingActivity sendMsgDialog = new MessagingActivity();
-			MessagingActivity.Show(transaction, "Dialog Fragment");
+			sendMsgDialog.Show(transaction, "Dialog Fragment");
 			this.Dismiss();
 		}
 

@@ -125,6 +125,7 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.logout_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
+						Deleter.DeleteObject(MainActivity.login_ext + "/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token, MainActivity.serverURL);
 						userProfile = null;
 						Intent logoutIntent = new Intent(this, typeof(MainActivity));
 						logoutIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
