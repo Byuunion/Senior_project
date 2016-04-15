@@ -3,7 +3,8 @@ password_hash VARCHAR(64),
 token VARCHAR(100),
 PRIMARY KEY (username)
 );
-			
+
+***********unused, user bio is used instead******************			
 CREATE TABLE user_interest (username VARCHAR(15), 
 interest VARCHAR(500),
 PRIMARY KEY (username, interest),
@@ -11,7 +12,8 @@ FOREIGN KEY (username) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
-						
+
+***********unused, user bio is used instead******************						
 CREATE TABLE user_language (username VARCHAR(15), 
 language VARCHAR(100), 
 PRIMARY KEY (username, language),
@@ -61,4 +63,11 @@ ON UPDATE CASCADE,
 FOREIGN KEY (block_username) references user_login(username)
 ON DELETE CASCADE
 ON UPDATE CASCADE
+);
+
+CREATE TABLE user_gcm (username VARCHAR(15),
+gcm_regid TEXT
+PRIMARY KEY (username),
+FOREIGN KEY (username) REFERENCES user_login(username)
+ON DELETE CASCADE
 );
