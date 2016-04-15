@@ -101,6 +101,7 @@
     <Compile Include="MessageSpinner.cs" />
     <Compile Include="GroupMessage.cs" />
     <Compile Include="Orm\SqliteNet.cs" />
+    <Compile Include="Orm\Message.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
