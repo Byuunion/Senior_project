@@ -145,11 +145,8 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.leave_group_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
-						// ***********
-
-						//Leave group code
-
-						// ***********
+						Deleter.DeleteObject(MainActivity.user_group + "/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token,
+							MainActivity.serverURL);
 					})
 					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
 				dialog = builder.Create ();
