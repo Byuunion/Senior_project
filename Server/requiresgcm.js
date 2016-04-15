@@ -174,6 +174,135 @@ router.route('/user/group/message')
 		});           
 	})
 	
+router.route('/user/group/:username/:token')
+	.delete(function(req, res){
+		var connection = mysql.createConnection(mysqlConfig);
+		connection.connect(function(err){
+			if(!err) console.log("Database is connected. Delete User from group.");
+			else {
+				console.log("Error connecting database.");
+				connection.end();
+			}
+		});
+		
+		var username = req.params.username;
+		
+		var response = {
+					success: null,
+					success_message: null
+		};
+		var token_sql = 'SELECT token FROM user_login WHERE username = ' + connection.escape(username);
+		console.log(token_sql);
+		connection.query(token_sql, function(err, data){
+			if (err || data.length === 0){
+				response.success = false;
+				response.success_message = "Failed to find existing token from: " + username + ".";
+				res.json(response);
+			}
+			else{
+				var token = data[0].token;
+			
+				if(req.params.token === token){
+					//Delete Cascades through tables
+					
+					var sql = 'SELECT count(*) as group_size FROM user_group WHERE id IN (SELECT id FROM user_group WHERE username = ' + connection.escape(username) + ')';
+					console.log(sql);
+					connection.query(sql, function(err, data1){
+						if(err || data1.length === 0){
+							response.success = false;
+							response.success_message = "Failed to find group of: " + username + ".";
+							res.json(response);
+							connection.end();
+						}
+						else{
+							console.log("y");
+							if(data1[0].group_size <= 2 && data1[0].group_size > 0){
+								connection.query('SELECT id FROM user_group WHERE username = ' + connection.escape(username) + '', function(err, db_id){
+									if(err || db_id.length === 0){
+										response.success = false;
+										response.success_message = "Failed to find id to delete group for user: " + username + ".";
+										res.json(response);
+										connection.end();
+									}
+									else{
+										var other_username_sql = 'SELECT username FROM user_group WHERE id = ' + db_id[0].id + ' AND username <> ' + connection.escape(username);
+										console.log(other_username_sql);
+										connection.query(other_username_sql, function(err, other_username){
+											if(err || other_username.length === 0){
+												response.success = false;
+												response.success_message = "Could not find the name of the other user in the group";
+												res.json(response);
+												connection.end();
+											}
+											else{
+												console.log("ere");
+												connection.query('DELETE FROM user_group WHERE id = ' + db_id[0].id, function(err, data){
+													if (err){
+														console.log(err);
+														response.success = false;
+														response.success_message = "Failed to delete group for user: " + username + data2[0].id + ".";
+														res.json(response);
+														connection.end();
+													}
+													else{
+														response.success = true;
+														response.success_message = "User group deleted from database";
+														//Send message
+														console.log(other_username[0].username);
+														send_single_message("MeetMeet", other_username[0].username, " all other members have left the group, group is disbanded", "1", function(results) {
+															response = results
+															console.log(response);
+															res.json(response);
+															connection.end();
+														});
+													}
+												});
+											}
+										});
+										
+									}
+								});
+								
+							}
+							else{
+								console.log(data[0].group_size);
+								if(data1[0].group_size != 0){
+									connection.query('DELETE FROM user_group WHERE username = ' + connection.escape(username), function(err, data){
+										if (err){
+											response.success = false;
+											response.success_message = "Failed to delete user: " + username + ".";
+											res.json(response);
+											connection.end();
+										}
+										else{
+											response.success = true;
+											response.success_message = "User information deleted from Database";
+											res.json(response);
+											connection.end();
+										}
+									});
+								}
+								else{
+									response.success = false;
+									response.success_message = "User not in database: " + username + ".";
+									res.json(response);
+									connection.end();
+								}
+							}
+						}
+					});
+				}
+				else{
+					response.success = false;
+					response.success_message = "Token didn't match";
+					res.json(response);
+					connection.end();
+				}
+			}
+			
+		});
+		
+	})
 	
 router.route('/user/group/invite')
 	.post(function(req, res) {

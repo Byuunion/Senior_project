@@ -840,57 +840,7 @@ router.route('/user/neg_rating/:username')
 	})
 	
 	
-router.route('/user/group/:username/:token')
-	.delete(function(req, res){
-		var connection = mysql.createConnection(mysqlConfig);
 
-		connection.connect(function(err){
-			if(!err) console.log("Database is connected. Delete User from group.");
-			else {
-				console.log("Error connecting database.");
-				connection.end();
-			}
-		});
-		
-		var username = req.params.username;
-		
-		var response = {
-					success: null,
-					success_message: null
-		};
-		
-		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
-			if (err || data.length === 0){
-				response.success = false;
-				response.success_message = "Failed to find existing token from: " + username + ".";
-				res.json(response);
-			}
-			else{
-				var token = data[0].token;
-			
-				if(req.params.token === token){
-					//Delete Cascades through tables
-					connection.query('DELETE FROM user_group WHERE username = ' + connection.escape(username), function(err, data){
-						if (err){
-							response.success = false;
-							response.success_message = "Failed to delete user: " + username + ".";
-						}
-						else{
-							response.success = true;
-							response.success_message = "User information deleted from Database";
-							res.json(response);
-						}
-					});
-				}
-				else{
-					response.success = false;
-					response.success_message = "Token didn't match";
-					res.json(response);
-				}
-			}
-			connection.end();
-		});
-	})
 	
 router.route('/user/blacklist')
 	.post(function(req, res){
