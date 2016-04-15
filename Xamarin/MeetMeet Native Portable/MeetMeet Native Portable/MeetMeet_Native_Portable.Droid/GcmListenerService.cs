@@ -15,13 +15,13 @@ namespace ClientApp
             var message = data.GetString("message");
             Log.Debug("MyGcmListenerService", "From:    " + from);
             Log.Debug("MyGcmListenerService", "Message: " + message);
-            SendNotification(message);
+            
 			int ms_code = 0;
 			int.TryParse((data.GetString ("message_code")), out ms_code);
 
 			string username = data.GetString ("username_from");
 			System.Diagnostics.Debug.WriteLine (username);
-
+			SendNotification(message, username);
             if(ms_code == 1)
             {
                 /*
@@ -54,7 +54,7 @@ namespace ClientApp
 			//string username = data.GetString ("username_from");
         }
 
-        void SendNotification(string message)
+		void SendNotification(string message, string username)
         {
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
@@ -62,7 +62,7 @@ namespace ClientApp
 
             var notificationBuilder = new Notification.Builder(this)
                 .SetSmallIcon(Resource.Drawable.ic_stat_ic_notification)
-                .SetContentTitle("GCM Message")
+                .SetContentTitle("From: " + username)
                 .SetContentText(message)
                 .SetAutoCancel(true)
                 .SetContentIntent(pendingIntent);
