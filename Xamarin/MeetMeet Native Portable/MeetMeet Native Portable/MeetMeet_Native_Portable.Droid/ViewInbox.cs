@@ -32,6 +32,14 @@ namespace MeetMeet_Native_Portable.Droid
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
 
+			tasks = MessageRepository.GetMessages().ToList();
+
+			// create our adapter
+			taskList = new MsgListAdapter(this, tasks);
+
+			//Hook up our adapter to our ListView
+			taskListView.Adapter = taskList;
+
 
 			// wire up view msg click handler
 			//user only needs to click on message to display pop up
@@ -43,8 +51,6 @@ namespace MeetMeet_Native_Portable.Droid
 					StartActivity (taskDetails);
 				};
 			}
-		
-		
 		}
 
 

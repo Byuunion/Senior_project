@@ -64,7 +64,7 @@ namespace MeetMeet_Native_Portable.Droid
 			// Set username text
 			mTextViewUsername.Text = userProfile.username;
 
-			//Click Events
+			//*** Click Events ***
 			// Find Nearby Users Click
 			mButtonNearbyUsers.Click += delegate {
 				StartActivity (typeof(NearbyUsersActivity));
@@ -77,7 +77,6 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonSendMessage.Click += MButtonSendMsg_Click;
 
 			//Send Group Message Click
-
 			mButtonGroupSendMessage.Click += MButtonGroupSendMessage_Click;
 
 			// Get the location manager
@@ -138,7 +137,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			case Resource.Id.viewMessages:
 				// Start ViewMessagesActivity 
-				StartActivity(typeof(NearbyUsersActivity));
+				StartActivity(typeof(ViewInbox));
 				return true;
 
 			case Resource.Id.leaveGroup:

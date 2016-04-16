@@ -30,18 +30,34 @@ namespace MeetMeet_Native_Portable.Droid
 	
 			//this needs to display the username the message was from 
 			//and the message when the user clicks on a message in the view inbox
+			// ***** you will need to pass that info using json during the click event or get it from the message object? *****
 
-			//add code for buttons that are at the bottom
+			// References for Home Menu Items
+			mBtnSendNewMsg = view.FindViewById<Button> (Resource.Id.sendMsgButton);
+			mBtnClose = view.FindViewById<Button> (Resource.Id.closeMsgButton);
+			mUsernameTextView = view.FindViewById<Button> (Resource.Id.userNameTextView);
+			mMsgTextTextView = view.FindViewById<Button> (Resource.Id.textMsgView);
+
+			// Set username text
+			mUsernameTextView.Text = "username";
+
+			// Set message text
+			mMsgTextTextView.Text = "message text";
+
+			//*** Click Events ***
+			// Send New Message Click
+			mBtnSendNewMsg.Click += MBtnSendNewMsg_Click;
+
+			// Close Message Click
+			mBtnClose.Click += MBtnClose_Click;
+
 
 			/***Chris added this line so the project would compile***/
 			return view;
 			/********************************************************/
 		}
-
 	
-	
-	
-		protected void SendNewMsg()
+		private void MBtnSendNewMsg_Click (object sender, EventArgs e)
 		{
 			//open send msg dialog 
 			FragmentTransaction transaction = FragmentManager.BeginTransaction();
@@ -50,10 +66,9 @@ namespace MeetMeet_Native_Portable.Droid
 			this.Dismiss();
 		}
 
-		protected void Close()
+		private void MBtnClose_Click (object sender, EventArgs e)
 		{
 			this.Dismiss();
 		}
-
 	}
 }
