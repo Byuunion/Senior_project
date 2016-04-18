@@ -17,7 +17,7 @@ namespace MeetMeet_Native_Portable
         /// <param name="url"></param> http://52.91.212.179:8800/user/group/message
         public static async Task<Boolean> SendGroupMessage(String message, Credentials this_user, string url)
         {
-            return await Poster.PostObject(new { username_from = this_user.username, token = this_user.token, message_code = "2", message_text = message}, url);
+            return await Poster.PostObject(new { username_from = this_user.username, token = this_user.token, message_code = 3, message_text = message}, url);
         }
 
         /// <param name="url"></param> http://52.91.212.179:8800/user/message

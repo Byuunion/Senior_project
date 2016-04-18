@@ -51,8 +51,7 @@ namespace ClientApp
 				//intent.PutExtra ("username_from", username);
 				//StartActivity(intent);
 
-				m.UserName = "group";
-				MessageRepository.SaveMessage (m);
+
 
 				Intent intent = new Intent(this, typeof(InviteRequestActivity));
 				intent.PutExtra ("username_from", username);
@@ -60,11 +59,13 @@ namespace ClientApp
 				StartActivity(intent);
 			}
             else if(ms_code == 3){
-
+				//Group messaging
 				//this may work
-				Intent intent = new Intent(this, typeof(InviteRequestActivity));
-				intent.PutExtra ("username_from", username);
-				StartActivity(intent);
+				//Intent intent = new Intent(this, typeof(InviteRequestActivity));
+				//intent.PutExtra ("username_from", username);
+				//StartActivity(intent);
+				m.UserName = "group";
+				MessageRepository.SaveMessage (m);
             }
 			//string username = data.GetString ("username_from");
         }
