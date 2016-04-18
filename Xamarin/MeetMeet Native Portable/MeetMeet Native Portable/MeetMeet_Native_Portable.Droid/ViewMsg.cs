@@ -20,8 +20,14 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mBtnClose;
 		private TextView mUsernameTextView;
 		private TextView mMsgTextTextView;
+		int msgID = 0;
 	
-	
+		public ViewMsg(int MsgIDin)
+		{	
+			//pass the ID so then we can determin the right view
+			msgID = MsgIDin;
+		}
+
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			base.OnCreateView (inflater, container, savedInstanceState);
@@ -39,10 +45,10 @@ namespace MeetMeet_Native_Portable.Droid
 			mMsgTextTextView = view.FindViewById<Button> (Resource.Id.textMsgView);
 
 			// Set username text
-			mUsernameTextView.Text = "username";
+			mUsernameTextView.Text = MessageRepository.GetMessage(msgID).UserName;
 
 			// Set message text
-			mMsgTextTextView.Text = "message text";
+			mMsgTextTextView.Text = MessageRepository.GetMessage(msgID).MsgText;
 
 			//*** Click Events ***
 			// Send New Message Click
@@ -51,10 +57,8 @@ namespace MeetMeet_Native_Portable.Droid
 			// Close Message Click
 			mBtnClose.Click += MBtnClose_Click;
 
-
-			/***Chris added this line so the project would compile***/
+		
 			return view;
-			/********************************************************/
 		}
 	
 		private void MBtnSendNewMsg_Click (object sender, EventArgs e)

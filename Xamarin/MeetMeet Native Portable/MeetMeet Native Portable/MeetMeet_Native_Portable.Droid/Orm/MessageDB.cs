@@ -69,6 +69,8 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
+		//this method checks to see if the generated ID is already in the DB, 
+		//if it is it calls the update method and then adds the msg
 		public int SaveMessage (Message msg) 
 		{
 			lock (locker) {

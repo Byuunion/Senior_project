@@ -23,8 +23,8 @@
     <TextView
         android:layout_width="184.0dp"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/billView"
+        android:text="Username(s)"
+        android:id="@+id/UserNameView"
         android:layout_alignTop="@+id/textView2"
         android:layout_toRightOf="@+id/textView2"
         android:layout_marginLeft="22dp" />

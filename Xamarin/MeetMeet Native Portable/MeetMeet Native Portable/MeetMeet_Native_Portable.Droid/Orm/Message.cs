@@ -17,7 +17,8 @@ using Android.Widget;
 
 namespace MeetMeet_Native_Portable.Droid
 {			
-	public class Message {
+	public class Message 
+	{
 	[PrimaryKey, AutoIncrement, Column("_id")]
 	public int Id { get; set; }
 	
@@ -28,6 +29,7 @@ namespace MeetMeet_Native_Portable.Droid
 	public string MsgText { get; set; }
 
 		//String date = DateTime.Now.ToString;
+		//String date = string.Format("{0:HH:mm:ss tt}", DateTime.Now);
 	}
 }
 

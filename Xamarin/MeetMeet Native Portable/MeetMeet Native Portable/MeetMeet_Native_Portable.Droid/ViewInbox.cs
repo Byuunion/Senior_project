@@ -26,8 +26,6 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnCreate (bundle);
 
-
-			// Create your application here
 			SetContentView(Resource.Layout.messaging);
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
@@ -46,8 +44,9 @@ namespace MeetMeet_Native_Portable.Droid
 			if(taskListView != null) {
 				taskListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) => 
 				{
+					int msgID = tasks[e.Position].Id;
 					var taskDetails = new Intent (this, typeof (ViewMsg));
-					taskDetails.PutExtra ("MsgId", tasks[e.Position].Id);
+					taskDetails.PutExtra ("MsgIDin", tasks[e.Position].Id);
 					StartActivity (taskDetails);
 				};
 			}

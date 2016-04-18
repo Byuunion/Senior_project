@@ -32,7 +32,7 @@ namespace MeetMeet_Native_Portable.Droid
         private Button mButtonSignUp;
         private Button mButtonSignIn;
         
-		private Button mButtonTestSendMsg;
+		//private Button mButtonTestSendMsg;
 		//private ProgressBar mProgressBar;
 
         // User data

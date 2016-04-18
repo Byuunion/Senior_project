@@ -361,6 +361,9 @@ namespace MeetMeet_Native_Portable.Droid
 			// aapt resource value: 0x7f080036
 			public const int TextView10 = 2131230774;
 			
+			// aapt resource value: 0x7f080041
+			public const int UserNameView = 2131230785;
+			
 			// aapt resource value: 0x7f080043
 			public const int UserProfile = 2131230787;
 			
@@ -378,9 +381,6 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// aapt resource value: 0x7f080003
 			public const int auto = 2131230723;
-			
-			// aapt resource value: 0x7f080041
-			public const int billView = 2131230785;
 			
 			// aapt resource value: 0x7f080045
 			public const int bioviewprofile = 2131230789;
