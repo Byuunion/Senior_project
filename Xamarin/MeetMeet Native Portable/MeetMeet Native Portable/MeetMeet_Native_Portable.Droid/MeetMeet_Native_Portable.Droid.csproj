@@ -16,7 +16,8 @@
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <AssemblyName>MeetMeet_Native_Portable.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,13 +100,13 @@
     <Compile Include="NearbyUsersFragment.cs" />
     <Compile Include="MessageSpinner.cs" />
     <Compile Include="GroupMessage.cs" />
-    <Compile Include="Orm\SqliteNet.cs" />
-    <Compile Include="Orm\Message.cs" />
-    <Compile Include="Orm\MessageDB.cs" />
-    <Compile Include="Orm\MessageRepository.cs" />
     <Compile Include="MsgListAdapter.cs" />
     <Compile Include="ViewMsg.cs" />
     <Compile Include="ViewInbox.cs" />
+    <Compile Include="MessageRepository.cs" />
+    <Compile Include="SqliteNet.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -28,6 +28,8 @@ namespace MeetMeet_Native_Portable.Droid
 	
 	public string MsgText { get; set; }
 
+		public Boolean incoming { get; set; }
+
 		//String date = DateTime.Now.ToString;
 		//String date = string.Format("{0:HH:mm:ss tt}", DateTime.Now);
 	}

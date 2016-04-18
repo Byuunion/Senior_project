@@ -19,11 +19,13 @@ namespace MeetMeet_Native_Portable.Droid
 		private ImageButton mButtonDeleteMsg;
 		private TextView mTextViewUsername;
 		private TextView mTextViewDate;
+		private TextView mTextIncoming;
 
 		public MsgListAdapter (Activity context, IList<Message> msgs) : base ()
 		{
 			this.context = context;
 			this.msgs = msgs;
+			System.Diagnostics.Debug.WriteLine (msgs.Count);
 		}
 
 		public override Message this[int position]
@@ -72,24 +74,30 @@ namespace MeetMeet_Native_Portable.Droid
 			//Try to reuse convertView if it's not  null, otherwise inflate it from our item layout
 			// gives us some performance gains by not always inflating a new view
 			// will sound familiar to MonoTouch developers with UITableViewCell.DequeueReusableCell()
-			var view = (convertView ??
-			           context.LayoutInflater.Inflate (
+			var view = (/*convertView ??*/ context.LayoutInflater.Inflate (
 				           Resource.Layout.msg_adapter,
-				           parent, 
-					false)) as ListView; 
+				           parent, false)) /*as ListView*/; 
 										//TextView;
 			//view.SetContentView (Resource.Layout.msg_adapter);
 			mButtonDeleteMsg = view.FindViewById<ImageButton> (Resource.Id.delButton);
 			mTextViewUsername = view.FindViewById<TextView> (Resource.Id.UserNameView);
 			mTextViewDate = view.FindViewById<TextView> (Resource.Id.dateView);
+			mTextIncoming = view.FindViewById<TextView> (Resource.Id.textView2);
 
 			mTextViewUsername.Text = item.UserName;
 			mTextViewDate.Text = item.Date;
+			mTextIncoming.Text = (item.incoming ? "Message from: " : "Message to: ");
 
-			mButtonDeleteMsg.Click += async (object sender, EventArgs e) => {
+			mButtonDeleteMsg.Click += (object sender, EventArgs e) => {
+				MessageRepository.DeleteMessage(item);
+				Toast.MakeText(context, "message with: " + item.UserName + " deleted", ToastLength.Short).Show();
 				msgs.Remove(item);
 			};
 
+			mTextViewUsername.Click += (object sender, EventArgs e) => {
+				//return new ViewMsg(1);
+				Toast.MakeText(context, item.MsgText, ToastLength.Short).Show();
+			};
 
 			//Finally return the view
 			return view;

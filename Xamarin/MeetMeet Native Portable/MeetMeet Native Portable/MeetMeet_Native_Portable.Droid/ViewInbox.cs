@@ -30,8 +30,13 @@ namespace MeetMeet_Native_Portable.Droid
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
 
-			tasks = MessageRepository.GetMessages().ToList();
+			foreach (string s in MessageRepository.GetMessagedUsers()) {
+				System.Diagnostics.Debug.WriteLine (s + "fdslkj");
+			}
 
+			System.Diagnostics.Debug.WriteLine ("finished with that");
+			tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
+			System.Diagnostics.Debug.WriteLine (tasks.Count);
 			// create our adapter
 			taskList = new MsgListAdapter(this, tasks);
 
@@ -57,8 +62,9 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnResume ();
 
-			tasks = MessageRepository.GetMessages().ToList();
+			//tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
 
+			tasks = MessageRepository.GetMessages ().ToList();
 			// create our adapter
 			taskList = new MsgListAdapter(this, tasks);
 

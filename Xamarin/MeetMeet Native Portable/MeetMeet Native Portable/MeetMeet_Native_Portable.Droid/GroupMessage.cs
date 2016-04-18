@@ -47,6 +47,12 @@ namespace MeetMeet_Native_Portable.Droid
 		async void MSendMessage_Click (object sender, EventArgs e)
 		{
 			if (await MessageSender.SendGroupMessage (mMessage.Text, MainActivity.credentials, serverURL + MainActivity.group_message)) {
+				Message m = new Message ();
+				m.Date = System.DateTime.Now.ToString ();
+				m.UserName = "group";
+				m.MsgText = mMessage.Text;
+				m.incoming = false;
+				MessageRepository.SaveMessage (m);
 				mMessage.Text = "";
 				Toast.MakeText (this, "Message Sent!", ToastLength.Short).Show ();
 			} else {

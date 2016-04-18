@@ -5,6 +5,7 @@ using Android.Gms.Gcm;
 using Android.Util;
 using MeetMeet_Native_Portable.Droid;
 
+
 namespace ClientApp
 {
     [Service(Exported = false), IntentFilter(new[] { "com.google.android.c2dm.intent.RECEIVE" })]
@@ -21,12 +22,23 @@ namespace ClientApp
 
 			string username = data.GetString ("username_from");
 			System.Diagnostics.Debug.WriteLine (username);
+
+			MeetMeet_Native_Portable.Droid.Message m = new MeetMeet_Native_Portable.Droid.Message ();
+
+
+			m.MsgText = message;
+			System.Diagnostics.Debug.WriteLine (m.MsgText);
+			m.Date = System.DateTime.Now.ToString();
+			m.incoming = true;
+
 			SendNotification(message, username);
             if(ms_code == 1)
             {
                 /*
                 *Put single user messages call here
                 */
+				m.UserName = username;
+				MessageRepository.SaveMessage (m);
             }
             else if(ms_code == 2)
             {
@@ -38,6 +50,9 @@ namespace ClientApp
 				//Intent intent = new Intent(this, typeof(InviteRequestActivity));
 				//intent.PutExtra ("username_from", username);
 				//StartActivity(intent);
+
+				m.UserName = "group";
+				MessageRepository.SaveMessage (m);
 
 				Intent intent = new Intent(this, typeof(InviteRequestActivity));
 				intent.PutExtra ("username_from", username);

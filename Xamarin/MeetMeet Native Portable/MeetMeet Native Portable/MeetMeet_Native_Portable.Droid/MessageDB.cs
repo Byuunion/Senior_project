@@ -51,7 +51,6 @@ namespace MeetMeet_Native_Portable.Droid
 
 		public MessageDB (string path) : base (path)
 		{
-			// create the tables
 			CreateTable<Message> ();
 		}
 			
@@ -67,6 +66,21 @@ namespace MeetMeet_Native_Portable.Droid
 			lock (locker) {
 				return Table<Message>().FirstOrDefault(x => x.Id == id);
 			}
+		}
+
+		public IEnumerable<Message> GetUsersMessage(string[] usernames){
+			return Query<Message> ("select * from Message where username = ?", usernames);
+		}
+
+		public IEnumerable<string> GetMessagedUsers(){
+			var returns = Query<QueryString> ("select username from Message", new QueryString[0]);
+			List<string> strings = new List<string> ();
+			foreach (QueryString qs in returns) {
+				if(qs.s != default(string))
+					strings.Add (qs.s);
+				//System.Diagnostics.Debug.WriteLine ("username: " + qs.s);
+			}
+			return strings;
 		}
 
 		//this method checks to see if the generated ID is already in the DB, 
@@ -89,6 +103,13 @@ namespace MeetMeet_Native_Portable.Droid
 			lock (locker) {
 				return Delete<Message> (msg.Id);
 			}
+		}
+	}
+
+	public class QueryString{
+		public string s;
+		public QueryString(){
+			//Do nothing
 		}
 	}
 }
