@@ -14,18 +14,18 @@ using Android.Widget;
 namespace MeetMeet_Native_Portable.Droid
 {
 	/// <summary>
-	/// Handles Sign In event arguments.
+	/// Handles Sign In event arguments. Allows for username and password inputed in 
+	/// dialog_sign_in layout to be retrieved. 
 	/// </summary>
 	public class OnSignInEventArgs: EventArgs 
 	{
 		private string mUserName;
 		private string mPassword;
-		//private string mEmail;
 
 		/// <summary>
-		/// Gets or sets the email.
+		/// Gets or sets the username.
 		/// </summary>
-		/// <value>The email.</value>
+		/// <value>The username.</value>
 		public string Username 
 		{
 			get { return mUserName; }
@@ -41,12 +41,7 @@ namespace MeetMeet_Native_Portable.Droid
 			get { return mPassword; }
 			set { mPassword = value; }
 		}
-
-		//public string Email 
-		//{
-			//get { return mEmail; }
-			//set { mEmail = value; }
-		//}
+			
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Droid.OnSignInEventArgs"/> class.
@@ -68,9 +63,9 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity (Label = "SignIn")]			
 	public class SignIn : DialogFragment
 	{
+		// Declaration of buttons and text view in dialog_sign_in layout
 		private EditText mTxtUserNameSignIn;
 		private EditText mTxtPasswordSignIn;
-		//private EditText mTxtEmailSignIn;
 		private Button mBtnDialogSignIn;
 
 		/// <summary>
@@ -95,10 +90,9 @@ namespace MeetMeet_Native_Portable.Droid
 
 			var view = inflater.Inflate (Resource.Layout.dialog_sign_in, container, false);
 
-			// Resource for SignIn
+			// Setting Button and edittext References from dialog_sign_in layout
 			mTxtUserNameSignIn = view.FindViewById<EditText>(Resource.Id.txtUserNameSignIn);
 			mTxtPasswordSignIn = view.FindViewById<EditText>(Resource.Id.txtPasswordSignIn);
-			//mTxtEmailSignIn = view.FindViewById<EditText>(Resource.Id.txtEmailSignIn);
 			mBtnDialogSignIn = view.FindViewById<Button> (Resource.Id.btnDialogSignIn);
 
 			// Sign In Click Event

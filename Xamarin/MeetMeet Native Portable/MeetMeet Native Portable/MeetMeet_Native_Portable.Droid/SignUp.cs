@@ -16,36 +16,24 @@ using Android.Widget;
 namespace MeetMeet_Native_Portable.Droid
 {
 	/// <summary>
-	/// On sign up event arguments.
-	/// Gets and Sets user input for firstname
-	/// email and password.
+	/// Handles Sign Up event arguments. Allows for username and password inputed in 
+	/// dialog_sign_up layout to be retrieved.
 	/// </summary>
 	public class OnSignUpEventArgs : EventArgs {
 
 		private string mUserName;
-		private string mEmail;
 		private string mPassword;
 
 		/// <summary>
-		/// Gets or sets the first name.
+		/// Gets or sets the name of the user.
 		/// </summary>
-		/// <value>The first name.</value>
+		/// <value>The name of the user.</value>
 		public string UserName
 		{
 			get { return mUserName; }
 			set { mUserName = value; }
 		}
-
-		/// <summary>
-		/// Gets or sets the email.
-		/// </summary>
-		/// <value>The email.</value>
-		public string Email 
-		{
-			get { return mEmail; }
-			set { mEmail = value; }
-		}
-
+			
 		/// <summary>
 		/// Gets or sets the password.
 		/// </summary>
@@ -65,7 +53,6 @@ namespace MeetMeet_Native_Portable.Droid
 		public OnSignUpEventArgs(String userName, String email, string password) : base()
 		{
 			UserName = userName;
-			Email = email;
 			Password = password;
 		}
 	}
@@ -104,13 +91,13 @@ namespace MeetMeet_Native_Portable.Droid
 
 			var view = inflater.Inflate (Resource.Layout.dialog_sign_up, container, false);
 
-			// Resource for SignUp text
+			// Setting Button and edittext References from dialog_sign_up layout
 			mTxtUserName=  view.FindViewById<EditText>(Resource.Id.txtUserName);
 			mTxtPassConfirm=  view.FindViewById<EditText>(Resource.Id.txtPassConfirm);
 			mTxtPassword=  view.FindViewById<EditText>(Resource.Id.txtPassword);
 			mBtnSignUp = view.FindViewById<Button> (Resource.Id.btnDialogEmail);
 
-			// Click event
+			// Click event for when user clicks sign up
 
 			mBtnSignUp.Click += MBtnSignUp_Click;
 

@@ -228,7 +228,6 @@ namespace MeetMeet_Native_Portable.Droid
         async void signUpDialog_mOnSignUpComplete(Object sender, OnSignUpEventArgs e)
         {
             userNameSignUp = e.UserName;
-            userEmailSignUp = e.Email;
             userPasswordSignUp = e.Password;
 
             if (await TryToSignUp(userNameSignUp, userPasswordSignUp))

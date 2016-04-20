@@ -18,7 +18,8 @@ using Newtonsoft.Json;
 namespace MeetMeet_Native_Portable.Droid
 {
 	/// <summary>
-	/// On edit profile event arguments.
+	/// On edit profile event arguments. Allows values gender and user profile 
+	/// to be passed with edit profile is called.
 	/// </summary>
 	public class OnEditProfileEventArgs: EventArgs 
 	{
@@ -74,7 +75,7 @@ namespace MeetMeet_Native_Portable.Droid
 		public EventHandler <OnEditProfileEventArgs> mOnEditProfileComplete;
 
 		/// <summary>
-		/// /
+		/// Starts event and adds functionality to edit_profile layout.
 		/// </summary>
 		/// <param name="savedInstanceState">Saved instance state.</param>
 		async protected override void OnCreate (Bundle savedInstanceState)
@@ -88,11 +89,13 @@ namespace MeetMeet_Native_Portable.Droid
 			var jsonString = Intent.GetStringExtra("UserProfile");
 			userProfile = JsonConvert.DeserializeObject<Profile>(jsonString);
 
-			//References for view items
+			//Setting button references
 			mTxtGender = FindViewById<EditText>(Resource.Id.edittextgender);
 			mTxtProfile = FindViewById<EditText>(Resource.Id.edittextprofile);
 			mButtonEditProfileSave = FindViewById<Button> (Resource.Id.btnEditProfileSave);
 
+			// Sets gender and profile text to appear in layout if 
+			// user is already a member.
 			if (userProfile.gender != null)
 				mTxtGender.Text = userProfile.gender;
 			if (userProfile.bio != null)
@@ -100,10 +103,12 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// Save Profile Click Event
 			mButtonEditProfileSave.Click += MButtonEditProfileSave_Click;
-		}
+	}
 
 		/// <summary>
-		/// Ms the button edit profile save click.
+		/// On save click in edit_profile layout, this will retrieve 
+		/// text inputted by user in the gender and profile edittext fields.
+		/// It will update profile object in the server.
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="e">E.</param>
@@ -111,9 +116,16 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 
 			{
+				// Retrieves the text inputted in the profile and gender
+				// edittext boxes in edit_profile layout
 				userProfile.gender = mTxtGender.Text;
 				userProfile.bio = mTxtProfile.Text;
-				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL, MainActivity.profile_ext)) 
+
+				// If profile is successfully updated server side, User will be taken to Home screen.
+				// If update is unsuccessful. Toast will notify user with "Profile Update Unsuccessful"
+
+				if ( await Updater.UpdateObject(userProfile, MainActivity.serverURL,MainActivity.profile_ext)) 
+				//if ( await Updater.UpdateObject(userProfile, MainActivity.serverURL))
 				{
 					// pass profile object to HomeActivity
 					Intent intent = new Intent(this, typeof(HomeActivity));

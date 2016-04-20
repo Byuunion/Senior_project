@@ -38,7 +38,7 @@ namespace MeetMeet_Native_Portable.Droid
 		public string userNameFrom;
 
 		/// <summary>
-		/// Raises the create event when receiving an invite request
+		/// Starts event when receiving an invite request
 		/// </summary>
 		/// <param name="bundle">Bundle.</param>
 		 protected override void OnCreate (Bundle bundle)
@@ -52,7 +52,7 @@ namespace MeetMeet_Native_Portable.Droid
 			//Retrieves username passed from GcmListenerService
 			userNameFrom = Intent.GetStringExtra ("username_from") ?? "Data not available";
 
-			// Setting Button References 
+			// Setting Button and Textview References from invite_request layout
 			mBtnCheckProfileInvite = FindViewById<Button> (Resource.Id.BtnInviteCheckProfile);
 			mBtnAcptMeetInvite = FindViewById<Button> (Resource.Id.BtnAcptMeetInvitation);
 			mBtnDclnMeetInvite = FindViewById<Button> (Resource.Id.BtnDeclineMeetInvitation);
