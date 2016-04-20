@@ -2,7 +2,10 @@
 
 namespace MeetMeet_Native_Portable 
 {
-    public class Profile : Updatable
+	/// <summary>
+	/// Container object for a user profile
+	/// </summary>
+    public class Profile 
     {
         public string username;
         public int positive_votes;
@@ -14,7 +17,13 @@ namespace MeetMeet_Native_Portable
         public string token;
 
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Profile"/> class.
+		/// </summary>
+		/// <param name="username">The username of the person that this profile belongs to</param>
+		/// <param name="gender">The gender set by the person that this profile belongs to</param>
+		/// <param name="bio">The bio set by the person that this profile belongs to</param>
+		/// <param name="token">The token given by the server for this user, for use when updating this profile</param>
         public Profile(string username, string gender, string bio, string token)
         {
             this.username = username;
@@ -25,11 +34,6 @@ namespace MeetMeet_Native_Portable
             this.current_long = 0.0;
             this.bio = bio;
             this.token = token;
-        }
-
-        public string GetName()
-        {
-            return this.username;
         }
     }
 }

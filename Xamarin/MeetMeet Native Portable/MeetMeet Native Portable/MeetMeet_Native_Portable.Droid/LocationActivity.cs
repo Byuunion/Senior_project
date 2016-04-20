@@ -109,14 +109,14 @@ namespace MeetMeet_Native_Portable.Droid
 			if (loggedIn)
 			{
 				System.Diagnostics.Debug.WriteLine("Successfully signed in, token is: " + test.token);
-				var testProfile = await Getter<Profile>.GetObject(test.username, serverURL + profileExt + "/");
+				var testProfile = await Getter<Profile>.GetObject(serverURL + profileExt + "/" + test.username);
 				testProfile.token = test.token;
 
 				if(testProfile != default(Profile))
 				{
 					testProfile.current_lat = 40.73061000;//location.latitude;
 					testProfile.current_long = -73.93524200;//location.longitude;
-					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/", testProfile.username);
+					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/" + testProfile.username);
 				}
 			}
 		}
@@ -124,7 +124,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private async void GetUsersNearby(Geolocation loc)
 		{
 			var resource = loc.minLat + "/" + loc.maxLat + "/" + loc.minLong + "/" + loc.maxLong + "/" + loc.latitude + "/" + loc.longitude;
-			var nearbyUserList = await Getter<Geolocation>.GetObjectList(resource, serverURL + "user/");
+			var nearbyUserList = await Getter<Geolocation>.GetObjectList(serverURL + "user/" + resource);
 			String names = "";
 			foreach (var user in nearbyUserList) {
 				if (loc.username != user.username)
@@ -143,7 +143,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			Profile test = new Profile("KevyKevvv", "sflkj", "dsf", "token");
 
-			var test2 = await Getter<Profile>.GetObject(test.username, "http://52.91.212.179:8800/user/profile/{0}");
+			var test2 = await Getter<Profile>.GetObject(MainActivity.serverURL + MainActivity.profile_ext + test.username);
 			if(test2 == default(Profile))
 			{
 				userlatitudeField.Text = "null";

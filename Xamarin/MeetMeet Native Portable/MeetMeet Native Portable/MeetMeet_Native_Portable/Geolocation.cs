@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace MeetMeet_Native_Portable
 {
-	public class Geolocation : Updatable
+	public class Geolocation 
 	{
 		public string username;
 		public double latitude;
@@ -52,11 +52,11 @@ namespace MeetMeet_Native_Portable
 
 		public async void UpdateGeolocation(String token)
 		{
-			var userProfile = await Getter<Profile>.GetObject(username, serverURL + profileExt + "/");
+			var userProfile = await Getter<Profile>.GetObject(serverURL + profileExt + "/" + username);
 			userProfile.current_lat = latitude;
 			userProfile.current_long = longitude;
 			userProfile.token = token;
-			await Updater.UpdateObject (userProfile, serverURL, profileExt);
+			await Updater.UpdateObject (userProfile, serverURL + profileExt);
 		}
 
 		public async void PrototypeUpdateGeolocation()
@@ -67,14 +67,14 @@ namespace MeetMeet_Native_Portable
 			if (loggedIn)
 			{
 				System.Diagnostics.Debug.WriteLine("Successfully signed in, token is: " + test.token);
-				var testProfile = await Getter<Profile>.GetObject(test.username, serverURL + profileExt + "/");
+				var testProfile = await Getter<Profile>.GetObject(serverURL + profileExt + "/" + test.username);
 				testProfile.token = test.token;
 
 				if(testProfile != default(Profile))
 				{
 					testProfile.current_lat = latitude;
 					testProfile.current_long = longitude;
-					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/", testProfile.username);
+					await Updater.UpdateObject(testProfile, serverURL + locationExt + "/" + testProfile.username);
 				}
 			}
 		}
@@ -82,7 +82,7 @@ namespace MeetMeet_Native_Portable
 		public async Task<List<Geolocation>> GetNearbyUsers()
 		{
 			var resource = minLat + "/" + maxLat + "/" + minLong + "/" + maxLong + "/" + latitude + "/" + longitude;
-			var nearbylist = await Getter<Geolocation>.GetObjectList(resource, serverURL + "user/");
+			var nearbylist = await Getter<Geolocation>.GetObjectList(serverURL + "user/" + resource);
 
 			return nearbylist;
 		}
@@ -90,7 +90,7 @@ namespace MeetMeet_Native_Portable
 		public async Task<List<Profile>> GetNearbyProfiles()
 		{
 			var resource = minLat + "/" + maxLat + "/" + minLong + "/" + maxLong + "/" + latitude + "/" + longitude;
-			var nearbylist = await Getter<Profile>.GetObjectList(resource, serverURL + "user/");
+			var nearbylist = await Getter<Profile>.GetObjectList(serverURL + "user/" + resource);
 
 			return nearbylist;
 		}

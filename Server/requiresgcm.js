@@ -680,6 +680,19 @@ function send_single_message(username_from, username_to, message_text, message_c
 						myRes.setEncoding('utf8');
 						myRes.on('data', function (chunk) {
 							console.log('BODY: ' + chunk);
+							
+							var message_chunk = JSON.parse(chunk)
+							
+							if(message_chunk.success === 1){
+								response.success = true;
+								response.success_message = 'message sent to GCM';	
+								callback(response);
+							}
+							else{
+								response.success = false;
+								response.success_message = 'message could not be sent';
+								callback(response);
+							}
 						});
 						myRes.on('end', function (){
 							console.log('No more data in response.')
@@ -692,10 +705,8 @@ function send_single_message(username_from, username_to, message_text, message_c
 					
 					myReq.write(postData);
 					myReq.end();
-
-					response.success = true;
-					response.success_message = 'message sent to GCM';	
-					callback(response);
+					
+					
 				}
 			});
 		}
