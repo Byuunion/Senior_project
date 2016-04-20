@@ -124,7 +124,7 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.logout_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
-						Deleter.DeleteObject(MainActivity.login_ext + "/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token, MainActivity.serverURL);
+						Deleter.DeleteObject( MainActivity.serverURL + MainActivity.login_ext + "/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token);
 						userProfile = null;
 						Intent logoutIntent = new Intent(this, typeof(MainActivity));
 						logoutIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
@@ -145,8 +145,7 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.leave_group_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
-						Deleter.DeleteObject(MainActivity.user_group + "/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token,
-							MainActivity.serverURL);
+						Deleter.DeleteObject(MainActivity.serverURL + MainActivity.user_group + "/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token);
 					})
 					.SetNegativeButton (Resource.String.no, (senderAlert, args) => {});
 				dialog = builder.Create ();
@@ -166,7 +165,7 @@ namespace MeetMeet_Native_Portable.Droid
 				builder.SetMessage (Resource.String.delete_question)
 					.SetCancelable (false)
 					.SetPositiveButton (Resource.String.yes, (senderAlert, args) => {
-						Deleter.DeleteObject("user/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token, MainActivity.serverURL);
+						Deleter.DeleteObject(MainActivity.serverURL + "user/" + MainActivity.credentials.username + "/" + MainActivity.credentials.token);
 						userProfile = null;
 						Intent deleteIntent = new Intent(this, typeof(MainActivity));
 						deleteIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);

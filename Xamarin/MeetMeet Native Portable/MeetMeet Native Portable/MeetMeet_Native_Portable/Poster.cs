@@ -6,9 +6,17 @@ using System.Net.Http;
 
 namespace MeetMeet_Native_Portable
 {
+	/// <summary>
+	/// This class takes care of the details for sending a post request to our server
+	/// </summary>
     public class Poster
     {
-
+		/// <summary>
+		/// Sends a post request to the server with the given object
+		/// </summary>
+		/// <returns>Whether or not the post was successful</returns>
+		/// <param name="obj">The object to send to the server</param>
+		/// <param name="url">The URL of the server</param>
         public static async Task<Boolean> PostObject(Object obj, string url)
         {
             HttpClient client = new HttpClient();

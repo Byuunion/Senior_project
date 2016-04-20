@@ -53,7 +53,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 		public EventHandler <OnEditProfileEventArgs> mOnEditProfileComplete;
 
-		async protected override void OnCreate (Bundle savedInstanceState)
+		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 
@@ -84,7 +84,7 @@ namespace MeetMeet_Native_Portable.Droid
 			{
 				userProfile.gender = mTxtGender.Text;
 				userProfile.bio = mTxtProfile.Text;
-				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL, MainActivity.profile_ext)) 
+				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL + MainActivity.profile_ext)) 
 				{
 					// pass profile object to HomeActivity
 					Intent intent = new Intent(this, typeof(HomeActivity));

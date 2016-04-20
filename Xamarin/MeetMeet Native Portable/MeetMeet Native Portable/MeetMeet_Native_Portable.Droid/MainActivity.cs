@@ -16,6 +16,7 @@ using System.Threading;
 using Android.Gms.Common;
 using ClientApp;
 using Newtonsoft.Json;
+using MeetMeet_Native_Portable;
 
 
 namespace MeetMeet_Native_Portable.Droid
@@ -43,18 +44,18 @@ namespace MeetMeet_Native_Portable.Droid
         public string userNameSignUp;
         public string userEmailSignUp;
         public string userPasswordSignUp;
-        public static string serverURL = "http://52.91.212.179:8800/";
-        public static string login_ext = "user/login";
-        public static string profile_ext = "user/profile";
-        public static string location_ext = "user/profile/location";
-        public static string gcm_regid_ext = "user/gcmregid";
-        public static string group_message = "user/group/message";
-        public static string single_message = "user/message";
-		public static string pos_rating = "user/pos_rating";
-		public static string neg_rating = "user/neg_rating";
-		public static string blacklist_user = "user/blacklist";
-		public static string group_invite = "user/group/invite";
-		public static string user_group = "user/group";
+		public static string serverURL = URLs.serverURL;
+		public static string login_ext = URLs.login_ext;
+		public static string profile_ext = URLs.profile_ext;
+		public static string location_ext = URLs.location_ext;
+		public static string gcm_regid_ext = URLs.gcm_regid_ext;
+		public static string group_message = URLs.group_message;
+		public static string single_message = URLs.single_message;
+		public static string pos_rating = URLs.pos_rating;
+		public static string neg_rating = URLs.neg_rating;
+		public static string blacklist_user = URLs.blacklist_user;
+		public static string group_invite = URLs.group_invite;
+		public static string user_group = URLs.user_group;
         public static string username;
         public static string user_token;
         public static string gcm_token;
@@ -130,16 +131,7 @@ namespace MeetMeet_Native_Portable.Droid
                 return true;
             }
         }
-
-
-		//void MButtonSendMsg_Click(object sender, EventArgs e)
-		//{
-		//	FragmentTransaction transaction = FragmentManager.BeginTransaction();
-		//	MessagingActivity msgAct = new MessagingActivity ();
-		//	msgAct.Show (transaction, "Dialog Fragment");
-		//}
-
-		// Sign In Click
+			
 
         /// <summary>
         /// Starts Sign in dialog fragment via SignIn() when clicked.
@@ -171,7 +163,7 @@ namespace MeetMeet_Native_Portable.Droid
 
             if (await TryToLogin(userNameSignIn, userPasswordSignIn))
             {
-                var userProfile = await Getter<Profile>.GetObject(userNameSignIn, serverURL + profile_ext + "/");
+				var userProfile = await Getter<Profile>.GetObject(serverURL + profile_ext + "/" + userNameSignIn);
                 if(userProfile == default(Profile))
                 {
                     Toast.MakeText(this, "You don't have a profile to show", ToastLength.Short).Show();
@@ -287,7 +279,7 @@ namespace MeetMeet_Native_Portable.Droid
                 System.Diagnostics.Debug.WriteLine("Finished doLogin, token is " + credentials.token);
                 if (loggedIn)
                 {
-                    return await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL, gcm_regid_ext);
+                    return await Updater.UpdateObject(new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL + gcm_regid_ext);
                 }
                 else
                 {

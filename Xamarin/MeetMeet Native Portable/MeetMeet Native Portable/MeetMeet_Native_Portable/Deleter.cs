@@ -6,19 +6,28 @@ using System.Net.Http;
 
 namespace MeetMeet_Native_Portable
 {
+	/// <summary>
+	/// This class takes care of the details for sending a delete request to our server
+	/// </summary>
     public class Deleter
     {
 
-		public static async Task<Boolean> DeleteObject(String resource, string url)
+		/// <summary>
+		/// Sends a delete request to the server to delete the information at the given extension
+		/// </summary>
+		/// <returns>Whether or not the deletion was successful</returns>
+		/// <param name="url">The URL of the resource to delete</param>
+		public static async Task<Boolean> DeleteObject(string url)
         {
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
 
-			var uri = new Uri(url + resource);
+			var uri = new Uri(url);
             var task = client.DeleteAsync(uri);
 
 			System.Diagnostics.Debug.WriteLine("Sending delete request for: " + uri);
 
+			// Catches time outs
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {
 				string response = await task.Result.Content.ReadAsStringAsync();

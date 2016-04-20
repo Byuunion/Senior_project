@@ -56,7 +56,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 
 			// Get user and bio
-		    profile = await Getter<Profile>.GetObject(userNameFrom, serverURL + "user/profile/");
+			profile = await Getter<Profile>.GetObject(serverURL + "user/profile/" + userNameFrom);
 			string username = profile.username;
 			string bio = profile.bio;
 			int posvote = profile.positive_votes;
@@ -81,8 +81,7 @@ namespace MeetMeet_Native_Portable.Droid
 		async void MUnblock_Click (object sender, EventArgs e)
 		{
 			System.Diagnostics.Debug.WriteLine ("Trying to block user " + profile.username);
-			if (await Deleter.DeleteObject (MainActivity.blacklist_user + "/" + MainActivity.credentials.username + "/" + profile.username + "/" + MainActivity.credentials.token, 
-				MainActivity.serverURL )) {
+			if (await Deleter.DeleteObject (MainActivity.serverURL + MainActivity.blacklist_user + "/" + MainActivity.credentials.username + "/" + profile.username + "/" + MainActivity.credentials.token)) {
 				Toast.MakeText (this, "Successfully unblocked user!", ToastLength.Short).Show ();
 			} else {
 				Toast.MakeText (this, "Unable to unblock user", ToastLength.Short).Show ();
@@ -94,7 +93,7 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			System.Diagnostics.Debug.WriteLine ("Trying to send positive vote to user " + profile.username + " from user " + MainActivity.credentials.username);
 			if (await Updater.UpdateObject (new {rating_username = MainActivity.credentials.username, token = MainActivity.credentials.token}, 
-				MainActivity.serverURL, MainActivity.pos_rating + "/" + profile.username)) {
+				MainActivity.serverURL + MainActivity.pos_rating + "/" + profile.username)) {
 				Toast.MakeText (this, "Successfully rated user!", ToastLength.Short).Show();
 			}
 			else
@@ -105,7 +104,7 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			System.Diagnostics.Debug.WriteLine ("Trying to send negative vote to user " + profile.username + " from user " + MainActivity.credentials.username);
 			if (await Updater.UpdateObject (new {rating_username = MainActivity.credentials.username, token = MainActivity.credentials.token}, 
-				MainActivity.serverURL, MainActivity.neg_rating + "/" + profile.username)) {
+				MainActivity.serverURL + MainActivity.neg_rating + "/" + profile.username)) {
 				Toast.MakeText (this, "Successfully rated user!", ToastLength.Short).Show();
 			}
 			else
