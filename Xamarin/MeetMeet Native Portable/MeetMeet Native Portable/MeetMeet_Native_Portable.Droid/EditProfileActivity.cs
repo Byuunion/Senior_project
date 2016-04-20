@@ -17,32 +17,52 @@ using Newtonsoft.Json;
 
 namespace MeetMeet_Native_Portable.Droid
 {
+	/// <summary>
+	/// On edit profile event arguments.
+	/// </summary>
 	public class OnEditProfileEventArgs: EventArgs 
 	{
+		//
 		private string mGender;
 		private string mProfile;
 
+		/// <summary>
+		/// Gets or sets the gender.
+		/// </summary>
+		/// <value>The gender.</value>
 		public string Gender 
 		{
 			get { return mGender; }
 			set { mGender = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the profile.
+		/// </summary>
+		/// <value>The profile.</value>
 		public string Profile 
 		{
 			get { return mProfile; }
 			set { mProfile = value; }
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MeetMeet_Native_Portable.Droid.OnEditProfileEventArgs"/> class.
+		/// </summary>
+		/// <param name="gender">Gender.</param>
+		/// <param name="profile">Profile.</param>
 		public OnEditProfileEventArgs(String gender, String profile) : base()
 		{
 			Gender = gender;
 			Profile = profile;
-			//Email = email;
 		}
 	}
 
 	[Activity (Label = "EditProfileActivity")]			
+
+	/// <summary>
+	/// Edit profile activity.
+	/// </summary>
 	public class EditProfileActivity : Activity
 	{
 		private EditText mTxtGender;
@@ -53,6 +73,10 @@ namespace MeetMeet_Native_Portable.Droid
 
 		public EventHandler <OnEditProfileEventArgs> mOnEditProfileComplete;
 
+		/// <summary>
+		/// /
+		/// </summary>
+		/// <param name="savedInstanceState">Saved instance state.</param>
 		async protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
@@ -78,6 +102,11 @@ namespace MeetMeet_Native_Portable.Droid
 			mButtonEditProfileSave.Click += MButtonEditProfileSave_Click;
 		}
 
+		/// <summary>
+		/// Ms the button edit profile save click.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
 		async void MButtonEditProfileSave_Click (object sender, EventArgs e)
 		{
 			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 

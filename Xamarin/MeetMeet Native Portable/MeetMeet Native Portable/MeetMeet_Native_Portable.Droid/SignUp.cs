@@ -67,10 +67,7 @@ namespace MeetMeet_Native_Portable.Droid
 			UserName = userName;
 			Email = email;
 			Password = password;
-
-
 		}
-			
 	}
 
 	/// <summary>
