@@ -1,18 +1,11 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 
-using Android.Gms.Common;
-using ClientApp;
 using Newtonsoft.Json;
 
 namespace MeetMeet_Native_Portable.Droid
@@ -113,7 +106,7 @@ namespace MeetMeet_Native_Portable.Droid
 			{
 				userProfile.gender = mTxtGender.Text;
 				userProfile.bio = mTxtProfile.Text;
-				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL, MainActivity.profile_ext)) 
+				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL + MainActivity.profile_ext)) 
 				{
 					// pass profile object to HomeActivity
 					Intent intent = new Intent(this, typeof(HomeActivity));
