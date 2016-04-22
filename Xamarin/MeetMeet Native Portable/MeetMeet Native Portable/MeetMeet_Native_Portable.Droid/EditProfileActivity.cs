@@ -14,7 +14,7 @@ namespace MeetMeet_Native_Portable.Droid
 	/// On edit profile event arguments. Allows values gender and user profile 
 	/// to be passed with edit profile is called.
 	/// </summary>
-	public class OnEditProfileEventArgs: EventArgs 
+	public class OnEditProfileEventArgs: EventArgs
 	{
 		//
 		private string mGender;
@@ -24,8 +24,7 @@ namespace MeetMeet_Native_Portable.Droid
 		/// Gets or sets the gender.
 		/// </summary>
 		/// <value>The gender.</value>
-		public string Gender 
-		{
+		public string Gender {
 			get { return mGender; }
 			set { mGender = value; }
 		}
@@ -34,8 +33,7 @@ namespace MeetMeet_Native_Portable.Droid
 		/// Gets or sets the profile.
 		/// </summary>
 		/// <value>The profile.</value>
-		public string Profile 
-		{
+		public string Profile {
 			get { return mProfile; }
 			set { mProfile = value; }
 		}
@@ -45,7 +43,7 @@ namespace MeetMeet_Native_Portable.Droid
 		/// </summary>
 		/// <param name="gender">Gender.</param>
 		/// <param name="profile">Profile.</param>
-		public OnEditProfileEventArgs(String gender, String profile) : base()
+		public OnEditProfileEventArgs (String gender, String profile) : base ()
 		{
 			Gender = gender;
 			Profile = profile;
@@ -79,12 +77,12 @@ namespace MeetMeet_Native_Portable.Droid
 			SetContentView (Resource.Layout.edit_profile);
 
 			// Get profile object from other activities
-			var jsonString = Intent.GetStringExtra("UserProfile");
-			userProfile = JsonConvert.DeserializeObject<Profile>(jsonString);
+			var jsonString = Intent.GetStringExtra ("UserProfile");
+			userProfile = JsonConvert.DeserializeObject<Profile> (jsonString);
 
 			//Setting button references
-			mTxtGender = FindViewById<EditText>(Resource.Id.edittextgender);
-			mTxtProfile = FindViewById<EditText>(Resource.Id.edittextprofile);
+			mTxtGender = FindViewById<EditText> (Resource.Id.edittextgender);
+			mTxtProfile = FindViewById<EditText> (Resource.Id.edittextprofile);
 			mButtonEditProfileSave = FindViewById<Button> (Resource.Id.btnEditProfileSave);
 
 			// Sets gender and profile text to appear in layout if 
@@ -96,7 +94,7 @@ namespace MeetMeet_Native_Portable.Droid
 			
 			// Save Profile Click Event
 			mButtonEditProfileSave.Click += MButtonEditProfileSave_Click;
-	}
+		}
 
 		/// <summary>
 		/// On save click in edit_profile layout, this will retrieve 
@@ -107,26 +105,24 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		async void MButtonEditProfileSave_Click (object sender, EventArgs e)
 		{
-			if (mTxtGender.Text!= "" && mTxtProfile.Text!= "") 
-			{
+			if (mTxtGender.Text != "" && mTxtProfile.Text != "") {
+
 				// Retrieves the text inputted in the profile and gender
 				// edittext boxes in edit_profile layout
 				userProfile.gender = mTxtGender.Text;
 				userProfile.bio = mTxtProfile.Text;
-
 
 				// If profile is successfully updated server side, User will be taken to Home screen.
 				// If update is unsuccessful. Toast will notify user with "Profile Update Unsuccessful"
 				if (await Updater.UpdateObject (userProfile, MainActivity.serverURL + MainActivity.profile_ext)) 
 				{
 					// pass profile object to HomeActivity
-					Intent intent = new Intent(this, typeof(HomeActivity));
-					var serializedObject = JsonConvert.SerializeObject(userProfile);
-					intent.PutExtra("UserProfile", serializedObject);
-					StartActivity(intent);
-				}
-				else
-					Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show();
+					Intent intent = new Intent (this, typeof(HomeActivity));
+					var serializedObject = JsonConvert.SerializeObject (userProfile);
+					intent.PutExtra ("UserProfile", serializedObject);
+					StartActivity (intent);
+				} else
+					Toast.MakeText (this, "Profile Update Unsuccessful", ToastLength.Short).Show ();
 			}
 		}
 	}

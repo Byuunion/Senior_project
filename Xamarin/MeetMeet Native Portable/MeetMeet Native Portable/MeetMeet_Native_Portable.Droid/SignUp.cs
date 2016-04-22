@@ -19,7 +19,8 @@ namespace MeetMeet_Native_Portable.Droid
 	/// Handles Sign Up event arguments. Allows for username and password inputed in 
 	/// dialog_sign_up layout to be retrieved.
 	/// </summary>
-	public class OnSignUpEventArgs : EventArgs {
+	public class OnSignUpEventArgs : EventArgs
+	{
 
 		private string mUserName;
 		private string mPassword;
@@ -28,18 +29,16 @@ namespace MeetMeet_Native_Portable.Droid
 		/// Gets or sets the name of the user.
 		/// </summary>
 		/// <value>The name of the user.</value>
-		public string UserName
-		{
+		public string UserName {
 			get { return mUserName; }
 			set { mUserName = value; }
 		}
-			
+
 		/// <summary>
 		/// Gets or sets the password.
 		/// </summary>
 		/// <value>The password.</value>
-		public string Password 
-		{
+		public string Password {
 			get { return mPassword; }
 			set { mPassword = value; }
 		}
@@ -50,7 +49,7 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="firstName">First name.</param>
 		/// <param name="email">Email.</param>
 		/// <param name="password">Password.</param>
-		public OnSignUpEventArgs(String userName, String email, string password) : base()
+		public OnSignUpEventArgs (String userName, String email, string password) : base ()
 		{
 			UserName = userName;
 			Password = password;
@@ -84,17 +83,16 @@ namespace MeetMeet_Native_Portable.Droid
 		/// Called to have the fragment instantiate its user interface view.
 		/// </summary>
 		/// <returns>To be added.</returns>
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-
+		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			base.OnCreateView (inflater, container, savedInstanceState);
 
 			var view = inflater.Inflate (Resource.Layout.dialog_sign_up, container, false);
 
 			// Setting Button and edittext References from dialog_sign_up layout
-			mTxtUserName=  view.FindViewById<EditText>(Resource.Id.txtUserName);
-			mTxtPassConfirm=  view.FindViewById<EditText>(Resource.Id.txtPassConfirm);
-			mTxtPassword=  view.FindViewById<EditText>(Resource.Id.txtPassword);
+			mTxtUserName = view.FindViewById<EditText> (Resource.Id.txtUserName);
+			mTxtPassConfirm = view.FindViewById<EditText> (Resource.Id.txtPassConfirm);
+			mTxtPassword = view.FindViewById<EditText> (Resource.Id.txtPassword);
 			mBtnSignUp = view.FindViewById<Button> (Resource.Id.btnDialogEmail);
 
 			// Click event for when user clicks sign up
@@ -104,7 +102,7 @@ namespace MeetMeet_Native_Portable.Droid
 			return view;
 		}
 
-		// Occurs when user clicks Sign up Button 
+		// Occurs when user clicks Sign up Button
 
 		/// <summary>
 		/// Completes Sign up process and passes arguments. 
@@ -113,14 +111,12 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		void MBtnSignUp_Click (object sender, EventArgs e)
 		{
-			if(mTxtUserName.Text != "" && mTxtPassConfirm.Text != "" && mTxtPassword.Text != "")
-			{
+			if (mTxtUserName.Text != "" && mTxtPassConfirm.Text != "" && mTxtPassword.Text != "") {
 				if (mTxtPassword.Text.Equals (mTxtPassConfirm.Text)) {
 					mOnSignUpComplete.Invoke (this, new OnSignUpEventArgs (mTxtUserName.Text, mTxtPassConfirm.Text, mTxtPassword.Text));
 					this.Dismiss ();
 				} 
 			}
-
 		}
 
 		/// <param name="savedInstanceState">If the fragment is being re-created from
@@ -129,13 +125,10 @@ namespace MeetMeet_Native_Portable.Droid
 		/// Called when the fragment's activity has been created and this
 		///  fragment's view hierarchy instantiated.
 		/// </summary>
-		public override void OnActivityCreated(Bundle savedInstanceState)
+		public override void OnActivityCreated (Bundle savedInstanceState)
 		{
 			Dialog.Window.RequestFeature (WindowFeatures.NoTitle);
 			base.OnActivityCreated (savedInstanceState);
-
 		}
-
-
 	}
 }
