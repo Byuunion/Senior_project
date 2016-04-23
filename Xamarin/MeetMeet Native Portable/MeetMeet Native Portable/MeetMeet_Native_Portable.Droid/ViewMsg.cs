@@ -41,8 +41,8 @@ namespace MeetMeet_Native_Portable.Droid
 			// References for Home Menu Items
 			mBtnSendNewMsg = view.FindViewById<Button> (Resource.Id.sendMsgButton);
 			mBtnClose = view.FindViewById<Button> (Resource.Id.closeMsgButton);
-			mUsernameTextView = view.FindViewById<Button> (Resource.Id.userNameTextView);
-			mMsgTextTextView = view.FindViewById<Button> (Resource.Id.textMsgView);
+			mUsernameTextView = view.FindViewById<TextView> (Resource.Id.userNameTextView);
+			mMsgTextTextView = view.FindViewById<TextView> (Resource.Id.textMsgView);
 
 			// Set username text
 			mUsernameTextView.Text = MessageRepository.GetMessage(msgID).UserName;

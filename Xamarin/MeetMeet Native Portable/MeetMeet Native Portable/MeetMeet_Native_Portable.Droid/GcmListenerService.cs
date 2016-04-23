@@ -39,6 +39,8 @@ namespace ClientApp
 			m.Date = System.DateTime.Now.ToString();
 			m.incoming = true;
 
+
+
 			
             if(ms_code == 1)
             {
@@ -61,6 +63,10 @@ namespace ClientApp
 				MessageRepository.SaveMessage (m);
                 SendNotification(message, m.UserName);
             }
+
+			ViewInbox inbox = (ViewInbox)MainActivity.references.Get ("Inbox");
+			inbox.newMessage (m);
+
         }
 
         /// <summary>
@@ -84,6 +90,8 @@ namespace ClientApp
             var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
             notificationBuilder.SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification));
             notificationManager.Notify(0, notificationBuilder.Build());
+
+
         }
     }
 }

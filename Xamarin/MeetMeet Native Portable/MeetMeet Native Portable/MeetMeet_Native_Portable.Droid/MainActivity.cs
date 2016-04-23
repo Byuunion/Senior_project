@@ -13,6 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
+using Java.Util;
+
 using Android.Gms.Common;
 using ClientApp;
 using Newtonsoft.Json;
@@ -56,6 +58,7 @@ namespace MeetMeet_Native_Portable.Droid
 		public static string username;
 		public static string user_token;
 		public static string gcm_token;
+		public static HashMap references;
 
 		public static Credentials credentials;
 
@@ -72,6 +75,7 @@ namespace MeetMeet_Native_Portable.Droid
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
+			references = new HashMap ();
 
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);

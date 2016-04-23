@@ -56,6 +56,8 @@ namespace MeetMeet_Native_Portable.Droid
 			task.MsgText = mMsgTextTextView.Text;
 
 			MessageRepository.SaveMessage(task);
+			ViewInbox v = (ViewInbox)MainActivity.references.Get ("Inbox");
+			v.newMessage (task);
 
 			//closes window
 			Dismiss();

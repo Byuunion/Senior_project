@@ -15,8 +15,9 @@ namespace MeetMeet_Native_Portable.Droid
     /// Adapter for user messages
     /// </summary>
 	public class MsgListAdapter : BaseAdapter<Message> {
-		Activity context = null;
+		ViewInbox context = null;
 		IList<Message> msgs = new List<Message>();
+
 
 		//the other text views and the delete button need to be in here
 		//utilizing getitemid one can port over that info to generate the write message in the view msg pop up
@@ -30,7 +31,7 @@ namespace MeetMeet_Native_Portable.Droid
         /// </summary>
         /// <param name="context"></param>
         /// <param name="msgs"></param>
-		public MsgListAdapter (Activity context, IList<Message> msgs) : base ()
+		public MsgListAdapter (ViewInbox context, IList<Message> msgs) : base ()
 		{
 			this.context = context;
 			this.msgs = msgs;
@@ -61,28 +62,34 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Inflate convertView from our item layout
 			var view = context.LayoutInflater.Inflate (Resource.Layout.msg_adapter, parent, false); 
+			view.Clickable = true;
 
 			mButtonDeleteMsg = view.FindViewById<ImageButton> (Resource.Id.delButton);
 			mTextViewUsername = view.FindViewById<TextView> (Resource.Id.UserNameView);
 			mTextViewDate = view.FindViewById<TextView> (Resource.Id.dateView);
 			mTextIncoming = view.FindViewById<TextView> (Resource.Id.textView2);
 
+			mButtonDeleteMsg.Focusable = false;
+			mButtonDeleteMsg.FocusableInTouchMode = false;
+			mButtonDeleteMsg.Clickable = true;
+
 			mTextViewUsername.Text = item.UserName;
 			mTextViewDate.Text = item.Date;
 			mTextIncoming.Text = (item.incoming ? "Message from: " : "Message to: ");
+
+			view.Click += (object sender, EventArgs e) => {
+				context.viewMessage(position);
+			};
 
             //Delete button clicked
 			mButtonDeleteMsg.Click += (object sender, EventArgs e) => {
 				MessageRepository.DeleteMessage(item);
 				Toast.MakeText(context, "message with: " + item.UserName + " deleted", ToastLength.Short).Show();
 				msgs.Remove(item);
+				context.removeMessage(position);
 			};
 
-            //Show message
-			mTextViewUsername.Click += (object sender, EventArgs e) => {
-				//return new ViewMsg(1);
-				Toast.MakeText(context, item.MsgText, ToastLength.Short).Show();
-			};
+
 
 			//Finally return the view
 			return view;
