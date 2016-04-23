@@ -1,18 +1,17 @@
 ﻿
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 
 namespace MeetMeet_Native_Portable.Droid
 {
+    /// <summary>
+    /// Inbox menu
+    /// </summary>
 	[Activity (Label = "ViewInbox")]			
 	public class ViewInbox : Activity
 	{
@@ -21,7 +20,10 @@ namespace MeetMeet_Native_Portable.Droid
 		protected IList<Message> tasks;
 		protected ListView taskListView = null;
 
-
+        /// <summary>
+        /// When the activity is created
+        /// </summary>
+        /// <param name="bundle">Any data passed to the activity</param>
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -30,13 +32,9 @@ namespace MeetMeet_Native_Portable.Droid
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
 
-			foreach (string s in MessageRepository.GetMessagedUsers()) {
-				System.Diagnostics.Debug.WriteLine (s + "fdslkj");
-			}
-
-			System.Diagnostics.Debug.WriteLine ("finished with that");
 			tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
 			System.Diagnostics.Debug.WriteLine (tasks.Count);
+
 			// create our adapter
 			taskList = new MsgListAdapter(this, tasks);
 
@@ -49,6 +47,7 @@ namespace MeetMeet_Native_Portable.Droid
 			if(taskListView != null) {
 				taskListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) => 
 				{
+                    System.Diagnostics.Debug.WriteLine("Clicked");
 					int msgID = tasks[e.Position].Id;
 					var taskDetails = new Intent (this, typeof (ViewMsg));
 					taskDetails.PutExtra ("MsgIDin", tasks[e.Position].Id);
@@ -57,12 +56,12 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
-
+        /// <summary>
+        /// Executed if the activity is resumed after it is paused
+        /// </summary>
 		protected override void OnResume ()
 		{
-			base.OnResume ();
-
-			//tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
+			base.OnResume ();;
 
 			tasks = MessageRepository.GetMessages ().ToList();
 			// create our adapter

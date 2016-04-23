@@ -45,9 +45,9 @@ namespace MeetMeet_Native_Portable.Droid
 			return view;
 		}
 
-		void mBtnSendMsg_Click(object sender, EventArgs e)
+		async void mBtnSendMsg_Click(object sender, EventArgs e)
 		{
-			MessageSender.SendSingleMessage( mMsgTextTextView.Text, mUsernameTextView.Text, MainActivity.credentials, "http://52.91.212.179:8800/user/message");
+			await MessageSender.SendSingleMessage( mMsgTextTextView.Text, mUsernameTextView.Text, MainActivity.credentials, "http://52.91.212.179:8800/user/message");
 
 			//also save a copy to user's personal DB on device
 			//id auto increments so no need to worry about assigining one

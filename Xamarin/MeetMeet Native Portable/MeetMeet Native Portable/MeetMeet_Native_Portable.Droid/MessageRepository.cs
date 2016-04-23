@@ -4,69 +4,91 @@ using System.Collections.Generic;
 
 namespace MeetMeet_Native_Portable.Droid
 {
-				
-	public class MessageRepository 
-	{
-		MessageDB db = null;
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MessageRepository
+    {
+        MessageDB db = null;
 
-		protected static MessageRepository me;
+        protected static MessageRepository me;
 
-		static MessageRepository ()
-		{
-			me = new MessageRepository();
-		}
-		protected MessageRepository()
-		{
-			db = new MessageDB(MessageDB.DatabaseFilePath);
-			/*
-			//insert default values for testing 
-			Message msg1 = new Message();
-			//0, "23:14:31 PM", "aa", "Here is the first message I sent to user aa");
-			msg1.Id = 0;
-			msg1.Date = "23:14:31 PM";
-			msg1.UserName = "aa";
-			msg1.MsgText = "Here is the first message I sent to user aa";
-			Message msg2 = new Message();
-			//1, "23:15:00 PM", "aa", "Here is the second message I sent to user aa");
+        /// <summary>
+        /// Static constructor
+        /// </summary>
+        static MessageRepository()
+        {
+            me = new MessageRepository();
+        }
 
-			msg1.Id = 1;
-			msg1.Date = "23:15:14 PM";
-			msg1.UserName = "aa";
-			msg1.MsgText = "Here is the second message I sent to user aa";
-			db.SaveMessage (msg1);
-			db.SaveMessage (msg2);
-*/
-		}
+        /// <summary>
+        /// Private constructor
+        /// </summary>
+        protected MessageRepository()
+        {
+            db = new MessageDB(MessageDB.DatabaseFilePath);
+        }
 
-		public static IEnumerable<string> GetMessagedUsers(){
-			return me.db.GetMessagedUsers ();
-		}
+        /// <summary>
+        /// Get all the unique usernames that appear in the database
+        /// </summary>
+        /// <returns>A list of unique usernames that this user has messaged</returns>
+        public static IEnumerable<string> GetMessagedUsers()
+        {
+            return me.db.GetMessagedUsers();
+        }
 
-		public static Message GetMessage(int id)
-		{
-			return me.db.GetMessage(id);
-		}
+        /// <summary>
+        /// Get a specific message from the database
+        /// </summary>
+        /// <param name="id">The id of the message to get</param>
+        /// <returns>The message belonging to the given id</returns>
+        public static Message GetMessage(int id)
+        {
+            return me.db.GetMessage(id);
+        }
 
-		public static IEnumerable<Message> GetUsersMessage(string[] usernames){
-			return me.db.GetUsersMessage (usernames);
-		}
+        /// <summary>
+        /// Get all the messages from the specified usernames
+        /// </summary>
+        /// <param name="usernames">The usernames to find the messages for</param>
+        /// <returns>All the messages to or from the given users</returns>
+        public static IEnumerable<Message> GetUsersMessage(string[] usernames)
+        {
+            return me.db.GetUsersMessage(usernames);
+        }
 
-		public static IEnumerable<Message> GetMessages ()
-		{
-			return me.db.GetMessages();
-		}
+        /// <summary>
+        /// Get all the messages stored in the database
+        /// </summary>
+        /// <returns> all the messages stored int the database</returns>
+        public static IEnumerable<Message> GetMessages()
+        {
+            return me.db.GetMessages();
+        }
 
-		public static int SaveMessage (Message msg)
-		{
-			return me.db.SaveMessage(msg);
-		}
+        /// <summary>
+        /// Save the given message to the database. First check to see if the generated ID is already in the DB, 
+        /// if it is, call the update method and then adds the msg.
+        /// </summary>
+        /// <param name="msg">The message to add</param>
+        /// <returns>The id of the message</returns>
+        public static int SaveMessage(Message msg)
+        {
+            return me.db.SaveMessage(msg);
+        }
 
-		public static int DeleteMessage(Message msg)
-		{
-			return me.db.DeleteMessage(msg);
-		}
+        /// <summary>
+        /// Delete the given message from the database
+        /// </summary>
+        /// <param name="msg">The message to delete</param>
+        /// <returns></returns>
+        public static int DeleteMessage(Message msg)
+        {
+            return me.db.DeleteMessage(msg);
+        }
 
-	}
+    }
 }
-	
+
 

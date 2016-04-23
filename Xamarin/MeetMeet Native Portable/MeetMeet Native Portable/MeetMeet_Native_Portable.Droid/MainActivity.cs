@@ -96,11 +96,11 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
-		/// <summary>
-		/// Determines whether this instance is play services available.
-		/// </summary>
-		/// <returns><c>true</c> if this instance is play services available; otherwise, <c>false</c>.</returns>
-		public bool IsPlayServicesAvailable ()
+        /// <summary>
+        /// Determines whether this instance is play services available.
+        /// </summary>
+        /// <returns><c>true</c> if this instance is play services available; otherwise, <c>false</c>.</returns>
+        public bool IsPlayServicesAvailable ()
 		{
 			int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable (this);
 			if (resultCode != ConnectionResult.Success) {

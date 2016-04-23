@@ -11,9 +11,13 @@ using Newtonsoft.Json;
 namespace MeetMeet_Native_Portable.Droid
 {
 	
+    /// <summary>
+    /// Adapter for user messages
+    /// </summary>
 	public class MsgListAdapter : BaseAdapter<Message> {
 		Activity context = null;
 		IList<Message> msgs = new List<Message>();
+
 		//the other text views and the delete button need to be in here
 		//utilizing getitemid one can port over that info to generate the write message in the view msg pop up
 		private ImageButton mButtonDeleteMsg;
@@ -21,6 +25,11 @@ namespace MeetMeet_Native_Portable.Droid
 		private TextView mTextViewDate;
 		private TextView mTextIncoming;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="msgs"></param>
 		public MsgListAdapter (Activity context, IList<Message> msgs) : base ()
 		{
 			this.context = context;
@@ -43,42 +52,16 @@ namespace MeetMeet_Native_Portable.Droid
 			get { return msgs.Count; }
 		}
 
-
-//		protected override void OnCreate(Bundle bundle)
-//		{
-//			base.OnCreate (bundle);
-//
-//			// Set our view from the home_page resource
-//			SetContentView (Resource.Layout.msg_adapter);
-//			mButtonDeleteMsg = FindViewById<ImageButton> (Resource.Id.delButton);
-//			mTextViewUsername = FindViewById<TextView> (Resource.Id.UserNameView);
-//			mTextViewDate = FindViewById<TextView> (Resource.Id.dateView);
-//			var item = msgs [position];
-//
-//			// Get Message object from other activities
-//			var jsonString = Intent.GetStringExtra("UserProfile");
-//			userProfile = JsonConvert.DeserializeObject<Profile>(jsonString);
-//
-//
-//		}
-
-		//delete button -> final long id = getItemId(position);
-
 		//this was the default method xamarin uses for list view.
 		//this needs to be changed because my view needs to display username and timestamp
-		public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
+		public override View GetView (int position, View convertView, ViewGroup parent)
 		{
 			// Get our object for position
 			var item = msgs[position];			
 
-			//Try to reuse convertView if it's not  null, otherwise inflate it from our item layout
-			// gives us some performance gains by not always inflating a new view
-			// will sound familiar to MonoTouch developers with UITableViewCell.DequeueReusableCell()
-			var view = (/*convertView ??*/ context.LayoutInflater.Inflate (
-				           Resource.Layout.msg_adapter,
-				           parent, false)) /*as ListView*/; 
-										//TextView;
-			//view.SetContentView (Resource.Layout.msg_adapter);
+			// Inflate convertView from our item layout
+			var view = context.LayoutInflater.Inflate (Resource.Layout.msg_adapter, parent, false); 
+
 			mButtonDeleteMsg = view.FindViewById<ImageButton> (Resource.Id.delButton);
 			mTextViewUsername = view.FindViewById<TextView> (Resource.Id.UserNameView);
 			mTextViewDate = view.FindViewById<TextView> (Resource.Id.dateView);
@@ -88,12 +71,14 @@ namespace MeetMeet_Native_Portable.Droid
 			mTextViewDate.Text = item.Date;
 			mTextIncoming.Text = (item.incoming ? "Message from: " : "Message to: ");
 
+            //Delete button clicked
 			mButtonDeleteMsg.Click += (object sender, EventArgs e) => {
 				MessageRepository.DeleteMessage(item);
 				Toast.MakeText(context, "message with: " + item.UserName + " deleted", ToastLength.Short).Show();
 				msgs.Remove(item);
 			};
 
+            //Show message
 			mTextViewUsername.Click += (object sender, EventArgs e) => {
 				//return new ViewMsg(1);
 				Toast.MakeText(context, item.MsgText, ToastLength.Short).Show();
