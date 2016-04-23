@@ -15,16 +15,19 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity (Label = "ViewInbox")]			
 	public class ViewInbox : Activity
 	{
-		
-		protected MsgListAdapter taskList;
+
+        //protected MsgListAdapter taskList;
+        protected BaseAdapter taskList;
 		protected IList<Message> tasks;
 		protected ListView taskListView = null;
+        protected IList<string> users;
+        IList<Message> msgs;
 
         /// <summary>
         /// When the activity is created
         /// </summary>
         /// <param name="bundle">Any data passed to the activity</param>
-		protected override void OnCreate (Bundle bundle)
+        protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 
@@ -35,54 +38,44 @@ namespace MeetMeet_Native_Portable.Droid
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
 
-			tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
-			System.Diagnostics.Debug.WriteLine (tasks.Count);
-
-			// create our adapter
-			taskList = new MsgListAdapter(this, tasks);
+            //tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
+            //System.Diagnostics.Debug.WriteLine (tasks.Count);
+            
+            users = MessageRepository.GetMessagedUsers().ToArray<string>();
+            tasks = new List<Message>();
+            foreach (string s in users)
+            {
+                tasks.Add(MessageRepository.GetMostRecentMessageFrom(s));
+            }
+            
+            // create our adapter
+            //taskList = new MsgListAdapter(this, tasks);
+            taskList = new MsgListAdapterInbox(this, users.ToList());
 
 
 			//Hook up our adapter to our ListView
 			taskListView.Adapter = taskList;
-
-			// wire up view msg click handler
-			//user only needs to click on message to display pop up
-			/*
-			taskListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) => 
-			{
-				System.Diagnostics.Debug.WriteLine("Clicked");
-				int msgID = tasks[e.Position].Id;
-				var taskDetails = new Intent (this, typeof (ViewMsg));
-				taskDetails.PutExtra ("MsgIDin", tasks[e.Position].Id);
-				StartActivity (taskDetails);
-			};
-			if(taskListView != null) {
-				
-			}*/
 		}
 
 		public void viewMessage(int position){
-			/*System.Diagnostics.Debug.WriteLine("Clicked");
-			int msgID = tasks[position].Id;
-			var taskDetails = new Intent (this, typeof (ViewMsg));
-			taskDetails.PutExtra ("MsgIDin", tasks[position].Id);
-			StartActivity (taskDetails);*/
-
 			FragmentTransaction transaction = FragmentManager.BeginTransaction ();
-			ViewMsg viewMsgDialog = new ViewMsg (tasks[position].Id);
+			ViewMsg viewMsgDialog = new ViewMsg (msgs[position].Id);
 			viewMsgDialog.Show (transaction, "Dialog Fragment");
-
-			// Subscribing to Signin Event
-
 		}
 
+        public void viewConversation(int position)
+        {
+           msgs = MessageRepository.GetUsersMessage(new string[] { users[position] }).ToList() ;
+            taskList = new MsgListAdapter(this, msgs);
+            taskListView.Adapter = taskList;
+        }
+
 		public void removeMessage(int position){
-			//tasks.RemoveAt (position);
 			taskListView.Adapter = taskList;
 		}
 
 		public void newMessage(Message m){
-			tasks.Add (m);
+			msgs.Add (m);
 			this.RunOnUiThread (() => {
 				taskListView.Adapter = taskList;
 			});
@@ -96,9 +89,10 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnResume ();
 
-			tasks = MessageRepository.GetMessages ().ToList();
-			// create our adapter
-			taskList = new MsgListAdapter(this, tasks);
+            //tasks = MessageRepository.GetMessages ().ToList();
+            // create our adapter
+            //taskList = new MsgListAdapter(this, tasks);
+            taskList = new MsgListAdapterInbox(this, users);
 
 			//Hook up our adapter to our ListView
 			taskListView.Adapter = taskList;

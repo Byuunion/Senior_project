@@ -92,7 +92,11 @@ namespace MeetMeet_Native_Portable.Droid
         /// <param name="usernames">The usernames to find the messages for</param>
         /// <returns>All the messages to or from the given users</returns>
 		public IEnumerable<Message> GetUsersMessage(string[] usernames){
-			return Query<Message> ("select * from Message where username = ?", usernames);
+            lock (locker)
+            {
+                return Query<Message> ("select * from Message where username = ?", usernames);
+            }
+			
 		}
 
         /// <summary>
@@ -101,18 +105,27 @@ namespace MeetMeet_Native_Portable.Droid
         /// <returns>A list of unique usernames that this user has messaged</returns>
 		public IEnumerable<string> GetMessagedUsers(){
 
-            //Select the all the usernames. The QueryString class is used because the Query function
-            //requires a type with an empty constructor, which regular strings do not have
-			var returns = Query<QueryString> ("select username from Message", new QueryString[0]);
-			List<string> strings = new List<string> ();
+            lock (locker)
+            {
+                //Select the all the usernames. The QueryString class is used because the Query function
+                //requires a type with an empty constructor, which regular strings do not have
+                var returns = Query<Message>("select distinct username from Message");
 
-            //Convert the data to regular strings
-			foreach (QueryString qs in returns) {
-				if(qs.s != default(string))
-					strings.Add (qs.s);
-			}
-			return strings;
-		}
+                List<string> strings = new List<string>();
+
+                //Convert the data to regular strings
+                foreach (Message qs in returns)
+                {
+                    if (qs.UserName != default(string))
+                        System.Diagnostics.Debug.WriteLine(qs.UserName);
+                    strings.Add(qs.UserName);
+                }
+                return strings;
+            }
+            
+           
+            
+        }
 
         /// <summary>
         /// Save the given message to the database. First check to see if the generated ID is already in the DB, 
@@ -144,6 +157,17 @@ namespace MeetMeet_Native_Portable.Droid
 				return Delete<Message> (msg.Id);
 			}
 		}
+
+
+        public Message GetMostRecentMessageFrom(string username)
+        {
+            lock (locker)
+            {
+                List<Message> messages = Query<Message>("select * from Message where UserName = ?", username);
+                return messages.LastOrDefault();
+            }
+           
+        }
 	}
 
     /// <summary>

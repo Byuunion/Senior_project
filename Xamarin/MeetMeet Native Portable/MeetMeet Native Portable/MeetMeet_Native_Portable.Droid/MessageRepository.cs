@@ -88,6 +88,11 @@ namespace MeetMeet_Native_Portable.Droid
             return me.db.DeleteMessage(msg);
         }
 
+        public static Message GetMostRecentMessageFrom(string username)
+        {
+            return me.db.GetMostRecentMessageFrom(username);
+        }
+
     }
 }
 

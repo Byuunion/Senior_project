@@ -22,9 +22,10 @@ namespace MeetMeet_Native_Portable.Droid
 		//the other text views and the delete button need to be in here
 		//utilizing getitemid one can port over that info to generate the write message in the view msg pop up
 		private ImageButton mButtonDeleteMsg;
-		private TextView mTextViewUsername;
+		//private TextView mTextViewUsername;
 		private TextView mTextViewDate;
-		private TextView mTextIncoming;
+        //private TextView mTextIncoming;
+        private TextView mTextViewMessage;
 
         /// <summary>
         /// Constructor
@@ -65,19 +66,31 @@ namespace MeetMeet_Native_Portable.Droid
 			view.Clickable = true;
 
 			mButtonDeleteMsg = view.FindViewById<ImageButton> (Resource.Id.delButton);
-			mTextViewUsername = view.FindViewById<TextView> (Resource.Id.UserNameView);
+			//mTextViewUsername = view.FindViewById<TextView> (Resource.Id.UserNameView);
 			mTextViewDate = view.FindViewById<TextView> (Resource.Id.dateView);
-			mTextIncoming = view.FindViewById<TextView> (Resource.Id.textView2);
+            //mTextIncoming = view.FindViewById<TextView> (Resource.Id.textView2);
+            mTextViewMessage = view.FindViewById<TextView>(Resource.Id.messageText);
 
-			mButtonDeleteMsg.Focusable = false;
+
+            mButtonDeleteMsg.Focusable = false;
 			mButtonDeleteMsg.FocusableInTouchMode = false;
 			mButtonDeleteMsg.Clickable = true;
 
-			mTextViewUsername.Text = item.UserName;
+			//mTextViewUsername.Text = item.UserName;
 			mTextViewDate.Text = item.Date;
-			mTextIncoming.Text = (item.incoming ? "Message from: " : "Message to: ");
+            //mTextIncoming.Text = (item.incoming ? "Message from: " : "Message to: ");
+            mTextViewMessage.Text = item.MsgText;
 
-			view.Click += (object sender, EventArgs e) => {
+            if (item.incoming)
+            {
+                mTextViewMessage.SetTextColor(Android.Graphics.Color.Cyan);
+            }
+            else
+            {
+                mTextViewMessage.SetTextColor(Android.Graphics.Color.Green);
+            }
+
+            view.Click += (object sender, EventArgs e) => {
 				context.viewMessage(position);
 			};
 

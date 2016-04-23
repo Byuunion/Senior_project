@@ -81,6 +81,7 @@
     <Compile Include="HomeActivity.cs" />
     <Compile Include="GcmListenerService.cs" />
     <Compile Include="MessagingActivity.cs" />
+    <Compile Include="MsgListAdapterInbox.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignUp.cs" />
@@ -122,6 +123,8 @@
     <AndroidResource Include="Resources\layout\dialog_view_msg.axml" />
     <AndroidResource Include="Resources\layout\msg_adapter.axml" />
     <AndroidResource Include="Resources\layout\home_page.xml" />
+    <AndroidResource Include="Resources\layout\msg_adapter_inbox.axml" />
+    <AndroidResource Include="Resources\layout\messaging_inbox.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -157,7 +160,6 @@
     <AndroidResource Include="Resources\drawable\ic_stat_ic_notification.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\menu\" />
     <Folder Include="Orm\" />
   </ItemGroup>
 </Project>

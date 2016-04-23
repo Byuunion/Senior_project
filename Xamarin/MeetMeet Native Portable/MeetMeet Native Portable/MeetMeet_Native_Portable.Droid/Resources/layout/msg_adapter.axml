@@ -11,23 +11,15 @@
         android:id="@+id/dateView"
         android:paddingTop="5dp"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/textView2" />
+        android:layout_alignLeft="@+id/MessageText" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Message With:"
-        android:id="@+id/textView2"
+        android:text="Message Text"
+        android:id="@+id/messageText"
         android:layout_alignBottom="@+id/delButton"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="21dp" />
-    <TextView
-        android:layout_width="184.0dp"
-        android:layout_height="wrap_content"
-        android:text="Username(s)"
-        android:id="@+id/UserNameView"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_marginLeft="22dp" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="46.5dp"
