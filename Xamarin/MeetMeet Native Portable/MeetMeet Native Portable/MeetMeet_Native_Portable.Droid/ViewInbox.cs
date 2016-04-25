@@ -89,8 +89,12 @@ namespace MeetMeet_Native_Portable.Droid
                         m.incoming = false;
 
                         newMessage(m);
-
+                        MessageRepository.SaveMessage(m);
                         mText.Text = "";
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Sending message was unsuccessful", ToastLength.Short).Show();
                     }
                    
                 }
