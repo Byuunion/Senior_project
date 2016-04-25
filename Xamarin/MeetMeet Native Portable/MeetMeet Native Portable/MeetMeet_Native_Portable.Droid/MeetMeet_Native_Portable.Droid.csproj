@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="HomeActivity.cs" />
     <Compile Include="GcmListenerService.cs" />
-    <Compile Include="MessagingActivity.cs" />
     <Compile Include="MsgListAdapterInbox.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="MessageSpinner.cs" />
     <Compile Include="GroupMessage.cs" />
     <Compile Include="MsgListAdapter.cs" />
-    <Compile Include="ViewMsg.cs" />
     <Compile Include="ViewInbox.cs" />
     <Compile Include="MessageRepository.cs" />
     <Compile Include="SqliteNet.cs" />

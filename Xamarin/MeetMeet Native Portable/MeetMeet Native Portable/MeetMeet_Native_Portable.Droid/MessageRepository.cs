@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace MeetMeet_Native_Portable.Droid
 {
     /// <summary>
-    /// 
+    /// Provides access to the database
     /// </summary>
     public class MessageRepository
     {
@@ -88,6 +88,11 @@ namespace MeetMeet_Native_Portable.Droid
             return me.db.DeleteMessage(msg);
         }
 
+        /// <summary>
+        /// Get the most recent message from the given user
+        /// </summary>
+        /// <param name="username">The user to find the message for</param>
+        /// <returns>The most recent message from the user</returns>
         public static Message GetMostRecentMessageFrom(string username)
         {
             return me.db.GetMostRecentMessageFrom(username);

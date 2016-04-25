@@ -17,7 +17,6 @@ namespace MeetMeet_Native_Portable.Droid
 	public class ViewInbox : Activity
 	{
 
-        //protected MsgListAdapter taskList;
         protected BaseAdapter taskList;
 		protected IList<Message> tasks;
 		protected ListView taskListView = null;
@@ -38,48 +37,48 @@ namespace MeetMeet_Native_Portable.Droid
 			SetContentView(Resource.Layout.messaging_inbox);
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
-
-            //tasks = MessageRepository.GetUsersMessage(MessageRepository.GetMessagedUsers().ToArray<string>()).ToList<Message>();
-            //System.Diagnostics.Debug.WriteLine (tasks.Count);
             
             users = MessageRepository.GetMessagedUsers().ToArray<string>();
             tasks = new List<Message>();
+
+            //Get the most recent message from each user to display in the "main" messaging list
             foreach (string s in users)
             {
                 tasks.Add(MessageRepository.GetMostRecentMessageFrom(s));
             }
             
             // create our adapter
-            //taskList = new MsgListAdapter(this, tasks);
             taskList = new MsgListAdapterInbox(this, users.ToList());
-
 
 			//Hook up our adapter to our ListView
 			taskListView.Adapter = taskList;
 		}
 
-		public void viewMessage(int position){
-			FragmentTransaction transaction = FragmentManager.BeginTransaction ();
-			ViewMsg viewMsgDialog = new ViewMsg (msgs[position].Id);
-			viewMsgDialog.Show (transaction, "Dialog Fragment");
-		}
-
+        /// <summary>
+        /// Open the conversation window
+        /// </summary>
+        /// <param name="position">The position of the user in the list of usernames that the conversation is with</param>
         public void viewConversation(int position)
         {
-           msgs = MessageRepository.GetUsersMessage(new string[] { users[position] }).ToList() ;
+            //Get the elements on the screen
             SetContentView(Resource.Layout.messaging);
             Button mButton = FindViewById<Button>(Resource.Id.btnSendMsg);
             EditText mText = FindViewById<EditText>(Resource.Id.sendMessageTxt);
-
             taskListView = (ListView)FindViewById(Resource.Id.listView);
+
+            //Get the messages in the conversation
+            msgs = MessageRepository.GetUsersMessage(new string[] { users[position] }).ToList();
+
+            //Set the adapter to use messages
             taskList = new MsgListAdapter(this, msgs);
             taskListView.Adapter = taskList;
             
-            
+            //When the send button is clicked
             mButton.Click += async (object sender, EventArgs e) =>
             {
                 if (!mText.Text.Equals(""))
                 {
+                    //If the message is sent successfully, store it and display it in the list
                     if(await MessageSender.SendSingleMessage(mText.Text, users[position], MainActivity.credentials, MainActivity.serverURL + MainActivity.single_message))
                     {
                         Message m = new Message();
@@ -95,24 +94,28 @@ namespace MeetMeet_Native_Portable.Droid
                     else
                     {
                         Toast.MakeText(this, "Sending message was unsuccessful", ToastLength.Short).Show();
-                    }
-                   
+                    }   
                 }
-
-
             };
         }
 
+        /// <summary>
+        /// Remove the message from the list on the screen
+        /// </summary>
+        /// <param name="position">The position of the message to remove</param>
 		public void removeMessage(int position){
 			taskListView.Adapter = taskList;
 		}
 
+        /// <summary>
+        /// Add a new message to the list on the screen
+        /// </summary>
+        /// <param name="m">The message to add</param>
 		public void newMessage(Message m){
 			msgs.Add (m);
-			this.RunOnUiThread (() => {
+			RunOnUiThread (() => {
 				taskListView.Adapter = taskList;
 			});
-
 		}
 
         /// <summary>
@@ -122,9 +125,7 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnResume ();
 
-            //tasks = MessageRepository.GetMessages ().ToList();
             // create our adapter
-            //taskList = new MsgListAdapter(this, tasks);
             taskList = new MsgListAdapterInbox(this, users);
 
 			//Hook up our adapter to our ListView
