@@ -26,7 +26,7 @@ namespace MeetMeet_Native_Portable.Droid
 		private TextView mTextViewDate;
         //private TextView mTextIncoming;
         private TextView mTextViewMessage;
-
+            
         /// <summary>
         /// Constructor
         /// </summary>
@@ -71,7 +71,6 @@ namespace MeetMeet_Native_Portable.Droid
             //mTextIncoming = view.FindViewById<TextView> (Resource.Id.textView2);
             mTextViewMessage = view.FindViewById<TextView>(Resource.Id.messageText);
 
-
             mButtonDeleteMsg.Focusable = false;
 			mButtonDeleteMsg.FocusableInTouchMode = false;
 			mButtonDeleteMsg.Clickable = true;
@@ -90,9 +89,10 @@ namespace MeetMeet_Native_Portable.Droid
                 mTextViewMessage.SetTextColor(Android.Graphics.Color.Green);
             }
 
-            view.Click += (object sender, EventArgs e) => {
-				context.viewMessage(position);
-			};
+            view.Click += (object sender, EventArgs e) =>
+            {
+                context.viewMessage(position);
+            };
 
             //Delete button clicked
 			mButtonDeleteMsg.Click += (object sender, EventArgs e) => {

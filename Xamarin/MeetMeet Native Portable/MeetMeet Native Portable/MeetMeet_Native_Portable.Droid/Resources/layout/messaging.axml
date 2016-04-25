@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListView
+        android:layout_alignParentTop="true"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/listView"
         android:clickable="true"
-        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/sendMessageTxt"
         tools:listitem="@layout/msg_adapter" />
-</LinearLayout>
+    <EditText
+        android:id="@+id/sendMessageTxt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSendMsg"
+        android:hint="Write Message" />
+    <Button
+        android:text="Send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSendMsg"
+        android:textSize="20dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:height="20dp"
+        android:paddingTop="2dp"
+        android:background="@drawable/ButtonSignInStyle"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

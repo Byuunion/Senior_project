@@ -6,6 +6,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
+using System;
 
 namespace MeetMeet_Native_Portable.Droid
 {
@@ -34,7 +35,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			MainActivity.references.Put ("Inbox", this);
 
-			SetContentView(Resource.Layout.messaging);
+			SetContentView(Resource.Layout.messaging_inbox);
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
 
@@ -66,8 +67,36 @@ namespace MeetMeet_Native_Portable.Droid
         public void viewConversation(int position)
         {
            msgs = MessageRepository.GetUsersMessage(new string[] { users[position] }).ToList() ;
+            SetContentView(Resource.Layout.messaging);
+            Button mButton = FindViewById<Button>(Resource.Id.btnSendMsg);
+            EditText mText = FindViewById<EditText>(Resource.Id.sendMessageTxt);
+
+            taskListView = (ListView)FindViewById(Resource.Id.listView);
             taskList = new MsgListAdapter(this, msgs);
             taskListView.Adapter = taskList;
+            
+            
+            mButton.Click += async (object sender, EventArgs e) =>
+            {
+                if (!mText.Text.Equals(""))
+                {
+                    if(await MessageSender.SendSingleMessage(mText.Text, users[position], MainActivity.credentials, MainActivity.serverURL + MainActivity.single_message))
+                    {
+                        Message m = new Message();
+                        m.MsgText = mText.Text;
+                        m.UserName = users[position];
+                        m.Date = DateTime.Now.ToString();
+                        m.incoming = false;
+
+                        newMessage(m);
+
+                        mText.Text = "";
+                    }
+                   
+                }
+
+
+            };
         }
 
 		public void removeMessage(int position){
