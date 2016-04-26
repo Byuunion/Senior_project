@@ -38,9 +38,6 @@ namespace ClientApp
 			System.Diagnostics.Debug.WriteLine (m.MsgText);
 			m.Date = System.DateTime.Now.ToString();
 			m.incoming = true;
-
-
-
 			
             if(ms_code == 1)
             {
@@ -64,8 +61,14 @@ namespace ClientApp
                 SendNotification(message, m.UserName);
             }
 
+            //Try to add it to the inbox, if the inbox has been created.
+            //Otherwise, it will get added automatically when the user opens the inbox
 			ViewInbox inbox = (ViewInbox)MainActivity.references.Get ("Inbox");
-			inbox.newMessage (m);
+            if(inbox != null)
+            {
+                inbox.newMessage (m);
+            }
+			
 
         }
 

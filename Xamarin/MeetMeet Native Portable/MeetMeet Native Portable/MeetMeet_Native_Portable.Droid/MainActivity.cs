@@ -2,23 +2,15 @@
 
 using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Android.Util;
-using System.Net.Http;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 
 using Java.Util;
 
 using Android.Gms.Common;
 using ClientApp;
 using Newtonsoft.Json;
-using MeetMeet_Native_Portable;
 
 
 namespace MeetMeet_Native_Portable.Droid
@@ -94,7 +86,8 @@ namespace MeetMeet_Native_Portable.Droid
 
 			msgText = FindViewById<TextView> (Resource.Id.msgText);
 
-			if (IsPlayServicesAvailable ()) {
+			if (IsPlayServicesAvailable ())
+            {
 				var intent = new Intent (this, typeof(RegistrationIntentService));
 				StartService (intent);
 			}
@@ -107,15 +100,19 @@ namespace MeetMeet_Native_Portable.Droid
         public bool IsPlayServicesAvailable ()
 		{
 			int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable (this);
-			if (resultCode != ConnectionResult.Success) {
+			if (resultCode != ConnectionResult.Success)
+            {
 				if (GoogleApiAvailability.Instance.IsUserResolvableError (resultCode))
 					msgText.Text = GoogleApiAvailability.Instance.GetErrorString (resultCode);
-				else {
+				else
+                {
 					msgText.Text = "Sorry, this device is not supported";
 					Finish ();
 				}
 				return false;
-			} else {
+			}
+            else
+            {
 				msgText.Text = "Google Play Services is available.";
 				return true;
 			}
@@ -155,21 +152,27 @@ namespace MeetMeet_Native_Portable.Droid
 			// attempts to log in. If user has no profile. User is notified and EditProfileActivity is started
 			// and users profile object is passed.
 			// Else statement occurs if user has a profile. HomeActivity is started and profile object is passed.
-			if (await TryToLogin (userNameSignIn, userPasswordSignIn)) {
+			if (await TryToLogin (userNameSignIn, userPasswordSignIn))
+            {
 				var userProfile = await Getter<Profile>.GetObject (serverURL + profile_ext + "/" + userNameSignIn);
-				if (userProfile == default(Profile)) {
+				if (userProfile == default(Profile))
+                {
 					Toast.MakeText (this, "You don't have a profile to show", ToastLength.Short).Show ();
 					string userGender = null;
 					string userBio = null;
 					Profile myProfile = new Profile (credentials.username, userGender, userBio, credentials.token);
-					if (await Poster.PostObject (myProfile, serverURL + profile_ext)) {
+
+					if (await Poster.PostObject (myProfile, serverURL + profile_ext))
+                    {
 						// pass profile object to EditProfileActivity
 						Intent intent = new Intent (this, typeof(EditProfileActivity));
 						var serializedProfile = JsonConvert.SerializeObject (myProfile);
 						intent.PutExtra ("UserProfile", serializedProfile);
 						StartActivity (intent);
 					}
-				} else {
+				}
+                else
+                {
 					username = credentials.username;
 					user_token = credentials.token;
 					userProfile.token = credentials.token;
@@ -179,11 +182,11 @@ namespace MeetMeet_Native_Portable.Droid
 					intent.PutExtra ("UserProfile", serializedProfile);
 					StartActivity (intent);
 				}
-			} else
+			}
+            else
 				Toast.MakeText (this, "Login Unsuccessful ", ToastLength.Short).Show ();
 		}
 
-		// Sign Up Click
 
 		/// <summary>
 		/// Starts Sign in dialog fragment via SignIn() when clicked.
@@ -215,32 +218,24 @@ namespace MeetMeet_Native_Portable.Droid
 
 			/// Checks if username is taken. If taken, user is notified. Otherwise a new profile object is created.
 			/// User is then taken to EditProfileActivity.
-			if (await TryToSignUp (userNameSignUp, userPasswordSignUp)) {
+			if (await TryToSignUp (userNameSignUp, userPasswordSignUp))
+            {
 				username = credentials.username;
 				user_token = credentials.token;
 				string userGender = null;
 				string userBio = null;
 				Profile myProfile = new Profile (credentials.username, userGender, userBio, credentials.token);
-				if (await Poster.PostObject (myProfile, serverURL + profile_ext)) {
+				if (await Poster.PostObject (myProfile, serverURL + profile_ext))
+                {
 					// pass profile object to EditProfileActivity
 					Intent intent = new Intent (this, typeof(EditProfileActivity));
 					var serializedProfile = JsonConvert.SerializeObject (myProfile);
 					intent.PutExtra ("UserProfile", serializedProfile);
 					StartActivity (intent);
 				}
-			} else
+			}
+            else
 				Toast.MakeText (this, "Signup Unsuccessful ", ToastLength.Short).Show ();
-		}
-
-		// Part of thread simulation
-
-		/// <summary>
-		/// Acts like A request.
-		/// </summary>
-		private async void ActLikeARequest ()
-		{
-			await TryToSignUp ("TestGCMUSER6", "password");
-
 		}
 
 		/// <summary>
@@ -251,18 +246,22 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <returns> whether or not the user was successfully logged in</returns>
 		private async Task<Boolean> TryToLogin (string username, string password)
 		{
-			try {
+			try
+            {
 				credentials = new Credentials (username);
-				System.Diagnostics.Debug.WriteLine ("Trying to log in");
 				bool loggedIn = await credentials.doLogin (password, serverURL);
 
-				System.Diagnostics.Debug.WriteLine ("Finished doLogin, token is " + credentials.token);
-				if (loggedIn) {
+				if (loggedIn)
+                {
 					return await Updater.UpdateObject (new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL + gcm_regid_ext);
-				} else {
+				}
+                else
+                {
 					return false;
 				}
-			} catch {
+			}
+            catch
+            {
 				return false;
 			}
 		}
@@ -277,15 +276,21 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			credentials = new Credentials (username);
 			System.Diagnostics.Debug.WriteLine ("Trying to sign up");
-			try {
+			try
+            {
 				var loggedIn = await credentials.doSignUp (password, serverURL);
 
-				if (loggedIn) {
+				if (loggedIn)
+                {
 					return await Poster.PostObject (new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL + gcm_regid_ext);
-				} else {
+				}
+                else
+                {
 					return false;
 				}
-			} catch {
+			}
+            catch
+            {
 				return false;
 			}
 		}
