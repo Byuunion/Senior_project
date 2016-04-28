@@ -112,10 +112,23 @@ namespace MeetMeet_Native_Portable.Droid
         /// </summary>
         /// <param name="m">The message to add</param>
 		public void newMessage(Message m){
-			msgs.Add (m);
-			RunOnUiThread (() => {
-				taskListView.Adapter = taskList;
-			});
+			if (msgs != null) {
+				msgs.Add (m);
+				RunOnUiThread (() => {
+					taskListView.Adapter = taskList;
+				});
+			} else if (users != null) {
+				foreach (Message me in tasks) {
+					if (me.UserName == m.UserName) {
+						tasks.Remove (me);
+						tasks.Add (m);
+						break;
+					}
+				}
+				RunOnUiThread (() => {
+					taskListView.Adapter = taskList;
+				});
+			}
 		}
 
         /// <summary>
