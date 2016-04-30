@@ -312,7 +312,6 @@ router.route('/user/profile')
 		});
 		
 		var username = req.body.username;
-		
 		var response = {
 					success: null,
 					success_message: null
@@ -327,12 +326,25 @@ router.route('/user/profile')
 			else{
 			
 				var token = data[0].token;
-			
+
 				if(req.body.token === token){
 					// Clones req.body without using a reference
 					var data = JSON.parse(JSON.stringify(req.body));
 					delete data.username;
 					delete data.token;
+					
+					var date;
+					date = new Date();
+					date = date.getUTCFullYear() + '-' +
+						('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+						('00' + date.getUTCDate()).slice(-2) + ' ' + 
+						('00' + date.getUTCHours()).slice(-2) + ':' + 
+						('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+						('00' + date.getUTCSeconds()).slice(-2);
+					
+					data.time = date;
+					
+					console.log(data.time);
 
 					connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(username), data, function(err, data){
 						if (err){
@@ -535,7 +547,6 @@ router.route('/user/profile/location/:username')
 		});
 		
 		var username = req.params.username;
-
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err || data.length === 0){
 				var response;
@@ -551,7 +562,7 @@ router.route('/user/profile/location/:username')
 					success: null,
 					success_message: "User location updated"
 				};
-			
+
 				if(req.body.token === token){
 					var data = {
 						current_lat: req.body.current_lat,
@@ -711,7 +722,6 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 								success: null,
 								success_message: null
 		};
-		
 			connection.query('SELECT * ' +
 								'FROM (SELECT * ' + 
 										' FROM user_profile ' + 
@@ -726,7 +736,8 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 								' * cos ( radians (current_long) - radians( ' + connection.escape(req.params.yourLong) + ')) ' + 
 								' + sin ( radians ( ' + connection.escape(req.params.yourLat) + ')) ' + 
 								' * sin ( radians (current_lat)) ' + 
-								') <= 5 ', function(err,data){
+								') <= 5 ' + 
+								'AND TIMESTAMPDIFF(MINUTE, time, NOW()) < 30', function(err,data){
 					if (err){
 							response.success = false;
 							response.success_message = "Failed to get nearby users.";
