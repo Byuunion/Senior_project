@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MeetMeet_Native_Portable
@@ -37,7 +34,7 @@ namespace MeetMeet_Native_Portable
         public async Task<Boolean> doLogin(string password, string url)
         {
 			var resource = URLs.login_ext + "/" +  username + "/" + password;
-			var tempToken = await Getter<Token>.GetObjectNotFromList(url + resource);
+            var tempToken = await LoginUpdater<Token>.LoginUpdate(new { username = username, password = password }, URLs.serverURL + URLs.login_ext + "/" + username);
 
             if (tempToken != default(Token))
             {

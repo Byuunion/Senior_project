@@ -7,7 +7,7 @@ namespace MeetMeet_Native_Portable
 	/// </summary>
 	public static class URLs
 	{
-		public static string serverURL = "http://52.91.212.179:8800/";
+		public static string serverURL = "https://52.91.212.179:443/";
 		public static string login_ext = "user/login";
 		public static string profile_ext = "user/profile";
 		public static string location_ext = "user/profile/location";
@@ -20,5 +20,6 @@ namespace MeetMeet_Native_Portable
 		public static string group_invite = "user/group/invite";
 		public static string user_group = "user/group";
 	}
+
 }
 

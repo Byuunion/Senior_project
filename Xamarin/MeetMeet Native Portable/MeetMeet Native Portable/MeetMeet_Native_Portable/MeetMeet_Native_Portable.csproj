@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="Credentials.cs" />
     <Compile Include="Deleter.cs" />
+    <Compile Include="LoginUpdater.cs" />
     <Compile Include="MessageSender.cs" />
     <Compile Include="Getter.cs" />
     <Compile Include="Poster.cs" />

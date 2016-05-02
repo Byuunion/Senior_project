@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 
 using Android.App;
 using Android.Content;
@@ -66,7 +67,14 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="bundle">Bundle.</param>
 		protected override void OnCreate (Bundle bundle)
 		{
-			base.OnCreate (bundle);
+            //For testing purposes only!
+            //Allows us to use a self signed certificate
+            
+            ServicePointManager.ServerCertificateValidationCallback +=
+                (sender, certificate, chain, sslPolicyErrors) => true;
+             
+            //
+            base.OnCreate (bundle);
 			references = new HashMap ();
 
 			// Set our view from the "main" layout resource

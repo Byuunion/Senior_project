@@ -177,13 +177,13 @@ router.route('/user/interest/:username')
 	})
 
 
-router.route('/user/login/:username/:password')
-	.get(function(req, res){
+router.route('/user/login/:username')
+	.put(function(req, res){
 		//Pass in username and password from the app's url
 		var connection = mysql.createConnection(mysqlConfig);
 
 		connection.connect(function(err){
-			if(!err) console.log("Database is connected. Get User Login.");
+			if(!err) console.log("Database is connected. Put User Login.");
 			else {
 				console.log("Error connecting database.");
 				connection.end();
@@ -204,7 +204,7 @@ router.route('/user/login/:username/:password')
 				connection.end();
 			}	
 			else{
-				var password = req.params.password;
+				var password = req.body.password;
 				var hashedPassword = data[0].password_hash;
 				bcrypt.compare(password, hashedPassword, function(err, match) {
 					if (err){

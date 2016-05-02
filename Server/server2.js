@@ -2,6 +2,14 @@ var express = require("express");
 var router = express.Router();
 var app = express();
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+
+var options = {
+  key: fs.readFileSync('./key.pem', 'utf8'),
+  cert: fs.readFileSync('./server.crt', 'utf8')
+};
 
 app.use(router);
 
@@ -13,6 +21,11 @@ var gcmlib = require('./requiresgcm');
 
 app.use('/', everythingelselib)
 app.use('/', gcmlib);
+
+// Create an HTTP service.
+http.createServer(app).listen(80);
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(443);
 
 //This is the port for the general webapi
 app.set('port', (process.env.PORT || 8800));
