@@ -25,7 +25,7 @@ Profile Location
 	
 Login
 
-	/user/login/:username/:password GET: Creates a new token and writes it to the db and returns it 
+	/user/login/:username PUT: Creates a new token and writes it to the db and returns it {password: }
 	
 	/user/login POST: Create account and token into db and returned it  {username: , password: }
 	
