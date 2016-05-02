@@ -8,7 +8,7 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="com.rowanseniorproject.meetmeet.permission.C2D_MESSAGE" />
 	<permission android:name="com.rowanseniorproject.meetmeet.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<application android:icon="@drawable/Icon" android:label="Meet-Meet">
+	<application android:icon="@drawable/mmlogolarge" android:label="Meet-Meet">
 		<receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />

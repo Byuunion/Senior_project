@@ -20,7 +20,7 @@ namespace MeetMeet_Native_Portable.Droid
 	/// <summary>
 	/// Will provide functionality for main page.
 	/// </summary>
-	[Activity (Label = "MeetMeet", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity (Label = "MeetMeet", MainLauncher = true, Icon = "@drawable/mmlogolarge")]
 	public class MainActivity : Activity
 	{
 

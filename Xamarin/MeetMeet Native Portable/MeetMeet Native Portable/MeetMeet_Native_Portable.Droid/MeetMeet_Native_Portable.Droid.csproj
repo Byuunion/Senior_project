@@ -123,6 +123,7 @@
     <AndroidResource Include="Resources\layout\home_page.xml" />
     <AndroidResource Include="Resources\layout\msg_adapter_inbox.axml" />
     <AndroidResource Include="Resources\layout\messaging_inbox.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\mmlogolarge.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
