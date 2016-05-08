@@ -28,6 +28,8 @@ Login
 	/user/login/:username PUT: Creates a new token and writes it to the db and returns it {password: }
 	
 	/user/login POST: Create account and token into db and returned it  {username: , password: }
+
+	/user/login/:username/:token DELETE: Log the user out
 	
 
 Language ********unused, user bio is more general**********
@@ -60,7 +62,7 @@ Get all Users
 
 	/user GET: Returns all users in the db
 	
-Delete specific User Keeps Messages
+Delete specific User
 	
 	/user/:username/:token DELETE: Deletes all references to the username from all tables.
 
