@@ -21,6 +21,7 @@ var mysqlConfig = {
 	database: 'userdb',
 };
 
+//Send message to a single user {username_to: , username_from: , message_text: , token: , message_code: }
 router.route('/user/message')
 	.post(function(req, res) {
 		//Token from sender needed
@@ -51,6 +52,8 @@ router.route('/user/message')
 				
 				if(req.body.token === token){
 					console.log("Sending single message");
+					
+					//Call the message sending function
 					send_single_message(req.body.username_from, req.body.username_to, req.body.message_text, req.body.message_code, function(results) {
 						res.json(results);
 					});
@@ -65,7 +68,7 @@ router.route('/user/message')
 		});            
 	})
 
-
+//Send message to the user's current group {username_from: , token: , message: , message_code: }
 router.route('/user/group/message')
 	.post(function(req, res) {
 	
@@ -84,11 +87,13 @@ router.route('/user/group/message')
 
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(sender), function(err, data){
 			if (err || data.length === 0){
+				console.log("Couldn't find token");
 				response.success = false;
 				response.success_message = "Failed to find existing token from: " + sender + ".";
 				res.json(response);
 			}
 			else{
+				
 				var token = data[0].token;
 				var response = {
 					success: null,
@@ -97,8 +102,7 @@ router.route('/user/group/message')
 
 				if(req.body.token === token){
 					
-					
-					
+					//Get all the GCM ids of the people in the current user's group
 					connection.query(	'SELECT gcm_regid ' +
 										'FROM user_gcm ' + 
 										'WHERE username IN (SELECT username ' + 
@@ -108,12 +112,14 @@ router.route('/user/group/message')
 																			'WHERE username = ' + connection.escape(sender) + ') ' + 
 															'AND username <> ' + connection.escape(sender) + ')', function(err, gcm_users){
 						if (err || gcm_users.length === 0){
+							console.log("Failed to find any gcm_regids for the group");
 							response.success = false;
 							response.success_message = "Failed to find gcm_regid for group of: " + sender + ".";
 							res.json(response);
 						}
 						
 						else{
+							//Create the reqest for Google's server
 							var to = gcm_users.map(function(item){return item.gcm_regid;});
 							console.log(to);
 							var postData = JSON.stringify({
@@ -174,6 +180,7 @@ router.route('/user/group/message')
 		});           
 	})
 	
+//Remove the user from their current group
 router.route('/user/group/:username/:token')
 	.delete(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -192,7 +199,6 @@ router.route('/user/group/:username/:token')
 					success_message: null
 		};
 		var token_sql = 'SELECT token FROM user_login WHERE username = ' + connection.escape(username);
-		console.log(token_sql);
 		connection.query(token_sql, function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -203,10 +209,9 @@ router.route('/user/group/:username/:token')
 				var token = data[0].token;
 			
 				if(req.params.token === token){
-					//Delete Cascades through tables
 					
+					//Find the size of the user's group
 					var sql = 'SELECT count(*) as group_size FROM user_group WHERE id IN (SELECT id FROM user_group WHERE username = ' + connection.escape(username) + ')';
-					console.log(sql);
 					connection.query(sql, function(err, data1){
 						if(err || data1.length === 0){
 							response.success = false;
@@ -215,7 +220,7 @@ router.route('/user/group/:username/:token')
 							connection.end();
 						}
 						else{
-							console.log("y");
+							//Check the size, if the group has two or less members, just delete the group
 							if(data1[0].group_size <= 2 && data1[0].group_size > 0){
 								connection.query('SELECT id FROM user_group WHERE username = ' + connection.escape(username) + '', function(err, db_id){
 									if(err || db_id.length === 0){
@@ -225,8 +230,8 @@ router.route('/user/group/:username/:token')
 										connection.end();
 									}
 									else{
+										//Find the name of the other user in the group
 										var other_username_sql = 'SELECT username FROM user_group WHERE id = ' + db_id[0].id + ' AND username <> ' + connection.escape(username);
-										console.log(other_username_sql);
 										connection.query(other_username_sql, function(err, other_username){
 											if(err || other_username.length === 0){
 												response.success = false;
@@ -235,7 +240,7 @@ router.route('/user/group/:username/:token')
 												connection.end();
 											}
 											else{
-												console.log("ere");
+												//Delete the group
 												connection.query('DELETE FROM user_group WHERE id = ' + db_id[0].id, function(err, data){
 													if (err){
 														console.log(err);
@@ -247,7 +252,7 @@ router.route('/user/group/:username/:token')
 													else{
 														response.success = true;
 														response.success_message = "User group deleted from database";
-														//Send message
+														//Send message to the other user in the group
 														console.log(other_username[0].username);
 														send_single_message("MeetMeet", other_username[0].username, " all other members have left the group, group is disbanded", "1", function(results) {
 															response = results
@@ -265,6 +270,7 @@ router.route('/user/group/:username/:token')
 								
 							}
 							else{
+								//If the group is larger than two, just remove the current user
 								console.log(data[0].group_size);
 								if(data1[0].group_size != 0){
 									connection.query('DELETE FROM user_group WHERE username = ' + connection.escape(username), function(err, data){
@@ -304,6 +310,7 @@ router.route('/user/group/:username/:token')
 		
 	})
 	
+//Send a group invite to another user {username_from: , token: , message: , message_code: }
 router.route('/user/group/invite')
 	.post(function(req, res) {
 		//Posting an invite
@@ -326,7 +333,8 @@ router.route('/user/group/invite')
 		if(username !== req.body.username_responder){
 			console.log("sending invite to " + req.body.username_responder);
 			connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(username) + ' AND username_to = ' + connection.escape(req.body.username_responder), function(err, data1){
-				if(data1.length === 0){ //Not yet invited
+				if(data1.length === 0){ 
+					//Not yet invited
 					connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 						if (err || data.length === 0){
 							response.success = false;
@@ -334,6 +342,7 @@ router.route('/user/group/invite')
 							res.json(response);
 						}
 						else{
+							//Send the invite
 							var token = data[0].token;
 							console.log("sending invite to " + req.body.username_responder);
 							if(req.body.token === token){
@@ -342,7 +351,6 @@ router.route('/user/group/invite')
 									username_to: req.body.username_responder
 								};
 								
-								console.log("checking database for invite");
 								connection.query('INSERT INTO user_invite SET ?', data, function(err, rows) {
 									if (err){
 										response.success_message = "Failed to post invite from: " + data.username + " to " + data.username_to + ".";
@@ -350,9 +358,8 @@ router.route('/user/group/invite')
 										
 									}
 									else{
-										//response.success = true;
-										//response.success_message = "Successfully created invite.";	
-										send_single_message(req.body.username_inviter, req.body.username_responder, req.body.message_text, req.body.message_code, function(results) {
+											//Send an invite message to the invited user
+											send_single_message(req.body.username_inviter, req.body.username_responder, req.body.message_text, req.body.message_code, function(results) {
 											response = results
 											console.log(response);
 											res.json(response);
@@ -377,7 +384,6 @@ router.route('/user/group/invite')
 											console.log(response);
 											res.json(response);
 										});
-					//res.json(response);
 					connection.end();
 				}
 			});
@@ -390,10 +396,12 @@ router.route('/user/group/invite')
 		}	
 	})
 	
+	//Responding to a group invitation {username_inviter: , username_responder: , token: , response: } 
 	.put(function(req, res) {
 		//Responding to an invite
 		//Username_to's token
 		var connection = mysql.createConnection(mysqlConfig);
+		
 		
 		connection.connect(function(err){
 			if(!err) console.log("Database is connected. Put User Invite");
@@ -410,9 +418,8 @@ router.route('/user/group/invite')
 			success: null,
 			success_message: null
 		};
-		
+
 		// Accept group invite
-		console.log("response " + req.body.response)
 		if(req.body.response == 'true'){
 			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err || data.length === 0){
@@ -434,8 +441,6 @@ router.route('/user/group/invite')
 						var sql = 'SELECT username_from, username_to FROM user_invite WHERE username_from = ? AND username_to = ?';
 						var inserts = [req.body.username_inviter, username];
 						sql = mysql.format(sql, inserts);
-						console.log(sql);
-						//connection.query('SELECT username_from, username_to FROM user_invite WHERE username_from = ' + connection.escape(req.body.username_from) + ', username_to = ' + connection.escape(username), function(err, data){
 						connection.query(sql, function(err, data){
 							if(err || data.length === 0){
 								response.success = false;
@@ -444,7 +449,7 @@ router.route('/user/group/invite')
 								res.json(response);
 							}
 							else{
-								console.log("invite exists");
+
 								connection.query('SELECT * FROM user_group WHERE username = ' + connection.escape(username), function(err, receiver_data) {
 									if(err){
 										response.success = false;
@@ -455,13 +460,12 @@ router.route('/user/group/invite')
 										if(receiver_data.length !== 0){ // Receiver is already in a group 
 											response.success = false;
 											response.success_message = "Receiver is already in a group";
-											//res.json(response);
 											
-											console.log("trying to delete existing invite");
+
 											var sql = 'DELETE FROM user_invite WHERE username_from = ? AND username_to = ?';
 											var inserts = [req.body.username_inviter, username];
 											sql = mysql.format(sql, inserts);
-											console.log("trying to insert into group");
+
 											connection.query(sql, function(err, data){	
 												if(err){
 													response.success = false;
@@ -469,7 +473,7 @@ router.route('/user/group/invite')
 													res.json(response);
 												}
 												else{
-													console.log("successful deletion");
+
 													send_single_message(req.body.username_responder, req.body.username_inviter, 'Invite Accepted', '1', function(results) {
 																				response = results;
 																				console.log(response);
@@ -542,21 +546,19 @@ router.route('/user/group/invite')
 																			res.json(response);
 																		}
 																		else{
-																			//response.success = true;
-																			//response.success_message = "Created new group and added to the sender";
+
 																			console.log("sending single message");
 																			send_single_message(req.body.username_inviter, req.body.username_responder, req.body.message_text, req.body.message_code, function(results) {
 																				response = results
 																				res.json(response);
 																			});
 																		}
-																		//res.json(response);
+
 																		// End of scenarios. Can delete the invite.
 																		var sql = 'DELETE FROM user_invite WHERE username_from = ? AND username_to = ?';
 																		var inserts = [req.body.username_inviter, username];
 																		sql = mysql.format(sql, inserts);
 																		
-																		//connection.query('DELETE FROM user_invite WHERE username_from = ? , username_to = ?', [req.body.username_from, username], function(err, data){
 																		connection.query(sql, function(err, data){	
 																			if(err){
 																				response.success = false;
@@ -610,7 +612,7 @@ router.route('/user/group/invite')
 		}
 	})
 
-	
+//Send a message to a single user
 function send_single_message(username_from, username_to, message_text, message_code, callback){
 	var connection = mysql.createConnection(mysqlConfig);
 		
@@ -626,6 +628,8 @@ function send_single_message(username_from, username_to, message_text, message_c
 		success: null,
 		success_message: null
 	};
+	
+	//Check to make sure the receiver hasn't been blocked by the sender
 	connection.query('SELECT * FROM user_blacklist WHERE (username = ' + connection.escape(username_to) + ' AND block_username = ' + connection.escape(username_from) + ' ) OR ( username = ' + connection.escape(username_from) + ' AND block_username = ' + connection.escape(username_to) + ')', function(err, blocks){
 		if(err){
 			response.success = false;
@@ -640,6 +644,7 @@ function send_single_message(username_from, username_to, message_text, message_c
 			callback(response);
 		}
 		else{
+			//Get the Google id of the receiver
 			connection.query('SELECT gcm_regid FROM user_gcm WHERE username = ' + connection.escape(username_to), function(err, gcm_user){
 				if (err || gcm_user.length === 0){
 					response.success = false;
@@ -651,6 +656,7 @@ function send_single_message(username_from, username_to, message_text, message_c
 					console.log("Found existing gcm_regid from: " + username_to + ".");
 					var to = gcm_user[0].gcm_regid;
 
+					//Create the reqest for Google's server
 					var postData = JSON.stringify({
 						'registration_ids': [ to ],
 						'data': {

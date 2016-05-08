@@ -56,7 +56,8 @@ namespace ClientApp
 			}
             else if(ms_code == 3){
 				//This is for group messages
-				m.UserName = "group, sent by " + username;
+				m.UserName = "group";
+                m.MsgText = username + ": " + m.MsgText;
 				MessageRepository.SaveMessage (m);
                 SendNotification(message, m.UserName);
             }

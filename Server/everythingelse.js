@@ -22,7 +22,7 @@ var mysqlConfig = {
 	database: 'userdb',
 };
 
-	
+//Get all the users in the database
 router.route('/user')
 	.get(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -47,7 +47,8 @@ router.route('/user')
 			connection.end();
 		});
 	})
-	
+
+//Delete a user's account 
 router.route('/user/:username/:token')	
 	.delete(function(req,res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -67,6 +68,7 @@ router.route('/user/:username/:token')
 					success_message: null
 		};
 		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -100,7 +102,7 @@ router.route('/user/:username/:token')
 		});
 	})
 	
-
+//Get the specified user's profile information
 router.route('/user/profile/:username')
 	.get(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -125,7 +127,8 @@ router.route('/user/profile/:username')
 			connection.end();
 		});
 	})
-	
+
+//Unused. Get any languages associated with this user
 router.route('/user/language/:username')
 	.get(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -150,7 +153,8 @@ router.route('/user/language/:username')
 			connection.end();
 		});
 	})
-
+	
+//Unused. Get any interests associated with this user
 router.route('/user/interest/:username')
 	.get(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -176,7 +180,7 @@ router.route('/user/interest/:username')
 		});
 	})
 
-
+//Log a user in to the system. Create a new token and return it to them
 router.route('/user/login/:username')
 	.put(function(req, res){
 		//Pass in username and password from the app's url
@@ -196,6 +200,7 @@ router.route('/user/login/:username')
 			token: null
 		};
 
+		//Check the password
 		connection.query('SELECT password_hash FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -237,7 +242,7 @@ router.route('/user/login/:username')
 		});
 	})
 
-	
+//Create a user profile entry in the database {username: , positive_votes: , negative_votes: , current_lat: , current_long: , gender: , bio: , token: }
 router.route('/user/profile')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -300,6 +305,7 @@ router.route('/user/profile')
 		});
 	})
 	
+	//Update the profile entry to the values passed in {username: , xxx: , xx: , x: , token: } USERNAME AND TOKEN WILL NOT BE UPDATED BUT NEEDED
 	.put(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
 
@@ -368,7 +374,7 @@ router.route('/user/profile')
 		});
 	})
 
-	
+//Unused. Enter a new user interest
 router.route('/user/interest')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -426,7 +432,7 @@ router.route('/user/interest')
 		});
 	})
 
-	
+//Unused. Enter a new user language
 router.route('/user/language')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -484,7 +490,7 @@ router.route('/user/language')
 		});
 	})
 
-	
+//Account creation {username: , password: }
 router.route('/user/login')
 	.post(function(req, res){	
 		//Create account
@@ -533,7 +539,7 @@ router.route('/user/login')
 		});
 	})
 
-	
+//Possibly unused. Updates user profile's lat/long values {current_lat: , current_long: , token: }
 router.route('/user/profile/location/:username')
 	.put(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -590,7 +596,8 @@ router.route('/user/profile/location/:username')
 			connection.end();
 		});
 	})
-	
+
+//Log the user out of the system 
 router.route('/user/login/:username/:token')
 	.delete(function(req, res){	
 		var connection = mysql.createConnection(mysqlConfig);
@@ -605,6 +612,7 @@ router.route('/user/login/:username/:token')
 		
 		var username = req.params.username;
 
+		//Check the request for validity
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err || data.length === 0){
 				console.log(err);
@@ -629,6 +637,7 @@ router.route('/user/login/:username/:token')
 						current_long: "null"
 					};
 					
+					//Stop the user from continuing to be matched
 					connection.query('UPDATE user_profile SET current_lat = null, current_long = null WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
 						if (err){
 							console.log(err);
@@ -638,6 +647,7 @@ router.route('/user/login/:username/:token')
 							connection.end();
 						}
 						else{
+							//Remove the user's message id
 							connection.query('UPDATE user_gcm SET gcm_regid = null WHERE username = ' + connection.escape(req.params.username), data, function(err, data1){
 								if(err){
 									console.log(err);
@@ -647,6 +657,7 @@ router.route('/user/login/:username/:token')
 									connection.end();
 								}
 								else{
+									//Remove any outstanding invites from this user
 									connection.query('DELETE FROM user_invite WHERE username_from = ' + connection.escape(req.params.username) + ' OR username_to = ' + connection.escape(req.params.username), data, function(err, data2){
 										if(err){
 											console.log(err);
@@ -656,6 +667,7 @@ router.route('/user/login/:username/:token')
 											connection.end();
 										}
 										else{
+											//Remove this user from any groups they are currently in
 											connection.query('DELETE FROM user_group WHERE username = ' + connection.escape(req.params.username), data, function(err, data3){
 												if(err){
 													console.log(err);
@@ -665,6 +677,7 @@ router.route('/user/login/:username/:token')
 													connection.end();
 												}
 												else{
+													//Remove the token from the database
 													connection.query('UPDATE user_login SET token = null WHERE username = ' + connection.escape(req.params.username), data, function(err, data4){
 														if(err){
 															console.log(err);
@@ -702,7 +715,7 @@ router.route('/user/login/:username/:token')
 		});
 	})
 
-				
+//Get the users around the given location and within the given bounding box
 router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 	.get(function(req, res){
 		console.log("Attempting to find users around " + req.params.yourLat + " " + req.params.yourLong );
@@ -716,12 +729,14 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 			}
 		});
 		
-		var radius = 0.00126291; // 5 miles
+		var radius = 5; // 5 miles
 
 		var response = {
 								success: null,
 								success_message: null
 		};
+		//Find all the active users around the given location 
+		//Active is defined as having updated their location within the last 30 minutes
 			connection.query('SELECT * ' +
 								'FROM (SELECT * ' + 
 										' FROM user_profile ' + 
@@ -751,7 +766,7 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 		connection.end();
 	})
 
-	
+//Set the Google id for a user {username: , token: , gcm_regid: }
 router.route('/user/gcmregid')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -807,6 +822,7 @@ router.route('/user/gcmregid')
 		});
 	})
 	
+	//Update the Google id for a user {username: , token: , gcm_regid: }
 	.put(function(req, res){
 		//Updates user's gcmregid
 		var connection = mysql.createConnection(mysqlConfig);
@@ -853,7 +869,7 @@ router.route('/user/gcmregid')
 		});
 	})
 
-	
+//Send a positive rating to a user {rating_username: , token: }
 router.route('/user/pos_rating/:username')
 	.put(function(req, res){		
 		var connection = mysql.createConnection(mysqlConfig);
@@ -907,7 +923,7 @@ router.route('/user/pos_rating/:username')
 		});
 	})
 
-	
+//Send a negative rating to a user {rating_username: , token: }
 router.route('/user/neg_rating/:username')
 	.put(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -961,9 +977,7 @@ router.route('/user/neg_rating/:username')
 		});
 	})
 	
-	
-
-	
+//Block a user {username: , token: , block_username: }
 router.route('/user/blacklist')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -1034,7 +1048,8 @@ router.route('/user/blacklist')
 			res.json(response);
 		}	
 	})
-	
+
+//Unblock a user
 router.route('/user/blacklist/:username/:block_username/:token')
 	.delete(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
