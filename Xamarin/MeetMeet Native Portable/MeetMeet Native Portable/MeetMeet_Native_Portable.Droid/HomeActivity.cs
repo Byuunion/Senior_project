@@ -107,12 +107,21 @@ namespace MeetMeet_Native_Portable.Droid
 
 		}
 
+		/// <summary>
+		/// Creates the Android options menu located in the upper right hand corner.
+		/// </summary>
+		/// <param name="menu">Menu.</param>
 		public override bool OnCreateOptionsMenu(IMenu menu)
 		{
 			MenuInflater.Inflate(Resource.Menu.home_menu, menu);
 			return base.OnPrepareOptionsMenu(menu);
 		}
 
+		/// <summary>
+		/// Performs the desired action of each menu item when
+		/// selected from the drop down menu list.
+		/// </summary>
+		/// <param name="item">Selected menu item.</param>
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
 			Dialog dialog = null;
@@ -179,36 +188,56 @@ namespace MeetMeet_Native_Portable.Droid
 			return base.OnOptionsItemSelected(item);
 		}
 
-		/* Request updates at startup */
+		/// <summary>
+		/// Request location updates at startup.
+		/// </summary>
 		protected override void OnResume() {
 			base.OnResume();
 			locationManager.RequestLocationUpdates(provider, 1000, 0, this);
 		}
 
-		/* Remove the locationlistener updates when Activity is paused */
+		/// <summary>
+		/// Remove the locationlistener updates when Activity is paused.
+		/// </summary>
 		protected override void OnPause() {
 			base.OnPause();
 			locationManager.RemoveUpdates(this);
 		}
 
-		public void OnLocationChanged(Location location) {
-			// constantly updates location
-		}
-
+		/// <summary>
+		/// Status of the location services provider.
+		/// </summary>
+		/// <param name="provider">Type of provider for location services.</param>
+		/// <param name="status">Availability of location services.</param>
+		/// <param name="extras">Bundle.</param>
 		public void OnStatusChanged(String provider, Availability status, Bundle extras) {
 			// TODO Auto-generated method stub
 		}
 
+		/// <summary>
+		/// Displays toast to let user know the provider is enabled.
+		/// </summary>
+		/// <param name="provider">Type of provider for location services.</param>
 		public void OnProviderEnabled(String provider) {
 			Toast.MakeText(this, "Enabled new provider " + provider,
 				ToastLength.Short).Show();
 		}
 
+		/// <summary>
+		/// Displays toast to let user know the provider is disabled.
+		/// </summary>
+		/// <param name="provider">Type of provider for location services.</param>
 		public void OnProviderDisabled(String provider) {
 			Toast.MakeText (this, "Disabled provider " + provider,
 				ToastLength.Short).Show();
 		}
 
+		/// <summary>
+		/// Click event to set the current location and update our server
+		/// with the user's new geolocation information.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
 		private void mButtonSetLocation_Click (object sender, EventArgs e)
 		{
 			Location location = locationManager.GetLastKnownLocation(provider);
