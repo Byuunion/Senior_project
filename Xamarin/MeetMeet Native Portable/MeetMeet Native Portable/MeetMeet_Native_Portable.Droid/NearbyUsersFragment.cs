@@ -11,6 +11,10 @@ using System.Collections.Generic;
 
 namespace MeetMeet_Native_Portable.Droid
 {
+	/// <summary>
+	/// The nearby users list fragment handles getting the user's current location 
+	/// from their device and displays a list of nearby usernames
+	/// </summary>
 	public class NearbyUsersFragment : ListFragment
 	{
 		private int supaPosition;
@@ -21,6 +25,15 @@ namespace MeetMeet_Native_Portable.Droid
 		private string[] nearbyBios;
 		private List<Profile> nearbyUserslist;
 
+		/// <summary>
+		/// Gets the location manager and creates a new Geolocation object with
+		/// the user's current location and receives a list from our server
+		/// containing all of the nearby users based on that geolocation.
+		/// The list is parsed and the profile bios are formatted and placed 
+		/// into a string array with the same corresponding index of the string
+		/// array of nearby usernames.
+		/// </summary>
+		/// <param name="savedInstanceState">Bundle.</param>
 		public override void OnActivityCreated(Bundle savedInstanceState)
 		{
 			base.OnActivityCreated(savedInstanceState);
@@ -41,7 +54,6 @@ namespace MeetMeet_Native_Portable.Droid
 			provider = locationManager.GetBestProvider(criteria, true);
 			Location location = locationManager.GetLastKnownLocation(provider);
 			Geolocation currentLocation = new Geolocation (MainActivity.username, location.Latitude, location.Longitude);
-			//Geolocation currentLocation = new Geolocation (MainActivity.username, 39.77689537, -75.11926562);
 
 			Task<List<Profile>> task3 = Task<List<Profile>>.Factory.StartNew(() => 
 				{ 
@@ -92,12 +104,24 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
+		/// <summary>
+		/// Saves current instance state.
+		/// </summary>
+		/// <param name="outState">Bundle.</param>
 		public override void OnSaveInstanceState(Bundle outState)
 		{  
 			base.OnSaveInstanceState(outState);
 			outState.PutInt("selected_user_id", selectedUserId);
 		}
 
+		/// <summary>
+		/// Displays the profile bios of the current username that the user
+		/// has clicked on to view.
+		/// </summary>
+		/// <param name="l">The current list view.</param>
+		/// <param name="v">The current view.</param>
+		/// <param name="position">The current postion of the list item clicked.</param>
+		/// <param name="id">The list id.</param>
 		public override void OnListItemClick(ListView l, View v, int position, long id)
 		{
 			if(supaPosition==position)
@@ -110,6 +134,11 @@ namespace MeetMeet_Native_Portable.Droid
 			supaPosition = position;
 		}
 
+
+		/// <summary>
+		/// Shows the profile of the current userId that is passed
+		/// </summary>
+		/// <param name="userId">The index of the selected user</param>
 		private void ShowProfile(int userId)
 		{
 			selectedUserId = userId;
