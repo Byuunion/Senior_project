@@ -45,7 +45,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			Task<List<Profile>> task3 = Task<List<Profile>>.Factory.StartNew(() => 
 				{ 
-					return currentLocation.GetNearbyProfiles().Result;
+					return currentLocation.GetNearbyUsers().Result;
 				});
 			
 			nearbyUserslist = new List<Profile>();

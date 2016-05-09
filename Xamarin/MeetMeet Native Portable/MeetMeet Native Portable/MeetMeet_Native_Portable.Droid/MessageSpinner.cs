@@ -69,7 +69,7 @@ namespace MeetMeet_Native_Portable.Droid
 			//Geolocation currentLocation = new Geolocation (MainActivity.username, 39.77689537, -75.11926562);
 
 			Task<List<Profile>> task3 = Task<List<Profile>>.Factory.StartNew (() => { 
-				return currentLocation.GetNearbyProfiles ().Result;
+				return currentLocation.GetNearbyUsers ().Result;
 			});
 
 			nearbyUserslist = new List<Profile> ();
