@@ -21,7 +21,7 @@ namespace MeetMeet_Native_Portable
         public Credentials(string username)
         {
             this.mUsername = username;
-            this.mToken = default(String);
+            this.mToken = default(string);
         }
 
 		/// <summary>
@@ -33,8 +33,8 @@ namespace MeetMeet_Native_Portable
 		/// <param name="url">The URL of the server</param>
         public async Task<Boolean> doLogin(string password, string url)
         {
-			var resource = URLs.login_ext + "/" +  username + "/" + password;
-            var tempToken = await LoginUpdater<Token>.LoginUpdate(new { username = username, password = password }, URLs.serverURL + URLs.login_ext + "/" + username);
+			//var resource = URLs.login_ext + "/" +  username + "/" + password;
+            var tempToken = await LoginUpdater<Token>.LoginUpdate(new { username = username, password = password }, url + "/" + username);
 
             if (tempToken != default(Token))
             {
@@ -55,9 +55,8 @@ namespace MeetMeet_Native_Portable
 		/// <param name="url">The URL of the server</param>
         public async Task<Boolean> doSignUp(string password, string url)
         {
-			if(await Poster.PostObject(new { username = this.username, password = password }, url + URLs.login_ext))
+			if(await Poster.PostObject(new { username = this.username, password = password }, url))
             {
-                System.Diagnostics.Debug.WriteLine("Successfully signed up user: " + this.username);
                 return await doLogin(password, url);
             }
 

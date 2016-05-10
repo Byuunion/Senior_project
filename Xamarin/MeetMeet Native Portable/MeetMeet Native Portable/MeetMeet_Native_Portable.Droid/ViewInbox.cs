@@ -11,7 +11,7 @@ using System;
 namespace MeetMeet_Native_Portable.Droid
 {
     /// <summary>
-    /// Inbox menu
+    /// Inbox menu, diplays the user's conversations and messages
     /// </summary>
 	[Activity (Label = "ViewInbox")]			
 	public class ViewInbox : Activity
@@ -31,13 +31,15 @@ namespace MeetMeet_Native_Portable.Droid
 		{
 			base.OnCreate (bundle);
 
-
+            //Allow this inbox to be retrieved by other classes
+            //This allows the inbox to be updated when a new message arrives
 			MainActivity.references.Put ("Inbox", this);
 
 			SetContentView(Resource.Layout.messaging_inbox);
 
 			taskListView = (ListView)FindViewById (Resource.Id.listView);
             
+            //Get all the users that this user has had a conversation with
             users = MessageRepository.GetMessagedUsers().ToArray<string>();
             tasks = new List<Message>();
 
@@ -81,14 +83,20 @@ namespace MeetMeet_Native_Portable.Droid
                     //If the message is sent successfully, store it and display it in the list
                     if(await MessageSender.SendSingleMessage(mText.Text, users[position], MainActivity.credentials, MainActivity.serverURL + MainActivity.single_message))
                     {
+                        //Create a message object
                         Message m = new Message();
                         m.MsgText = mText.Text;
                         m.UserName = users[position];
                         m.Date = DateTime.Now.ToString();
                         m.incoming = false;
 
+                        //Update the message on the screen
                         newMessage(m);
+
+                        //Save the message
                         MessageRepository.SaveMessage(m);
+
+                        //Clear the input box
                         mText.Text = "";
                     }
                     else
@@ -112,19 +120,30 @@ namespace MeetMeet_Native_Portable.Droid
         /// </summary>
         /// <param name="m">The message to add</param>
 		public void newMessage(Message m){
-			if (msgs != null) {
+
+            //Try to add the message to the list of messages
+			if (msgs != null)
+            {
 				msgs.Add (m);
+                //Update the display
 				RunOnUiThread (() => {
 					taskListView.Adapter = taskList;
 				});
-			} else if (users != null) {
-				foreach (Message me in tasks) {
-					if (me.UserName == m.UserName) {
+			}
+            //Try to update the most recent conversation with the user
+            else if (users != null)
+            {
+				foreach (Message me in tasks)
+                {
+                    //If the names match, replace the old message with the new message
+					if (me.UserName == m.UserName)
+                    {
 						tasks.Remove (me);
 						tasks.Add (m);
 						break;
 					}
 				}
+                //Update the display
 				RunOnUiThread (() => {
 					taskListView.Adapter = taskList;
 				});
@@ -144,7 +163,6 @@ namespace MeetMeet_Native_Portable.Droid
 			//Hook up our adapter to our ListView
 			taskListView.Adapter = taskList;
 		}
-
 	}
 }
 

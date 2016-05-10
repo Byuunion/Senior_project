@@ -1,13 +1,7 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
@@ -101,12 +95,12 @@ namespace MeetMeet_Native_Portable.Droid
 			return view;
 		}
 
-		/// <summary>
-		/// Completes Sign in process and passes arguments. 
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void MBtnDialogSignIn_Click (object sender, EventArgs e)
+        /// <summary>
+        /// Completes Sign in process and passes arguments. 
+        /// </summary>
+        /// <param name="sender">The object that invoked the event</param>
+        /// <param name="e">The event arguments</param>
+        void MBtnDialogSignIn_Click (object sender, EventArgs e)
 		{
 			if (mTxtUserNameSignIn.Text != "" && mTxtPasswordSignIn.Text != "") {
 				mOnSignInComplete.Invoke (this, new OnSignInEventArgs (mTxtUserNameSignIn.Text, mTxtPasswordSignIn.Text));

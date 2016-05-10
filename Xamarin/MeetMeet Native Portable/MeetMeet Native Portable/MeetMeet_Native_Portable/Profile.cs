@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MeetMeet_Native_Portable 
+﻿namespace MeetMeet_Native_Portable 
 {
 	/// <summary>
 	/// Container object for a user profile

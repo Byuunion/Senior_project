@@ -1,13 +1,18 @@
 ﻿using System;
+
 using Android.App;
 using Android.Content;
 using Android.Util;
 using Android.Gms.Gcm;
 using Android.Gms.Gcm.Iid;
+
 using MeetMeet_Native_Portable.Droid;
 
 namespace ClientApp
 {
+    /// <summary>
+    /// Register this device with Google Cloud Messaging
+    /// </summary>
 	[Service(Exported = false)]
 	class RegistrationIntentService : IntentService
 	{   
@@ -15,6 +20,10 @@ namespace ClientApp
 
 		public RegistrationIntentService() : base("RegistrationIntentService") { }
 
+        /// <summary>
+        /// Register this device with GCM to receive a Google Cloud Messaging id
+        /// </summary>
+        /// <param name="intent"></param>
 		protected override void OnHandleIntent (Intent intent)
 		{
 			try
@@ -23,6 +32,10 @@ namespace ClientApp
 				lock (locker)
 				{
 					var instanceID = InstanceID.GetInstance (this);
+
+                    //The token is gotten twice due to a bug that was encountered where Google would assign
+                    //a device an old, invalid token and fail to mark the token as valid again.
+                    //This was fixed by getting the old token, forcibly deleting it and requesting a new token
 					var token = instanceID.GetToken (
 						"47160214403", GoogleCloudMessaging.InstanceIdScope, null);
 						//senderID generated from google dev. console
@@ -38,7 +51,6 @@ namespace ClientApp
 
                     //Make the token accessible by our code
                     MainActivity.gcm_token = token;
-					SendRegistrationToAppServer (token);
 					Subscribe (token);
 				}
 			}
@@ -49,11 +61,10 @@ namespace ClientApp
 			}
 		}
 
-		void SendRegistrationToAppServer (string token)
-		{
-             // Add custom implementation here as needed.
-		}
-
+        /// <summary>
+        /// Have this device subscribe to the general topic
+        /// </summary>
+        /// <param name="token">The Google id of this device</param>
 		void Subscribe (string token)
 		{
 			var pubSub = GcmPubSub.GetInstance(this);

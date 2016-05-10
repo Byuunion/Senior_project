@@ -7,14 +7,14 @@ namespace MeetMeet_Native_Portable.Droid
 {
 
     /// <summary>
-    /// Adapter for user messages
+    /// Adapter for the user's conversations
     /// </summary>
     public class MsgListAdapterInbox : BaseAdapter<string>
     {
         ViewInbox context = null;
         IList<string> users = new List<string>();
 
-        //Information fields
+        //The gui components that need to be modified
         private TextView mTextUsername;
         private TextView mTextRecentMessage;
 
@@ -69,6 +69,7 @@ namespace MeetMeet_Native_Portable.Droid
             var view = context.LayoutInflater.Inflate(Resource.Layout.msg_adapter_inbox, parent, false);
             view.Clickable = true;
 
+            //Find and set the gui components
             mTextUsername = view.FindViewById<TextView>(Resource.Id.textUsername);
             mTextRecentMessage = view.FindViewById<TextView>(Resource.Id.textRecentMessage);
            
@@ -80,7 +81,7 @@ namespace MeetMeet_Native_Portable.Droid
                 context.viewConversation(position);
             };
 
-            //Finally return the view
+            //Return the created view
             return view;
         }
 

@@ -1,20 +1,18 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+
 using SQLite;
 
 namespace MeetMeet_Native_Portable.Droid
 {
 
-	//db for message objects
-	//a message contains an id(self increasing), a timestamp, a username, and the message itself
-
-        /// <summary>
-        /// Database for holding user messages
-        /// </summary>
-	public class MessageDB : SQLiteConnection
+    /// <summary>
+    /// Database for message objects
+    /// Messages contain ids (self increasing), a timestamp, a username, and the message itself
+    /// </summary>
+    public class MessageDB : SQLiteConnection
 	{
 		//MUST LOCK WHEN ACCESSING DB
 		//protects from other threads accessing it at the same time
@@ -28,30 +26,11 @@ namespace MeetMeet_Native_Portable.Droid
 				//name of DB stored on device
 				var sqliteFilename = "MsgDB.db3";
 
-				#if NETFX_CORE
-				var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, sqliteFilename);
-				#else
-
-				#if SILVERLIGHT
-				// Windows Phone expects a local path, not absolute
-				var path = sqliteFilename;
-				#else
-
-				#if __ANDROID__
 				// Just use whatever directory SpecialFolder.Personal returns
 				string libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); ;
-				#else
-				// we need to put in /Library/ on iOS5.1 to meet Apple's iCloud terms
-				// (they don't want non-user-generated data in Documents)
-				string documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal); // Documents folder
-				string libraryPath = Path.Combine (documentsPath, "../Library/"); // Library folder
-				#endif
-				var path = Path.Combine (libraryPath, sqliteFilename);
-				#endif		
 
-				#endif
-				return path;	
-			}
+				return Path.Combine(libraryPath, sqliteFilename);
+            }
 		}
 
         /// <summary>
@@ -121,10 +100,7 @@ namespace MeetMeet_Native_Portable.Droid
                     strings.Add(qs.UserName);
                 }
                 return strings;
-            }
-            
-           
-            
+            } 
         }
 
         /// <summary>
@@ -145,7 +121,6 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
-	
         /// <summary>
         /// Delete the given message from the database
         /// </summary>
@@ -158,26 +133,18 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
-
+        /// <summary>
+        /// Get the most recent message from the given user
+        /// </summary>
+        /// <param name="username">The name of the user to get the most recent message from</param>
+        /// <returns>The most recent message object from the given username</returns>
         public Message GetMostRecentMessageFrom(string username)
         {
             lock (locker)
             {
-                List<Message> messages = Query<Message>("select * from Message where UserName = ?", username);
+                List<Message> messages = Query<Message>("select * from Message where UserName = ? ", username);
                 return messages.LastOrDefault();
             }
-           
         }
-	}
-
-    /// <summary>
-    /// This is a container class to allow the extraction of strings from the database
-    /// </summary>
-	public class QueryString{
-		public string s;
-
-		public QueryString(){
-			//Do nothing
-		}
 	}
 }

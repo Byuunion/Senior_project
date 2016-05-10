@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net.Http;
 
 namespace MeetMeet_Native_Portable
@@ -27,23 +25,19 @@ namespace MeetMeet_Native_Portable
 
 			System.Diagnostics.Debug.WriteLine("Sending delete request for: " + uri);
 
-			// Catches time outs
+			// Catch connection timeouts
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {
 				string response = await task.Result.Content.ReadAsStringAsync();
 				System.Diagnostics.Debug.WriteLine("Delete response received, string is: " + response);
+
+                //Check to make sure that the request was successful
 				return task.Result.IsSuccessStatusCode && !response.Contains("\"success\":false");
             }
             else {
                 System.Diagnostics.Debug.WriteLine("Response timeout");
 				return false;
-            }
-
-
-            
+            }       
         }
-
     }
-
-
 }

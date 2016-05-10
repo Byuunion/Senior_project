@@ -13,9 +13,7 @@ namespace MeetMeet_Native_Portable.Droid
 		ViewInbox context = null;
 		IList<Message> msgs = new List<Message>();
 
-
-		//the other text views and the delete button need to be in here
-		//utilizing getitemid one can port over that info to generate the write message in the view msg pop up
+        //The gui components that need to be modified
 		private ImageButton mButtonDeleteMsg;
 		private TextView mTextViewDate;
         private TextView mTextViewMessage;
@@ -83,7 +81,8 @@ namespace MeetMeet_Native_Portable.Droid
 			mTextViewDate.Text = item.Date;
             mTextViewMessage.Text = item.MsgText;
 
-            //Display the message in a different color depending on who sent it
+            //Display the message in a different color depending on whether this user sent the message
+            //or received it
             if (item.incoming)
             {
                 mTextViewMessage.SetTextColor(Android.Graphics.Color.Cyan);
@@ -93,10 +92,9 @@ namespace MeetMeet_Native_Portable.Droid
                 mTextViewMessage.SetTextColor(Android.Graphics.Color.Green);
             }
 
-            
             //Delete button clicked
 			mButtonDeleteMsg.Click += (object sender, EventArgs e) => {
-                //Delete the message from the phone
+                //Delete the message from the device
 				MessageRepository.DeleteMessage(item);
 				Toast.MakeText(context, "message with: " + item.UserName + " deleted", ToastLength.Short).Show();
 
@@ -105,7 +103,7 @@ namespace MeetMeet_Native_Portable.Droid
 				context.removeMessage(position);
 			};
 
-			//Finally return the view
+            //Return the created view
 			return view;
 		}
 	}

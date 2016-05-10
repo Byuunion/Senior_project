@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
 using Android.Widget;
 using Android.OS;
-using System.Threading.Tasks;
+using Android.Gms.Common;
 
 using Java.Util;
 
-using Android.Gms.Common;
 using ClientApp;
+
 using Newtonsoft.Json;
 
 
@@ -23,24 +24,16 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity (Label = "MeetMeet", MainLauncher = true, Icon = "@drawable/mmlogolarge")]
 	public class MainActivity : Activity
 	{
-
 		// Main Menu Items
 		private Button mButtonSignUp;
 		private Button mButtonSignIn;
-        
-		// User data
-		public string userNameSignIn;
-		public string userEmailSignIn;
-		public string userPasswordSignIn;
 
-		public string userNameSignUp;
-		public string userEmailSignUp;
-		public string userPasswordSignUp;
+        //URLs and extensions for communicating with the server
 		public static string serverURL = URLs.serverURL;
-		public static string login_ext = URLs.login_ext;
-		public static string profile_ext = URLs.profile_ext;
-		public static string location_ext = URLs.location_ext;
-		public static string gcm_regid_ext = URLs.gcm_regid_ext;
+		public static string login_ext = URLs.login;
+		public static string profile_ext = URLs.profile;
+		public static string location_ext = URLs.location;
+		public static string gcm_regid_ext = URLs.gcm_regid;
 		public static string group_message = URLs.group_message;
 		public static string single_message = URLs.single_message;
 		public static string pos_rating = URLs.pos_rating;
@@ -48,11 +41,18 @@ namespace MeetMeet_Native_Portable.Droid
 		public static string blacklist_user = URLs.blacklist_user;
 		public static string group_invite = URLs.group_invite;
 		public static string user_group = URLs.user_group;
-		public static string username;
+
+        // User data
+        public string userNameSignIn;
+        public string userPasswordSignIn;
+
+        public string userNameSignUp;
+        public string userPasswordSignUp;
+
+        public static string username;
 		public static string user_token;
 		public static string gcm_token;
 		public static HashMap references;
-
 		public static Credentials credentials;
 
 
@@ -67,13 +67,12 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="bundle">Bundle.</param>
 		protected override void OnCreate (Bundle bundle)
 		{
-            //For testing purposes only!
-            //Allows us to use a self signed certificate
-            
+            //For testing purposes
+            //Allows us to use a self signed server certificate
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
-             
-            //
+            //End  
+
             base.OnCreate (bundle);
 			references = new HashMap ();
 
@@ -94,6 +93,7 @@ namespace MeetMeet_Native_Portable.Droid
 
 			msgText = FindViewById<TextView> (Resource.Id.msgText);
 
+            //Check to see if the app can use GCM 
 			if (IsPlayServicesAvailable ())
             {
 				var intent = new Intent (this, typeof(RegistrationIntentService));
@@ -125,13 +125,13 @@ namespace MeetMeet_Native_Portable.Droid
 				return true;
 			}
 		}
-			
-		/// <summary>
-		/// Starts Sign in dialog fragment via SignIn() when clicked.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void MButtonSignIn_Click (object sender, EventArgs e)
+
+        /// <summary>
+        /// Starts Sign in dialog fragment via SignIn() when clicked.
+        /// </summary>
+        /// <param name="sender">The object that invoked the event</param>
+        /// <param name="e">The event arguments</param>
+        void MButtonSignIn_Click (object sender, EventArgs e)
 		{
 			//Pull up dialog
 			FragmentTransaction transaction = FragmentManager.BeginTransaction ();
@@ -144,20 +144,21 @@ namespace MeetMeet_Native_Portable.Droid
 
 		}
 
-		/// <summary>
-		///  Retrieves data from Sign in activity and attempts to sign in user 
-		///  to the database. If user has no profile it will start EditProfile Activity
-		///  If user has a profile, HomeActivity will be started
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		public async void signInDialog_mOnSignInComplete (Object sender, OnSignInEventArgs e)
+        /// <summary>
+        ///  Retrieves data from Sign in activity and attempts to sign in user 
+        ///  to the database. If user has no profile it will start EditProfile Activity
+        ///  If user has a profile, HomeActivity will be started
+        /// </summary>
+        /// <param name="sender">The object that invoked the event</param>
+        /// <param name="e">The event arguments</param>
+        public async void signInDialog_mOnSignInComplete (Object sender, OnSignInEventArgs e)
 		{
 			// Retrieves data from SignIn Activity
 			userNameSignIn = e.Username;
 			userPasswordSignIn = e.Password;
 
-			// attempts to log in. If user has no profile. User is notified and EditProfileActivity is started
+            // Attempts to log in. 
+            //If user has no profile, they are notified and EditProfileActivity is started
 			// and users profile object is passed.
 			// Else statement occurs if user has a profile. HomeActivity is started and profile object is passed.
 			if (await TryToLogin (userNameSignIn, userPasswordSignIn))
@@ -181,10 +182,12 @@ namespace MeetMeet_Native_Portable.Droid
 				}
                 else
                 {
+                    //Set the variables associated with the user session
 					username = credentials.username;
 					user_token = credentials.token;
 					userProfile.token = credentials.token;
-					//pass profile object to HomeActivity
+
+					//Open the main menu and pass the profile object
 					Intent intent = new Intent (this, typeof(HomeActivity));
 					var serializedProfile = JsonConvert.SerializeObject (userProfile);
 					intent.PutExtra ("UserProfile", serializedProfile);
@@ -196,14 +199,13 @@ namespace MeetMeet_Native_Portable.Droid
 		}
 
 
-		/// <summary>
-		/// Starts Sign in dialog fragment via SignIn() when clicked.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void mButtonSignUp_Click (object sender, EventArgs e)
+        /// <summary>
+        /// Starts Sign in dialog fragment via SignIn() when clicked.
+        /// </summary>
+        /// <param name="sender">The object that invoked the event</param>
+        /// <param name="e">The event arguments</param>
+        void mButtonSignUp_Click (object sender, EventArgs e)
 		{
-
 			//Pull up dialog
 			FragmentTransaction transaction = FragmentManager.BeginTransaction ();
 			SignUp signUpDialog = new SignUp ();
@@ -213,12 +215,12 @@ namespace MeetMeet_Native_Portable.Droid
 			signUpDialog.mOnSignUpComplete += signUpDialog_mOnSignUpComplete;
 		}
 
-		/// <summary>
-		/// On SignUp activity completion, this will attempt to sign up user to the database.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		async void signUpDialog_mOnSignUpComplete (Object sender, OnSignUpEventArgs e)
+        /// <summary>
+        /// On SignUp activity completion, this will attempt to sign up user to the database.
+        /// </summary>
+        /// <param name="sender">The object that invoked the event</param>
+        /// <param name="e">The event arguments</param>
+        async void signUpDialog_mOnSignUpComplete (Object sender, OnSignUpEventArgs e)
 		{
 			// Retrieves data from SignUp activity
 			userNameSignUp = e.UserName;
@@ -228,14 +230,17 @@ namespace MeetMeet_Native_Portable.Droid
 			/// User is then taken to EditProfileActivity.
 			if (await TryToSignUp (userNameSignUp, userPasswordSignUp))
             {
+                //Create a default profile to start
 				username = credentials.username;
 				user_token = credentials.token;
 				string userGender = null;
 				string userBio = null;
 				Profile myProfile = new Profile (credentials.username, userGender, userBio, credentials.token);
+
+                //Send the temporary profile to the server
 				if (await Poster.PostObject (myProfile, serverURL + profile_ext))
                 {
-					// pass profile object to EditProfileActivity
+					// pass profile object to EditProfileActivity, so the user can fill in their information
 					Intent intent = new Intent (this, typeof(EditProfileActivity));
 					var serializedProfile = JsonConvert.SerializeObject (myProfile);
 					intent.PutExtra ("UserProfile", serializedProfile);
@@ -257,10 +262,11 @@ namespace MeetMeet_Native_Portable.Droid
 			try
             {
 				credentials = new Credentials (username);
-				bool loggedIn = await credentials.doLogin (password, serverURL);
 
-				if (loggedIn)
+                //Try to log the user into the system
+				if (await credentials.doLogin(password, serverURL + login_ext))
                 {
+                    //If the login was successful, update the user's GCM id
 					return await Updater.UpdateObject (new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL + gcm_regid_ext);
 				}
                 else
@@ -274,22 +280,22 @@ namespace MeetMeet_Native_Portable.Droid
 			}
 		}
 
-		/// <summary>
-		/// Do the sign up procedure
-		/// </summary>
-		/// <param name="username"></param>
-		/// <param name="password"></param>
-		/// <returns></returns>
-		private async Task<Boolean> TryToSignUp (string username, string password)
+        /// <summary>
+        /// Do the sign up procedure
+        /// </summary>
+        /// <param name="username"> the user's username, gotten from the gui</param>
+        /// <param name="password"> the user's password, gotten from the gui</param>
+        /// <returns> whether or not the user was successfully signed up</returns>
+        private async Task<Boolean> TryToSignUp (string username, string password)
 		{
 			credentials = new Credentials (username);
-			System.Diagnostics.Debug.WriteLine ("Trying to sign up");
+
 			try
             {
-				var loggedIn = await credentials.doSignUp (password, serverURL);
-
-				if (loggedIn)
+                //Try to register the user with the system
+				if (await credentials.doSignUp(password, serverURL + login_ext))
                 {
+                    //If registration was successful, send a request to create a new entry in the table with GCM ids
 					return await Poster.PostObject (new { token = credentials.token, username = username, gcm_regid = gcm_token }, serverURL + gcm_regid_ext);
 				}
                 else

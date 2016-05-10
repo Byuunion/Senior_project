@@ -53,16 +53,20 @@ namespace MeetMeet_Native_Portable.Droid
 			criteria.Accuracy = Accuracy.Fine;
 			provider = locationManager.GetBestProvider(criteria, true);
 			Location location = locationManager.GetLastKnownLocation(provider);
-			Geolocation currentLocation = new Geolocation (MainActivity.username, location.Latitude, location.Longitude);
 
-			Task<List<Profile>> task3 = Task<List<Profile>>.Factory.StartNew(() => 
+            //Create a Geolocation object which handles most of the location related functionality, including server calls
+            Geolocation currentLocation = new Geolocation (MainActivity.username, location.Latitude, location.Longitude);
+
+            //Get the list of nearby profiles
+            Task<List<Profile>> nearbyProfiles = Task<List<Profile>>.Factory.StartNew(() => 
 				{ 
 					return currentLocation.GetNearbyUsers().Result;
 				});
-			
-			nearbyUserslist = new List<Profile>();
+
+            //Filter the list of profiles, removing the profile for this user, if it was returned by the server
+            nearbyUserslist = new List<Profile>();
 			try{
-				nearbyUserslist = task3.Result;
+				nearbyUserslist = nearbyProfiles.Result;
 				foreach (Profile p in nearbyUserslist){
 					if(p.username.Equals(MainActivity.credentials.username)){
 						nearbyUserslist.Remove(p);
@@ -75,11 +79,12 @@ namespace MeetMeet_Native_Portable.Droid
 				System.Diagnostics.Debug.WriteLine ("\n\nServer offline\n\n" + error);
 			}
 
-
+            //Create the arrays containing the information about the users
 			int numUsers = nearbyUserslist.Count;
 			string[] nearbyUsers = new string[numUsers];
 			nearbyBios = new string[numUsers];
 
+            //Process the information about the nearby users in a formatted string, for display
 			for (int i = 0; i < numUsers; i++)
 			{
 				nearbyUsers [i] = nearbyUserslist [i].username;
@@ -89,6 +94,7 @@ namespace MeetMeet_Native_Portable.Droid
 					+ "\n\n" + nearbyUserslist [i].bio;
 			}
 		
+            //Set up the adapted to display the list of users
 			var adapter = new ArrayAdapter<String>(Activity, Android.Resource.Layout.SimpleListItemChecked, nearbyUsers);
 			ListAdapter = adapter;
 

@@ -1,27 +1,19 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 
-using MeetMeet_Native_Portable;
-using Android.Content.PM;
 
-
-/// <summary>
-/// Invite request activity. This activity starts when receiving and invite request
-/// in the user profile section.
-/// </summary>
 namespace MeetMeet_Native_Portable.Droid
 {
-	[Activity (Label = "InviteRequestActivity")]			
+
+    /// <summary>
+    /// Invite request activity. This activity starts when receiving and invite request
+    /// in the user profile section.
+    /// </summary>
+    [Activity (Label = "InviteRequestActivity")]			
 	public class InviteRequestActivity : Activity
 	{
 		// Declaration of buttons and text view in invite_request layout
@@ -29,10 +21,6 @@ namespace MeetMeet_Native_Portable.Droid
 		private Button mBtnAcptMeetInvite;
 		private Button mBtnDclnMeetInvite;
 		private TextView mUsernameInviteTextView;
-
-		// Necessary server variables
-		public static Credentials credentials;
-		public static string serverURL = "http://52.91.212.179:8800/";
 
 		// Stores username of invitee
 		public string userNameFrom;
@@ -43,7 +31,6 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="bundle">Bundle.</param>
 		protected override void OnCreate (Bundle bundle)
 		{
-
 			base.OnCreate (bundle);
 
 			// Set our view from the home_page resource
@@ -60,9 +47,6 @@ namespace MeetMeet_Native_Portable.Droid
 
 			// Set username of invitee to textview in invite_request layout
 			mUsernameInviteTextView.Text = userNameFrom;
-
-
-			//Button Function
 
 			// When user clicks Check Profile button in invite_request layout, this 
 			// starts view profile activity. Also passes username of invitee to the activity.
@@ -87,7 +71,8 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		async void MBtnDclnMeetInvite_Click (object sender, EventArgs e)
 		{
-			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, serverURL + MainActivity.group_invite, "false")) {
+            //Try to decline the response
+			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, URLs.serverURL + URLs.group_invite, "false")) {
 				Toast.MakeText (this, "Response Sent!", ToastLength.Short).Show ();
 				base.OnBackPressed ();
 			} else {
@@ -104,9 +89,11 @@ namespace MeetMeet_Native_Portable.Droid
 		/// <param name="e">E.</param>
 		async void MBtnAcptMeetInvite_Click (object sender, EventArgs e)
 		{
-			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, serverURL + MainActivity.group_invite, "true")) {
+            //Try to accept the response
+			if (await MessageSender.RespondGroupInvite (userNameFrom, MainActivity.credentials, URLs.serverURL + URLs.group_invite, "true")) {
 
-				await MessageSender.SendSingleMessage (MainActivity.credentials.username + " accepts your invite!", userNameFrom, MainActivity.credentials, serverURL + MainActivity.single_message);  
+                //Send a message to the other user to let them know the invitation was accepted
+				await MessageSender.SendSingleMessage (MainActivity.credentials.username + " accepts your invite!", userNameFrom, MainActivity.credentials, URLs.serverURL + URLs.single_message);  
 
 				Toast.MakeText (this, "Response Sent!", ToastLength.Short).Show ();
 				base.OnBackPressed ();

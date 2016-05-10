@@ -29,10 +29,13 @@ namespace MeetMeet_Native_Portable
             
 			System.Diagnostics.Debug.WriteLine("Trying to post object: " + json + " to: " + uri);
 
+            //Catch connection timeouts
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {
                 string response = await task.Result.Content.ReadAsStringAsync();
                 System.Diagnostics.Debug.WriteLine("Post response received. String is: " + response);
+
+                //Make sure the response was successful
                 return task.Result.IsSuccessStatusCode && !response.Contains("\"success\":false");
             }
             else {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -28,31 +27,31 @@ namespace MeetMeet_Native_Portable
             client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
 
-			System.Diagnostics.Debug.WriteLine("Resource trying to get " );
+			System.Diagnostics.Debug.WriteLine("Sending get request for " + uri);
 
-            var response = await client.GetAsync(uri);
+            var task = client.GetAsync(uri);
 
-            System.Diagnostics.Debug.WriteLine("Response: " + await response.Content.ReadAsStringAsync());
-            
-
-            if (response.IsSuccessStatusCode)
+            //Catch connection timeouts
+            if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {
-                string responseString = await response.Content.ReadAsStringAsync();
-                if (responseString.Contains("\"success\":false"))
+                string response = await task.Result.Content.ReadAsStringAsync();
+
+                //Make sure the response was successful
+                if (response.Contains("\"success\":false") || !task.Result.IsSuccessStatusCode)
                 {
-					System.Diagnostics.Debug.WriteLine("Get was not successful");
+                    System.Diagnostics.Debug.WriteLine("Get was not successful");
                     return default(string);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("Get for " + url + " was successful, string is " + responseString);
-                    return responseString;
+                    System.Diagnostics.Debug.WriteLine("Get for " + url + " was successful, string is " + response);
+                    return response;
                 }
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Get was not successful");
-                return default(String);
+                System.Diagnostics.Debug.WriteLine("Response timeout");
+                return default(string);
             }
         }
 

@@ -12,6 +12,10 @@ namespace MeetMeet_Native_Portable.Droid
 	[Activity(Label = "Nearby User Profile")]
 	public class NearbyProfileActivity : FragmentActivity
 	{
+        /// <summary>
+        /// Code to execute when the activity is created
+        /// </summary>
+        /// <param name="bundle">Any additional information passed to the activity</param>
     	protected override void OnCreate(Bundle bundle)
     	{
         	base.OnCreate(bundle);

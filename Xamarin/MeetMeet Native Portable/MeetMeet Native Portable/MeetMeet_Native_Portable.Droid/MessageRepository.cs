@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
 namespace MeetMeet_Native_Portable.Droid
@@ -10,11 +9,10 @@ namespace MeetMeet_Native_Portable.Droid
     public class MessageRepository
     {
         MessageDB db = null;
-
         protected static MessageRepository me;
 
         /// <summary>
-        /// Static constructor
+        /// Static constructor, creates a single instance of the MessageRepository
         /// </summary>
         static MessageRepository()
         {

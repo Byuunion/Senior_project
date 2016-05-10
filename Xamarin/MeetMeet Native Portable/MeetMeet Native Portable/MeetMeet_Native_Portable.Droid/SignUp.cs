@@ -1,25 +1,20 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-// Class to change layout when SignUp button pressed
 
 namespace MeetMeet_Native_Portable.Droid
 {
-	/// <summary>
-	/// Handles Sign Up event arguments. Allows for username and password inputed in 
-	/// dialog_sign_up layout to be retrieved.
-	/// </summary>
-	public class OnSignUpEventArgs : EventArgs
+    /// <summary>
+    /// Class to change layout when SignUp button pressed
+    /// Handles Sign Up event arguments. Allows for username and password inputed in 
+    /// dialog_sign_up layout to be retrieved.
+    /// </summary>
+    public class OnSignUpEventArgs : EventArgs
 	{
 
 		private string mUserName;
@@ -102,14 +97,14 @@ namespace MeetMeet_Native_Portable.Droid
 			return view;
 		}
 
-		// Occurs when user clicks Sign up Button
+        // Occurs when user clicks Sign up Button
 
-		/// <summary>
-		/// Completes Sign up process and passes arguments. 
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
-		void MBtnSignUp_Click (object sender, EventArgs e)
+        /// <summary>
+        /// Completes Sign up process and passes arguments. 
+        /// </summary>
+        /// <param name="sender">The object that invoked the event</param>
+        /// <param name="e">The event arguments</param>
+        void MBtnSignUp_Click (object sender, EventArgs e)
 		{
 			if (mTxtUserName.Text != "" && mTxtPassConfirm.Text != "" && mTxtPassword.Text != "") {
 				if (mTxtPassword.Text.Equals (mTxtPassConfirm.Text)) {

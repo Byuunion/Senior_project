@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MeetMeet_Native_Portable
+﻿namespace MeetMeet_Native_Portable
 {
 	/// <summary>
 	/// Contains the URLs used by our application
@@ -8,10 +6,10 @@ namespace MeetMeet_Native_Portable
 	public static class URLs
 	{
 		public static string serverURL = "https://52.91.212.179:443/";
-		public static string login_ext = "user/login";
-		public static string profile_ext = "user/profile";
-		public static string location_ext = "user/profile/location";
-		public static string gcm_regid_ext = "user/gcmregid";
+		public static string login = "user/login";
+		public static string profile = "user/profile";
+		public static string location = "user/profile/location";
+		public static string gcm_regid = "user/gcmregid";
 		public static string group_message = "user/group/message";
 		public static string single_message = "user/message";
 		public static string pos_rating = "user/pos_rating";
@@ -20,6 +18,5 @@ namespace MeetMeet_Native_Portable
 		public static string group_invite = "user/group/invite";
 		public static string user_group = "user/group";
 	}
-
 }
 

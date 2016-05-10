@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 using Android.App;
 using Android.Content;
@@ -12,11 +11,11 @@ namespace MeetMeet_Native_Portable.Droid
 {
 	/// <summary>
 	/// On edit profile event arguments. Allows values gender and user profile 
-	/// to be passed with edit profile is called.
+	/// to be passed when edit profile is called.
 	/// </summary>
 	public class OnEditProfileEventArgs: EventArgs
 	{
-		//
+		//variables
 		private string mGender;
 		private string mProfile;
 

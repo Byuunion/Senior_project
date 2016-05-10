@@ -10,6 +10,9 @@ namespace ClientApp
 	[Service(Exported = false), IntentFilter(new[] { "com.google.android.gms.iid.InstanceID" })]
 	class MyInstanceIDListenerService : InstanceIDListenerService
 	{
+        /// <summary>
+        /// Called when the Google system determines that the tokens need to be refreshed
+        /// </summary>
 		public override void OnTokenRefresh()
 		{
 			var intent = new Intent (this, typeof (RegistrationIntentService));

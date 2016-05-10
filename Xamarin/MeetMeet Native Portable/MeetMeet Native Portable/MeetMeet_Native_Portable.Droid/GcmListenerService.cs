@@ -2,9 +2,9 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Gms.Gcm;
-using Android.Util;
-using MeetMeet_Native_Portable.Droid;
 using Android.Media;
+
+using MeetMeet_Native_Portable.Droid;
 
 namespace ClientApp
 {
@@ -22,40 +22,37 @@ namespace ClientApp
         public override void OnMessageReceived(string from, Bundle data)
         {
             var message = data.GetString("message");
-            Log.Debug("MyGcmListenerService", "From:    " + from);
-            Log.Debug("MyGcmListenerService", "Message: " + message);
             
 			int ms_code = 0;
 			int.TryParse((data.GetString ("message_code")), out ms_code);
 
 			string username = data.GetString ("username_from");
-			System.Diagnostics.Debug.WriteLine (username);
 
+            //Create a new message object to be stored
 			MeetMeet_Native_Portable.Droid.Message m = new MeetMeet_Native_Portable.Droid.Message ();
-
-
 			m.MsgText = message;
-			System.Diagnostics.Debug.WriteLine (m.MsgText);
 			m.Date = System.DateTime.Now.ToString();
 			m.incoming = true;
 			
+            //Check the message code to decide what to do with the message
             if(ms_code == 1)
             {
-                //This is for single messages
+                //This is for single messages, simply save the message and display a notification
 				m.UserName = username;
 				MessageRepository.SaveMessage (m);
                 SendNotification(message, username);
             }
             else if(ms_code == 2)
             {
-                //This is for group invites
+                //This is for group invites, bring up the invite screen
 				Intent intent = new Intent(this, typeof(InviteRequestActivity));
 				intent.PutExtra ("username_from", username);
 				intent.SetFlags (ActivityFlags.NewTask);
 				StartActivity(intent);
 			}
             else if(ms_code == 3){
-				//This is for group messages
+				//This is for group messages, save the message to the group conversation and add the sending user's name 
+                //to the message text. Then display a notification
 				m.UserName = "group";
                 m.MsgText = username + ": " + m.MsgText;
 				MessageRepository.SaveMessage (m);
@@ -69,8 +66,6 @@ namespace ClientApp
             {
                 inbox.newMessage (m);
             }
-			
-
         }
 
         /// <summary>
@@ -84,6 +79,7 @@ namespace ClientApp
             intent.AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.OneShot);
 
+            //Create the notification
             var notificationBuilder = new Notification.Builder(this)
                 .SetSmallIcon(Resource.Drawable.ic_stat_ic_notification)
                 .SetContentTitle("Message from: " + username)
@@ -91,11 +87,10 @@ namespace ClientApp
                 .SetAutoCancel(true)
                 .SetContentIntent(pendingIntent);
 
+            //Play a sound and add the notification to the notification bar
             var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
             notificationBuilder.SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification));
             notificationManager.Notify(0, notificationBuilder.Build());
-
-
         }
     }
 }
