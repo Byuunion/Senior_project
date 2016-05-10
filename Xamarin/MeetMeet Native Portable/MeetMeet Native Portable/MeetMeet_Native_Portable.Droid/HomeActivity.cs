@@ -16,7 +16,7 @@ namespace MeetMeet_Native_Portable.Droid
     /// Will provide functionality for home page.
     /// </summary>
     [Activity(Label = "Home", Icon = "@drawable/icon")]
-    public class HomeActivity : Activity
+    public class HomeActivity : Activity, ILocationListener
     {
         private Profile userProfile;
         private LocationManager locationManager;
@@ -210,11 +210,12 @@ namespace MeetMeet_Native_Portable.Droid
         }
 
         /// <summary>
-        /// Request location updates at startup.
-        /// </summary>
-        protected override void OnResume()
+		/// Request location updates at startup.
+		/// </summary>
+		protected override void OnResume()
         {
             base.OnResume();
+            locationManager.RequestLocationUpdates(provider, 1000, 0, this);
         }
 
         /// <summary>
@@ -223,6 +224,28 @@ namespace MeetMeet_Native_Portable.Droid
         protected override void OnPause()
         {
             base.OnPause();
+            locationManager.RemoveUpdates(this);
+        }
+
+        /// <summary>
+        /// Constantly updates location
+        /// </summary>
+        /// <param name="location">The newest location</param>
+        public void OnLocationChanged(Location location)
+        {
+            userProfile.current_lat = location.Latitude;
+            userProfile.current_long = location.Longitude;
+        }
+
+        /// <summary>
+		/// Status of the location services provider.
+		/// </summary>
+		/// <param name="provider">Type of provider for location services.</param>
+		/// <param name="status">Availability of location services.</param>
+		/// <param name="extras">Bundle.</param>
+		public void OnStatusChanged(String provider, Availability status, Bundle extras)
+        {
+            // Required for ILocationListener
         }
 
         /// <summary>

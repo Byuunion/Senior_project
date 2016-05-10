@@ -128,7 +128,7 @@ router.route('/user/profile/:username')
 		});
 	})
 
-//Unused. Get any languages associated with this user
+//Currently unused. Get any languages associated with this user
 router.route('/user/language/:username')
 	.get(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -154,7 +154,7 @@ router.route('/user/language/:username')
 		});
 	})
 	
-//Unused. Get any interests associated with this user
+//Currently unused. Get any interests associated with this user
 router.route('/user/interest/:username')
 	.get(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -209,6 +209,7 @@ router.route('/user/login/:username')
 				connection.end();
 			}	
 			else{
+				//Hash the password and check it against the stored password hash
 				var password = req.body.password;
 				var hashedPassword = data[0].password_hash;
 				bcrypt.compare(password, hashedPassword, function(err, match) {
@@ -218,10 +219,13 @@ router.route('/user/login/:username')
 						res.json(response);
 					}
 					if(match){
+						//Create a new token to be returned to the app
 						var token = hat();
 						response.success = true;
 						response.success_message = "User successfully logged in: " + req.params.username;
 						response.token = token;
+						
+						//Store the token to check in the future
 						connection.query('UPDATE user_login SET token = ' + connection.escape(token) + ' WHERE username = ' + connection.escape(req.params.username), function(err, data){
 							if (err){
 								response.success = false;
@@ -262,6 +266,7 @@ router.route('/user/profile')
 			success_message: null
 		};
 		
+		//Check to make sure that this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -283,6 +288,7 @@ router.route('/user/profile')
 						bio: req.body.bio
 					};
 
+					//Create an entry in the profile table
 					connection.query('INSERT INTO user_profile SET ?', data, function(err) {
 						if (err){
 							response.success = false;
@@ -323,6 +329,7 @@ router.route('/user/profile')
 					success_message: null
 		};
 
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -339,6 +346,7 @@ router.route('/user/profile')
 					delete data.username;
 					delete data.token;
 					
+					//Create the timestamp to be inserted into the database
 					var date;
 					date = new Date();
 					date = date.getUTCFullYear() + '-' +
@@ -349,9 +357,9 @@ router.route('/user/profile')
 						('00' + date.getUTCSeconds()).slice(-2);
 					
 					data.time = date;
-					
-					console.log(data.time);
 
+					//Update the database with whatever information was passed in and the current time
+					//The time is used when selecting nearby users, it allows us to avoid finding inactive users
 					connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(username), data, function(err, data){
 						if (err){
 							response.success = false;
@@ -374,7 +382,7 @@ router.route('/user/profile')
 		});
 	})
 
-//Unused. Enter a new user interest
+//Currently unused. Enter a new user interest
 router.route('/user/interest')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -394,6 +402,7 @@ router.route('/user/interest')
 			success_message: null
 		};
 		
+		//Check to make sure that this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -410,6 +419,7 @@ router.route('/user/interest')
 						interest: req.body.interest
 					};
 					
+					//Create a new entry in the interests table
 					connection.query('INSERT INTO user_interest SET ?', data, function(err, rows) {
 						if (err){
 							response.success = false;
@@ -432,7 +442,7 @@ router.route('/user/interest')
 		});
 	})
 
-//Unused. Enter a new user language
+//Currently unused. Enter a new user language
 router.route('/user/language')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -452,6 +462,7 @@ router.route('/user/language')
 			success_message: null
 		};
 		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -468,6 +479,7 @@ router.route('/user/language')
 						language: req.body.language
 					};
 					
+					//Create a new entry in the language table
 					connection.query('INSERT INTO user_language SET ?', data, function(err) {
 						if (err){
 							response.success = false;
@@ -493,7 +505,7 @@ router.route('/user/language')
 //Account creation {username: , password: }
 router.route('/user/login')
 	.post(function(req, res){	
-		//Create account
+	
 		var connection = mysql.createConnection(mysqlConfig);
 
 		connection.connect(function(err){
@@ -505,10 +517,14 @@ router.route('/user/login')
 		});
 		
 		var username = req.body.username;
+		
+		//Token to be used in place of the password for the current session
 		var token = hat();
 		var hashedPassword;
+		
 		const saltRounds = 10;
 		
+		//Hash the password through bcrypt
 		bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
 			
 			var data = {
@@ -523,6 +539,7 @@ router.route('/user/login')
 				token: token
 			};
 
+			//Create an entry in the login table with the username, hashed password and token
 			connection.query('INSERT INTO user_login SET ?', data, function(err, rows) {
 				if (err){
 					response.success = false;
@@ -539,7 +556,7 @@ router.route('/user/login')
 		});
 	})
 
-//Possibly unused. Updates user profile's lat/long values {current_lat: , current_long: , token: }
+//Possibly unused, should use /user/profile (PUT) instead. Updates user profile's lat/long values {current_lat: , current_long: , token: }
 router.route('/user/profile/location/:username')
 	.put(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -553,6 +570,8 @@ router.route('/user/profile/location/:username')
 		});
 		
 		var username = req.params.username;
+		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err || data.length === 0){
 				var response;
@@ -575,6 +594,7 @@ router.route('/user/profile/location/:username')
 						current_long: req.body.current_long
 					};
 					
+					//Update the latitude and longitude of the user
 					connection.query('UPDATE user_profile SET ? WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
 						if (err){
 							response.success = false;
@@ -612,7 +632,7 @@ router.route('/user/login/:username/:token')
 		
 		var username = req.params.username;
 
-		//Check the request for validity
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.params.username), function(err, data){
 			if (err || data.length === 0){
 				console.log(err);
@@ -637,7 +657,7 @@ router.route('/user/login/:username/:token')
 						current_long: "null"
 					};
 					
-					//Stop the user from continuing to be matched
+					//Set the location of the user to null, to avoid them showing up in future matches
 					connection.query('UPDATE user_profile SET current_lat = null, current_long = null WHERE username = ' + connection.escape(req.params.username), data, function(err, data){
 						if (err){
 							console.log(err);
@@ -687,6 +707,7 @@ router.route('/user/login/:username/:token')
 															connection.end();
 														}
 														else{
+															//Logout successful
 															console.log("User successfully logged out: " + username + ".");
 															response.success = true;
 															response.success_message = "User successfully logged out: " + username + ".";
@@ -718,7 +739,6 @@ router.route('/user/login/:username/:token')
 //Get the users around the given location and within the given bounding box
 router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 	.get(function(req, res){
-		console.log("Attempting to find users around " + req.params.yourLat + " " + req.params.yourLong );
 		var connection = mysql.createConnection(mysqlConfig);
 
 		connection.connect(function(err){
@@ -729,11 +749,12 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 			}
 		});
 		
-		var radius = 5; // 5 miles
+		var radius = 5; 	// miles
+		var timeout = 30; 	// minutes
 
 		var response = {
-								success: null,
-								success_message: null
+			success: null,
+			success_message: null
 		};
 		//Find all the active users around the given location 
 		//Active is defined as having updated their location within the last 30 minutes
@@ -751,11 +772,12 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 								' * cos ( radians (current_long) - radians( ' + connection.escape(req.params.yourLong) + ')) ' + 
 								' + sin ( radians ( ' + connection.escape(req.params.yourLat) + ')) ' + 
 								' * sin ( radians (current_lat)) ' + 
-								') <= 5 ' + 
-								'AND TIMESTAMPDIFF(MINUTE, time, NOW()) < 30', function(err,data){
+								') <= ' + connection.escape(radius) +   
+								' AND TIMESTAMPDIFF(MINUTE, time, NOW()) < ' + connection.escape(timeout), function(err,data){
 					if (err){
 							response.success = false;
 							response.success_message = "Failed to get nearby users.";
+							console.log(err);
 					}
 					else{
 							response.success = true;
@@ -766,7 +788,7 @@ router.route('/user/:min_lat/:max_lat/:min_long/:max_long/:yourLat/:yourLong')
 		connection.end();
 	})
 
-//Set the Google id for a user {username: , token: , gcm_regid: }
+//Set the initial Google id for a user {username: , token: , gcm_regid: }
 router.route('/user/gcmregid')
 	.post(function(req, res){
 		var connection = mysql.createConnection(mysqlConfig);
@@ -783,7 +805,8 @@ router.route('/user/gcmregid')
 				success: null,
 				success_message: null,
 		};
-			
+		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -800,10 +823,11 @@ router.route('/user/gcmregid')
 						gcm_regid: req.body.gcm_regid, 
 					};
 
+					//Create a new entry in the GCM id table with the username and gcm_regid
 					connection.query('INSERT INTO user_gcm SET ?', data, function(err, rows) {
 						if (err){
 							response.success = false;
-							response.success_message = "Failed to post interest for: " + username + ".";
+							response.success_message = "Failed to post gcm_regid for: " + username + ".";
 						}
 						else{
 							response.success = true;
@@ -824,7 +848,6 @@ router.route('/user/gcmregid')
 	
 	//Update the Google id for a user {username: , token: , gcm_regid: }
 	.put(function(req, res){
-		//Updates user's gcmregid
 		var connection = mysql.createConnection(mysqlConfig);
 
 		connection.connect(function(err){
@@ -835,6 +858,7 @@ router.route('/user/gcmregid')
 			}
 		});
 		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(req.body.username), function(err, data){
 			if (err) throw err;
 			var token = data[0].token;
@@ -851,13 +875,18 @@ router.route('/user/gcmregid')
 					gcm_regid: req.body.gcm_regid, 
 				};
 
+				//Update the GCM id for the user
 				connection.query('UPDATE user_gcm SET gcm_regid = ' + connection.escape(req.body.gcm_regid) + 'WHERE username = ' + connection.escape(req.body.username), data, function(err, rows) {
-					if (err) throw err;
-
-					response.success = true;
-					response.success_message = "Successfully created user gcm";
-					res.json(response);
-					connection.end();
+					if (err) {
+						response.success = false;
+						response.success_message = "Failed to update gcm_regid for: " + username + ".";
+					}
+					else{
+						response.success = true;
+						response.success_message = "Successfully updated user gcm";
+						res.json(response);
+						connection.end();
+					}
 				});
 			}
 			else{
@@ -890,6 +919,7 @@ router.route('/user/pos_rating/:username')
 					success_message: null
 		};
 		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(rating_user), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -899,8 +929,10 @@ router.route('/user/pos_rating/:username')
 			else{
 				var token = data[0].token;
 			
-				if(req.body.token === token){
+				//Make sure that a user isn't trying to rate themself
+				if(req.body.token === token && rating_user !== rated_user){
 					
+					//Increment the rated user's positive votes
 					connection.query('UPDATE user_profile SET positive_votes = positive_votes + 1 WHERE username = ' + connection.escape(rated_user), function(err, data){
 						if (err){
 							response.success = false;
@@ -944,6 +976,7 @@ router.route('/user/neg_rating/:username')
 					success_message: null
 		};
 		
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(rating_user), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -953,8 +986,10 @@ router.route('/user/neg_rating/:username')
 			else{
 				var token = data[0].token;
 			
-				if(req.body.token === token){
+				//Make sure that a user isn't trying to rate themself
+				if(req.body.token === token && rating_user !== rated_user){
 					
+					//Increment the rated user's negative votes
 					connection.query('UPDATE user_profile SET negative_votes = negative_votes + 1 WHERE username = ' + connection.escape(rated_user), function(err, data){
 						if (err){
 							response.success = false;
@@ -997,8 +1032,10 @@ router.route('/user/blacklist')
 			success_message: null
 		};
 		
+		//Check to make sure a user isn't trying to block themself
 		if(username !== req.body.block_username){
-			console.log("trying to block user " + req.body.block_username);
+			
+			//Check to make sure this is a valid request
 			connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 				if (err || data.length === 0){
 					response.success = false;
@@ -1009,27 +1046,22 @@ router.route('/user/blacklist')
 					var token = data[0].token;
 					
 					if(req.body.token === token){
-						console.log("tokens matched " + req.body.block_username);
 						var data = {
 							username: username,
 							block_username: req.body.block_username
 						};
-						console.log("attempting to insert " + data.username + " " + data.block_username);
+						
+						//Create a new entry in the blacklist table where the current user is blocking the user with block_username
 						connection.query('INSERT INTO user_blacklist SET ?', data, function(err) {
 							if (err){
-								console.log("errored attempting to insert user");
 								response.success = false;
-								console.log("errored attempting to insert user");
 								response.success_message = "Failed to block user: " + data.block_username + ".";
-								console.log("errored attempting to insert user");
 							}
 							else{
-								console.log("successfully inserted user");
 								response.success = true;
 								response.success_message = "Successfully blocked user: " + data.block_username + ".";
 								
 							}
-							console.log("finished insert attemp " + data.username + " " + data.block_username);
 							res.json(response);
 						});
 					}
@@ -1065,10 +1097,11 @@ router.route('/user/blacklist/:username/:block_username/:token')
 		var username = req.params.username;
 		
 		var response = {
-					success: null,
-					success_message: null
+			success: null,
+			success_message: null
 		};
 
+		//Check to make sure this is a valid request
 		connection.query('SELECT token FROM user_login WHERE username = ' + connection.escape(username), function(err, data){
 			if (err || data.length === 0){
 				response.success = false;
@@ -1078,10 +1111,11 @@ router.route('/user/blacklist/:username/:block_username/:token')
 			else{
 				var token = data[0].token;
 				var data = {
-						username: username,
-						block_username: req.params.block_username
+					username: username,
+					block_username: req.params.block_username
 				}
 				if(req.params.token === token){
+					//Delete the entry in the blacklist table where the current user is blocking the user with block_username
 					connection.query('DELETE FROM user_blacklist WHERE username = ? AND block_username = ?', [username,req.params.block_username], function(err, data){
 						if (err){
 							response.success = false;
